@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "SuccessCase")
+@Table(name = "success_case")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class SuccessCase extends BaseTime {

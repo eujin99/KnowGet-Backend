@@ -19,7 +19,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Counseling")
+@Table(name = "counseling")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Counseling extends SentTime {

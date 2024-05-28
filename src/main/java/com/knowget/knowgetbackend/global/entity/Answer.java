@@ -18,7 +18,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Answer")
+@Table(name = "answer")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Answer extends BaseTime {

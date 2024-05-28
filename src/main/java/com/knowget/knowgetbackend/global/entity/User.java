@@ -14,7 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "Users")
+@Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User {
@@ -57,7 +57,7 @@ public class User {
 		this.prefJob = prefJob;
 	}
 
-	public void deleteUser() {
+	public void updateIsActive() {
 		this.isActive = false;
 	}
 

@@ -17,7 +17,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "JobGuide")
+@Table(name = "job_guide")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class JobGuide extends BaseTime {
