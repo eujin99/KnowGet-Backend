@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideRequestDTO;
 import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideResponseDTO;
+import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.entity.Admin;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
@@ -49,7 +50,10 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Transactional(readOnly = true)
 	public JobGuideResponseDTO getJobGuideById(Integer id) {
 		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
-		return jobGuide != null ? convertToDTO(jobGuide) : null;
+		if (jobGuide == null) {
+			throw new ResourceNotFoundException("등록된" + id + "번 취업가이드가 없습니다. ");
+		}
+		return convertToDTO(jobGuide);
 	}
 
 	/**
@@ -87,13 +91,15 @@ public class JobGuideServiceImpl implements JobGuideService {
 	public JobGuideResponseDTO updateJobGuide(Integer id, JobGuideRequestDTO jobGuideRequestDTO) {
 		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
 
-		if (jobGuide != null) {
-			jobGuide.updateTitle(jobGuideRequestDTO.getTitle());
-			jobGuide.updateContent(jobGuideRequestDTO.getContent());
-			jobGuideRepository.save(jobGuide);
+		if (jobGuide == null) {
+			throw new ResourceNotFoundException("등록된" + id + "번 취업가이드가 없습니다. 그러니 수정할 수 없겠죠?");
 		}
 
-		return jobGuide != null ? convertToDTO(jobGuide) : null;
+		jobGuide.updateTitle(jobGuideRequestDTO.getTitle());
+		jobGuide.updateContent(jobGuideRequestDTO.getContent());
+		jobGuideRepository.save(jobGuide);
+
+		return convertToDTO(jobGuide);
 	}
 
 	/**
@@ -104,9 +110,10 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Override
 	@Transactional
 	public void deleteJobGuide(Integer id) {
-		if (jobGuideRepository.existsById(id)) {
-			jobGuideRepository.deleteById(id);
+		if (!jobGuideRepository.existsById(id)) {
+			throw new ResourceNotFoundException("등록된" + id + "번 취업가이드가 애초에 없습니다. 삭제할 것이 없어요. 있었는데 ? 아뇨 그냥 없어요.");
 		}
+		jobGuideRepository.deleteById(id);
 	}
 
 	/**
