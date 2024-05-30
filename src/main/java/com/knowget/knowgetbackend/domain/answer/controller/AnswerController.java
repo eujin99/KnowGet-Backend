@@ -27,7 +27,7 @@ public class AnswerController {
 	/** 답변 상세 조회
 	 *
 	 * @param id
-	 * @return
+	 * @return ResponseEntity<AnswerResponseDTO> 답변 내용
 	 * @author 근엽
 	 */
 	@PostMapping("/{id}")
@@ -40,7 +40,7 @@ public class AnswerController {
 	/** 답변 작성
 	 *
 	 * @param answerRequestDTO
-	 * @return
+	 * @return ResponseEntity<String> 작성 완료 메시지
 	 * @author 근엽
 	 */
 	@PostMapping("/")
@@ -55,7 +55,7 @@ public class AnswerController {
 	 *
 	 * @param id
 	 * @param answerModfiyDTO
-	 * @return
+	 * @return ResponseEntity<String> 수정 완료 메시지
 	 * @author 근엽
 	 */
 	@PatchMapping("/{id}")
@@ -68,7 +68,7 @@ public class AnswerController {
 	/** 답변 삭제
 	 *
 	 * @param id
-	 * @return
+	 * @return ResponseEntity<String> 삭제 완료 메시지
 	 * @author 근엽
 	 */
 	@DeleteMapping("/{id}")

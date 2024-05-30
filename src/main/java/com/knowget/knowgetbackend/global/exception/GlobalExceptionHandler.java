@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
+import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
 import com.knowget.knowgetbackend.domain.user.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
@@ -30,6 +32,16 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(InvalidPasswordException.class)
 	public ResponseEntity<String> handleInvalidPasswordException(InvalidPasswordException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+	}
+
+	@ExceptionHandler(AnswerNotFoundException.class)
+	public ResponseEntity<String> handleAnswerNotFoundException(AnswerNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(CounselingNotFoundException.class)
+	public ResponseEntity<String> handleCounselingNotFoundException(CounselingNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
 
 }

@@ -11,6 +11,7 @@ import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
 import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.answer.repository.AnswerRepository;
+import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
 import com.knowget.knowgetbackend.global.entity.Admin;
 import com.knowget.knowgetbackend.global.entity.Answer;
@@ -29,26 +30,31 @@ public class AnswerServiceImpl implements AnswerService {
 	/** 답변 상세 조회
 	 *
 	 * @param id
-	 * @return
+	 * @return AnswerResponseDTO 답변 내용
+	 * @author 근엽
+	 * @throws AnswerNotFoundException
 	 */
 	@Transactional(readOnly = true)
 	@Override
 	public AnswerResponseDTO getAnswer(Integer id) {
-		Answer ans = answerRepository.findById(id).orElseThrow(() -> new AnswerNotFoundException("답변을 찾을 수 없습니다."));
+		Answer ans = answerRepository.findById(id)
+			.orElseThrow(() -> new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다."));
 		return new AnswerResponseDTO(ans);
 	}
 
 	/** 답변 작성
 	 *
 	 * @param answerRequestDTO
-	 * @return
+	 * @return String 작성 완료 메시지
+	 * @author 근엽
+	 * @throws CounselingNotFoundException
 	 */
 	@Transactional
 	@Override
 	public String saveAnswer(AnswerRequestDTO answerRequestDTO) {
 		// String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
 		Counseling counseling = counselingRepository.findById(answerRequestDTO.getCounselingId()).orElseThrow(
-			() -> new IllegalArgumentException("잘못된 접근입니다."));
+			() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
 		String adminId = "admin";
 		Admin admin = adminRepository.findByUsername(adminId);
 
@@ -67,7 +73,9 @@ public class AnswerServiceImpl implements AnswerService {
 	 *
 	 * @param id
 	 * @param answerModfiyDTO
-	 * @return
+	 * @return String 수정 완료 메시지
+	 * @author 근엽
+	 * @throws AnswerNotFoundException
 	 */
 	@Transactional
 	@Override
@@ -78,7 +86,7 @@ public class AnswerServiceImpl implements AnswerService {
 			answerRepository.save(answer.get());
 			return "답변이 수정되었습니다.";
 		} else {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다.");
 		}
 
 	}
@@ -86,7 +94,9 @@ public class AnswerServiceImpl implements AnswerService {
 	/** 답변 삭제
 	 *
 	 * @param id
-	 * @return
+	 * @return String 삭제 완료 메시지
+	 * @author 근엽
+	 * @throws AnswerNotFoundException
 	 */
 	@Transactional
 	@Override
@@ -96,7 +106,7 @@ public class AnswerServiceImpl implements AnswerService {
 			answerRepository.deleteById(id);
 			return "답변이 삭제되었습니다.";
 		} else {
-			throw new IllegalArgumentException("잘못된 접근입니다.");
+			throw new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다.");
 		}
 
 	}
