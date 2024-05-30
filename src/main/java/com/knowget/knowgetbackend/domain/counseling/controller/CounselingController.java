@@ -26,7 +26,7 @@ public class CounselingController {
 
 	/** 최신 순으로 상담 목록 조회
 	 *
-	 * @return 상담 목록
+	 * @return ResponseEntity<List < CounselingResponseDTO>> 상담 목록
 	 * @author 근엽
 	 */
 	@GetMapping("/")
@@ -39,7 +39,7 @@ public class CounselingController {
 	/** 상담 상세 조회
 	 *
 	 * @param id
-	 * @return 상담 내용
+	 * @return ResponseEntity<CounselingResponseDTO> 상담 내용
 	 * @author 근엽
 	 */
 	@PostMapping("/{id}")
@@ -52,7 +52,7 @@ public class CounselingController {
 	/** 상담 작성
 	 *
 	 * @param counselingRequestDTO
-	 * @return 작성 완료 메시지
+	 * @return ResponseEntity<String> 작성 완료 메시지
 	 * @author 근엽
 	 */
 	@PostMapping("/")

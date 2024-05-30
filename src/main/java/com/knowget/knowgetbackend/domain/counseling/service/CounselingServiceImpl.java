@@ -27,7 +27,7 @@ public class CounselingServiceImpl implements CounselingService {
 
 	/** 최신 순으로 상담 목록 조회
 	 *
-	 * @return 상담 목록
+	 * @return List<CounselingResponseDTO> 상담 목록
 	 * @author 근엽
 	 */
 	@Override
@@ -42,7 +42,7 @@ public class CounselingServiceImpl implements CounselingService {
 	/** 상담 상세 조회
 	 *
 	 * @param id
-	 * @return 상담 내용
+	 * @return CounselingResponseDTO 상담 내용
 	 * @author 근엽
 	 * @throws CounselingNotFoundException
 	 */
@@ -58,7 +58,7 @@ public class CounselingServiceImpl implements CounselingService {
 	/** 상담 작성
 	 *
 	 * @param counselingRequestDTO
-	 * @return 작성 완료 메시지
+	 * @return String 작성 완료 메시지
 	 * @author 근엽
 	 * @throws UserNotFoundException
 	 */
