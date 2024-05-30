@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
+import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
-import com.knowget.knowgetbackend.domain.user.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 
 @RestControllerAdvice
