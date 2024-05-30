@@ -1,12 +1,14 @@
 package com.knowget.knowgetbackend.domain.jobGuide.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideRequestDTO;
+import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideResponseDTO;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.entity.Admin;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
@@ -30,20 +32,24 @@ public class JobGuideServiceImpl implements JobGuideService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<JobGuide> getAllJobGuides() {
-		return jobGuideRepository.findAll();
+	public List<JobGuideResponseDTO> getAllJobGuides() {
+		return jobGuideRepository.findAll().stream()
+			.map(this::convertToDTO)
+			.collect(Collectors.toList());
 	}
 
 	/**
 	 * 취업가이드 게시글 상세 조회
-	 * @param id 조회할 게시글 id
+	 * @param id 조회할 게시글 id (얘로 특정 게시글 조회 가능함!)
 	 * @return 조회된 게시글
 	 * @author 유진
 	 */
+
 	@Override
 	@Transactional(readOnly = true)
-	public JobGuide getJobGuideById(Integer id) {
-		return jobGuideRepository.findById(id).orElse(null);
+	public JobGuideResponseDTO getJobGuideById(Integer id) {
+		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
+		return jobGuide != null ? convertToDTO(jobGuide) : null;
 	}
 
 	/**
@@ -55,7 +61,7 @@ public class JobGuideServiceImpl implements JobGuideService {
 
 	@Override
 	@Transactional
-	public JobGuide createJobGuide(JobGuideRequestDTO jobGuideRequestDTO) {
+	public JobGuideResponseDTO createJobGuide(JobGuideRequestDTO jobGuideRequestDTO) {
 		Admin admin = adminRepository.findById(jobGuideRequestDTO.getAdminId()).orElse(null);
 
 		JobGuide jobGuide = JobGuide.builder()
@@ -64,7 +70,8 @@ public class JobGuideServiceImpl implements JobGuideService {
 			.content(jobGuideRequestDTO.getContent())
 			.build();
 
-		return jobGuideRepository.save(jobGuide);
+		jobGuideRepository.save(jobGuide);
+		return convertToDTO(jobGuide);
 	}
 
 	/**
@@ -77,15 +84,16 @@ public class JobGuideServiceImpl implements JobGuideService {
 
 	@Override
 	@Transactional
-	public JobGuide updateJobGuide(Integer id, JobGuideRequestDTO jobGuideRequestDTO) {
+	public JobGuideResponseDTO updateJobGuide(Integer id, JobGuideRequestDTO jobGuideRequestDTO) {
 		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
 
 		if (jobGuide != null) {
 			jobGuide.updateTitle(jobGuideRequestDTO.getTitle());
 			jobGuide.updateContent(jobGuideRequestDTO.getContent());
+			jobGuideRepository.save(jobGuide);
 		}
 
-		return jobGuide;
+		return jobGuide != null ? convertToDTO(jobGuide) : null;
 	}
 
 	/**
@@ -99,5 +107,23 @@ public class JobGuideServiceImpl implements JobGuideService {
 		if (jobGuideRepository.existsById(id)) {
 			jobGuideRepository.deleteById(id);
 		}
+	}
+
+	/**
+	 * JobGuide Entity -> JobGuideResponseDTO 로 변환!
+	 * @param jobGuide 변환할 JobGuide Entity
+	 * @return JobGuide 엔티티 데이터를 포함하는 JobGuideResponseDTO
+	 * @author 유진
+	 */
+	private JobGuideResponseDTO convertToDTO(JobGuide jobGuide) {
+		return new JobGuideResponseDTO(
+			jobGuide.getGuideId(),
+			jobGuide.getAdmin().getAdminId(),
+			jobGuide.getAdmin().getUsername(),
+			jobGuide.getTitle(),
+			jobGuide.getContent(),
+			jobGuide.getCreatedDate(),
+			jobGuide.getUpdatedDate()
+		);
 	}
 }
