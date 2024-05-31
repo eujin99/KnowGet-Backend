@@ -28,4 +28,5 @@ public class CommentResponseDTO {
 		this.createdDate = comment.getCreatedDate();
 		this.updatedDate = comment.getUpdatedDate();
 	}
+	
 }

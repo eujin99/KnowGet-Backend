@@ -19,6 +19,7 @@ import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Comment;
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -35,27 +36,28 @@ public class CommentServiceImpl implements CommentService {
 	 *
 	 * @param commentRequestDTO caseId : 취업 성공사례 게시글 ID, username : 사용자 ID, content : 댓글 내용
 	 * @return 댓글 작성 성공 여부 메시지 + CommentId
-	 * @throws UserNotFoundException        입력한 사용자 ID로 가입된 사용자가 없을 경우
 	 * @throws SuccessCaseNotFoundException 존재하지 않는 게시글일 경우
+	 * @throws UserNotFoundException        존재하지 않는 사용자일 경우
+	 * @throws RequestFailedException       댓글 작성에 실패했을 경우
 	 * @author Jihwan
 	 */
 	@Override
 	@Transactional
 	public String saveComment(CommentRequestDTO commentRequestDTO) {
-		SuccessCase successCase = successCaseRepository.findById(commentRequestDTO.getCaseId())
-			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다."));
-		User user = userRepository.findByUsername(commentRequestDTO.getUsername())
-			.orElseThrow(() -> new UserNotFoundException("[Error] 입력하신 정보로 가입된 사용자가 없습니다."));
 		try {
+			SuccessCase successCase = successCaseRepository.findById(commentRequestDTO.getCaseId())
+				.orElseThrow(() -> new SuccessCaseNotFoundException("존재하지 않는 게시글입니다"));
+			User user = userRepository.findByUsername(commentRequestDTO.getUsername())
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 			Comment comment = Comment.builder()
 				.successCase(successCase)
 				.user(user)
 				.content(commentRequestDTO.getContent())
 				.build();
 			Comment result = commentRepository.save(comment);
-			return "댓글이 작성되었습니다. CommentId : " + result.getCommentId();
+			return "댓글이 작성되었습니다 : [CommentId=" + result.getCommentId() + "]";
 		} catch (Exception e) {
-			return "[Error] 댓글 작성에 실패했습니다. : " + e.getMessage();
+			throw new RequestFailedException("[Error] 댓글 작성에 실패했습니다 : " + e.getMessage());
 		}
 	}
 
@@ -71,9 +73,9 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<CommentResponseDTO> findComments(Integer caseId) {
+		successCaseRepository.findById(caseId)
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다"));
 		List<Comment> comments = commentRepository.findBySuccessCaseIdOrderByCreatedDateAsc(caseId);
-		if (comments.isEmpty())
-			throw new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다.");
 		return comments.stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
 
@@ -88,13 +90,13 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional
 	public String updateComment(CommentUpdateDTO commentUpdateDTO) {
-		Comment comment = commentRepository.findById(commentUpdateDTO.getCommentId())
-			.orElseThrow(() -> new CommentNotFoundException("[Error] 존재하지 않는 댓글입니다."));
 		try {
+			Comment comment = commentRepository.findById(commentUpdateDTO.getCommentId())
+				.orElseThrow(() -> new CommentNotFoundException("존재하지 않는 댓글입니다"));
 			comment.updateContent(commentUpdateDTO.getContent());
-			return "댓글이 수정되었습니다. CommentId : " + comment.getCommentId();
+			return "댓글이 수정되었습니다 : [CommentId=" + comment.getCommentId() + "]";
 		} catch (Exception e) {
-			return "[Error] 댓글 수정에 실패했습니다. : " + e.getMessage();
+			return "[Error] 댓글 수정에 실패했습니다 : " + e.getMessage();
 		}
 	}
 
@@ -109,15 +111,14 @@ public class CommentServiceImpl implements CommentService {
 	@Override
 	@Transactional
 	public String deleteComment(CommentDeleteDTO commentDeleteDTO) {
-		Comment comment = commentRepository.findById(commentDeleteDTO.getCommentId())
-			.orElseThrow(() -> new CommentNotFoundException("[Error] 존재하지 않는 댓글입니다."));
 		try {
+			Comment comment = commentRepository.findById(commentDeleteDTO.getCommentId())
+				.orElseThrow(() -> new CommentNotFoundException("존재하지 않는 댓글입니다"));
 			commentRepository.deleteById(comment.getCommentId());
-			return "댓글이 삭제되었습니다.";
+			return "댓글이 삭제되었습니다";
 		} catch (Exception e) {
-			return "[Error] 댓글 삭제에 실패했습니다. : " + e.getMessage();
+			return "[Error] 댓글 삭제에 실패했습니다 : " + e.getMessage();
 		}
 	}
 
 }
-
