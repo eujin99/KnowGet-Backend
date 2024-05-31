@@ -7,5 +7,5 @@ public class SuccessCaseRequestDTO {
 
 	private String title;
 	private String content;
-	private String writer;
+	private String username;
 }

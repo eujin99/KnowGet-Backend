@@ -5,9 +5,12 @@ import java.util.List;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.service.SuccessCaseService;
 
@@ -32,5 +35,13 @@ public class SuccessCaseController {
 	public ResponseEntity<List<SuccessCaseResponseDTO>> getAllSuccessCases() {
 		List<SuccessCaseResponseDTO> successCases = successCaseService.getAllSuccessCases();
 		return ResponseEntity.ok(successCases);
+	}
+
+	// SuccessCase 생성
+	@PostMapping
+	public ResponseEntity<SuccessCaseResponseDTO> createSuccessCase(
+		@RequestBody SuccessCaseRequestDTO successCaseRequestDTO) {
+		SuccessCaseResponseDTO successCase = successCaseService.createSuccessCase(successCaseRequestDTO);
+		return ResponseEntity.ok(successCase);
 	}
 }

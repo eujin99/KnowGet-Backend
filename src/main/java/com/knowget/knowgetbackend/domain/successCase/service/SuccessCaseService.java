@@ -2,6 +2,7 @@ package com.knowget.knowgetbackend.domain.successCase.service;
 
 import java.util.List;
 
+import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 
 public interface SuccessCaseService {
@@ -11,4 +12,8 @@ public interface SuccessCaseService {
 
 	// 전체 SuccessCase 목록 조회
 	List<SuccessCaseResponseDTO> getAllSuccessCases();
+
+	// SuccessCase 생성
+	SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO);
+
 }
