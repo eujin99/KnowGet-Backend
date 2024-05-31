@@ -49,7 +49,7 @@ public class UserController {
 	 * @author Jihwan
 	 */
 	@PostMapping("/signup")
-	public ResponseEntity<String> signUp(@RequestBody @Valid UserSignUpDTO userSignupDTO) {
+	public ResponseEntity<String> signUp(@RequestBody UserSignUpDTO userSignupDTO) {
 		String msg = userServiceImpl.signUp(userSignupDTO);
 		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}

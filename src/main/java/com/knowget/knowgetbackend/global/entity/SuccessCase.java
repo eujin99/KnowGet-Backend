@@ -1,9 +1,12 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import java.util.Set;
+
 import org.hibernate.annotations.ColumnDefault;
 
 import com.knowget.knowgetbackend.global.common.BaseTime;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -12,6 +15,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,6 +46,9 @@ public class SuccessCase extends BaseTime {
 	@Column(name = "is_approved", nullable = false, columnDefinition = "TINYINT(1)")
 	@ColumnDefault("0")
 	private Short isApproved;
+
+	@OneToMany(mappedBy = "successCase", cascade = CascadeType.ALL, orphanRemoval = true)
+	private Set<Comment> comments;
 
 	@Builder
 	public SuccessCase(User user, String title, String content) {

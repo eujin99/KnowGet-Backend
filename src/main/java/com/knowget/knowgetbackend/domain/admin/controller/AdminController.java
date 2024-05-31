@@ -2,7 +2,7 @@ package com.knowget.knowgetbackend.domain.admin.controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import com.knowget.knowgetbackend.domain.admin.service.AdminServiceImpl;
+import com.knowget.knowgetbackend.domain.admin.service.AdminService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminController {
 
-	private final AdminServiceImpl adminServiceImpl;
+	private final AdminService adminService;
 
 }
