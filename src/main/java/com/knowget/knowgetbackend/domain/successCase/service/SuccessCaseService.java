@@ -16,4 +16,9 @@ public interface SuccessCaseService {
 	// SuccessCase 생성
 	SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO);
 
+	// SuccessCase 삭제
+	String deleteSuccessCase(Integer caseId);
+
+	// SuccessCase 검색
+	List<SuccessCaseResponseDTO> searchSuccessCase(String keyword);
 }

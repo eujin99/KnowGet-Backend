@@ -3,6 +3,7 @@ package com.knowget.knowgetbackend.domain.successCase.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -24,6 +25,7 @@ public class SuccessCaseController {
 	private final SuccessCaseService successCaseService;
 
 	// 특정 caseId에 해당하는 SuccessCase 조회
+	// postman 사용법 : get으로 요청 route : http://localhost:8080/api/v1/success-case/{caseId}
 	@GetMapping("/{caseId}")
 	public ResponseEntity<SuccessCaseResponseDTO> getSuccessCase(@PathVariable Integer caseId) {
 		SuccessCaseResponseDTO successCase = successCaseService.getSuccessCase(caseId);
@@ -31,6 +33,7 @@ public class SuccessCaseController {
 	}
 
 	// 전체 SuccessCase 목록 조회
+	// postman 사용법 : get으로 요청 route : http://localhost:8080/api/v1/success-case
 	@GetMapping
 	public ResponseEntity<List<SuccessCaseResponseDTO>> getAllSuccessCases() {
 		List<SuccessCaseResponseDTO> successCases = successCaseService.getAllSuccessCases();
@@ -38,10 +41,20 @@ public class SuccessCaseController {
 	}
 
 	// SuccessCase 생성
+	// postman 사용법 : username / title / content 입력 후 post로 요청
+	// 성공 시 200 OK 반환
 	@PostMapping
 	public ResponseEntity<SuccessCaseResponseDTO> createSuccessCase(
 		@RequestBody SuccessCaseRequestDTO successCaseRequestDTO) {
 		SuccessCaseResponseDTO successCase = successCaseService.createSuccessCase(successCaseRequestDTO);
 		return ResponseEntity.ok(successCase);
+	}
+
+	// SuccessCase 삭제
+	// postman 사용법 : delete로 요청 route : http://localhost:8080/api/v1/success-case/{caseId}
+	@DeleteMapping("/{caseId}")
+	public ResponseEntity<String> deleteSuccessCase(@PathVariable Integer caseId) {
+		String msg = successCaseService.deleteSuccessCase(caseId);
+		return ResponseEntity.ok(msg);
 	}
 }

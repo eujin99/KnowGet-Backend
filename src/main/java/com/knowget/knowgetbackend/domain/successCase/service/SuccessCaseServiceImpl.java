@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
+import com.knowget.knowgetbackend.domain.successCase.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
@@ -23,7 +24,6 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	private final UserRepository userRepository;
 
 	// 특정 caseId에 해당하는 SuccessCase 조회 - findById
-	// postman 사용법 : get으로 요청 route : http://localhost:8080/api/v1/success-case/{caseId}
 	@Override
 	@Transactional(readOnly = true)
 	public SuccessCaseResponseDTO getSuccessCase(Integer caseId) {
@@ -33,7 +33,6 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	}
 
 	// 전체 SuccessCase 목록 조회 - findAll
-	// postman 사용법 : get으로 요청 route : http://localhost:8080/api/v1/success-case
 	@Override
 	@Transactional(readOnly = true)
 	public List<SuccessCaseResponseDTO> getAllSuccessCases() {
@@ -42,8 +41,6 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	}
 
 	// SuccessCase 생성 - save
-	// postman 사용법 : username / title / content 입력 후 post로 요청
-	// 성공 시 200 OK 반환
 	@Override
 	@Transactional
 	public SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO) {
@@ -57,10 +54,24 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 			.content(successCaseRequestDTO.getContent())
 			.build();
 
-		// Save the SuccessCase
+		//SuccessCase에 저장
 		successCaseRepository.save(successCase);
-
-		// Convert the saved SuccessCase to SuccessCaseResponseDTO and return it
 		return new SuccessCaseResponseDTO(successCase);
 	}
+
+	// SuccessCase 삭제
+	@Override
+	@Transactional
+	public String deleteSuccessCase(Integer caseId) {
+		//존재하는지 확인
+		if (!successCaseRepository.existsById(caseId)) {
+			throw new ResourceNotFoundException("등록된" + caseId + "번 성공사례가 없습니다.");
+		}
+
+		//삭제
+		successCaseRepository.deleteById(caseId);
+
+		return "삭제가 되었습니다";
+	}
+
 }
