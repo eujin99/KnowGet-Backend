@@ -16,6 +16,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -47,7 +48,8 @@ public class SuccessCase extends BaseTime {
 	@ColumnDefault("0")
 	private Short isApproved;
 
-	@OneToMany(mappedBy = "successCase", cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "successCase", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+	@OrderBy("createdDate ASC")
 	private Set<Comment> comments;
 
 	@Builder

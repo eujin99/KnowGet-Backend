@@ -5,9 +5,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
-import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
@@ -28,7 +28,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(UserNotFoundException.class)
 	public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(InvalidPasswordException.class)
@@ -38,14 +38,14 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(SuccessCaseNotFoundException.class)
 	public ResponseEntity<String> handleSuccessCaseNotFoundException(SuccessCaseNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(CommentNotFoundException.class)
 	public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException e) {
-    return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
-  }
-  
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	}
+
 	@ExceptionHandler(AnswerNotFoundException.class)
 	public ResponseEntity<String> handleAnswerNotFoundException(AnswerNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -54,6 +54,11 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(CounselingNotFoundException.class)
 	public ResponseEntity<String> handleCounselingNotFoundException(CounselingNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(RequestFailedException.class)
+	public ResponseEntity<String> handleRequestFailedException(RequestFailedException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
 	}
 
 }
