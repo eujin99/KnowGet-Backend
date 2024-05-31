@@ -50,9 +50,11 @@ public class AnswerServiceImpl implements AnswerService {
 	@Transactional
 	@Override
 	public String saveAnswer(AnswerRequestDTO answerRequestDTO) {
-		// String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
 		Counseling counseling = counselingRepository.findById(answerRequestDTO.getCounselingId()).orElseThrow(
 			() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
+		counseling.updateIsAnswered(true);
+
+		// String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
 		String adminId = "admin";
 		Admin admin = adminRepository.findByUsername(adminId);
 
@@ -98,9 +100,14 @@ public class AnswerServiceImpl implements AnswerService {
 	public String deleteAnswer(Integer id) {
 		Answer answer = answerRepository.findById(id)
 			.orElseThrow(() -> new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다."));
+
+		Counseling counseling = counselingRepository.findById(answer.getCounseling().getCounselingId()).orElseThrow(
+			() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
+		counseling.updateIsAnswered(false);
+
 		answerRepository.delete(answer);
 		return "답변이 삭제되었습니다.";
-		
+
 	}
 
 }
