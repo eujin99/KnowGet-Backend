@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
+import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
+import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
+import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
-import com.knowget.knowgetbackend.domain.user.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 
 @RestControllerAdvice
@@ -41,6 +43,16 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(CommentNotFoundException.class)
 	public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException e) {
+    return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+  }
+  
+	@ExceptionHandler(AnswerNotFoundException.class)
+	public ResponseEntity<String> handleAnswerNotFoundException(AnswerNotFoundException e) {
+		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(CounselingNotFoundException.class)
+	public ResponseEntity<String> handleCounselingNotFoundException(CounselingNotFoundException e) {
 		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
 	}
 
