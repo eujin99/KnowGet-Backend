@@ -1,7 +1,5 @@
 package com.knowget.knowgetbackend.domain.answer.service;
 
-import java.util.Optional;
-
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -80,14 +78,11 @@ public class AnswerServiceImpl implements AnswerService {
 	@Transactional
 	@Override
 	public String updateAnswer(Integer id, AnswerModfiyDTO answerModfiyDTO) {
-		Optional<Answer> answer = answerRepository.findById(id);
-		if (answer.isPresent()) {
-			answer.get().updateContent(answerModfiyDTO.getContent());
-			answerRepository.save(answer.get());
-			return "답변이 수정되었습니다.";
-		} else {
-			throw new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다.");
-		}
+		Answer answer = answerRepository.findById(id)
+			.orElseThrow(() -> new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다."));
+		answer.updateContent(answerModfiyDTO.getContent());
+		answerRepository.save(answer);
+		return "답변이 수정되었습니다.";
 
 	}
 
@@ -101,14 +96,11 @@ public class AnswerServiceImpl implements AnswerService {
 	@Transactional
 	@Override
 	public String deleteAnswer(Integer id) {
-		Optional<Answer> answer = answerRepository.findById(id);
-		if (answer.isPresent()) {
-			answerRepository.deleteById(id);
-			return "답변이 삭제되었습니다.";
-		} else {
-			throw new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다.");
-		}
-
+		Answer answer = answerRepository.findById(id)
+			.orElseThrow(() -> new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다."));
+		answerRepository.delete(answer);
+		return "답변이 삭제되었습니다.";
+		
 	}
 
 }
