@@ -51,8 +51,8 @@ public class Counseling extends SentTime {
 		this.isAnswered = false;
 	}
 
-	public void updateIsAnswered() {
-		this.isAnswered = true;
+	public void updateIsAnswered(Boolean isAnswered) {
+		this.isAnswered = isAnswered;
 	}
 
 }

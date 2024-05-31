@@ -69,12 +69,12 @@ public class CounselingServiceImpl implements CounselingService {
 		User user = userRepository.findByUsername(userId)
 			.orElseThrow(() -> new UserNotFoundException("[ERROR] 회원정보가 입력되지 않았습니다."));
 
-		Counseling couns = Counseling.builder()
+		Counseling counseling = Counseling.builder()
 			.user(user)
 			.category(counselingRequestDTO.getCategory())
 			.content(counselingRequestDTO.getContent())
 			.build();
-		counselingRepository.save(couns);
+		counselingRepository.save(counseling);
 		return "상담이 저장되었습니다.";
 	}
 
