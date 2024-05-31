@@ -2,6 +2,7 @@ package com.knowget.knowgetbackend.domain.successCase.service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -71,7 +72,15 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 		//삭제
 		successCaseRepository.deleteById(caseId);
 
-		return "삭제가 되었습니다";
+		return "해당 글이 삭제 되었습니다";
+	}
+
+	// SuccessCase 검색 - By Using "Keyword"
+	@Override
+	@Transactional(readOnly = true)
+	public List<SuccessCaseResponseDTO> searchSuccessCase(String keyword) {
+		List<SuccessCase> successCases = successCaseRepository.findByTitleContaining(keyword);
+		return successCases.stream().map(SuccessCaseResponseDTO::new).collect(Collectors.toList());
 	}
 
 }

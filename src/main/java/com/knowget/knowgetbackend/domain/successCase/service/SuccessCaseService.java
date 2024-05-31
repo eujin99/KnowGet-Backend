@@ -19,6 +19,6 @@ public interface SuccessCaseService {
 	// SuccessCase 삭제
 	String deleteSuccessCase(Integer caseId);
 
-	// SuccessCase 검색
+	// SuccessCase 검색 - By Using "Keyword"
 	List<SuccessCaseResponseDTO> searchSuccessCase(String keyword);
 }

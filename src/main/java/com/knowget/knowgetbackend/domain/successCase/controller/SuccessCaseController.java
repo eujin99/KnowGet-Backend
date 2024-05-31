@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
@@ -56,5 +57,13 @@ public class SuccessCaseController {
 	public ResponseEntity<String> deleteSuccessCase(@PathVariable Integer caseId) {
 		String msg = successCaseService.deleteSuccessCase(caseId);
 		return ResponseEntity.ok(msg);
+	}
+
+	// SuccessCase 검색 - By Using "Keyword"
+	// postman 사용법 : get으로 요청 route : http://localhost:8080/api/v1/success-case/search?keyword={keyword}
+	@GetMapping("/search")
+	public ResponseEntity<List<SuccessCaseResponseDTO>> searchSuccessCase(@RequestParam String keyword) {
+		List<SuccessCaseResponseDTO> successCases = successCaseService.searchSuccessCase(keyword);
+		return ResponseEntity.ok(successCases);
 	}
 }
