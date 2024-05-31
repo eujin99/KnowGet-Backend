@@ -1,5 +1,7 @@
 package com.knowget.knowgetbackend.domain.successCase.dto;
 
+import java.time.LocalDateTime;
+
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
 
 import lombok.AllArgsConstructor;
@@ -16,6 +18,8 @@ public class SuccessCaseResponseDTO {
 	private String title;
 	private String content;
 	private Short isApproved;
+	private LocalDateTime createdDate;
+	private LocalDateTime updatedDate;
 
 	public SuccessCaseResponseDTO(SuccessCase successCase) {
 		this.caseId = successCase.getCaseId();
@@ -23,6 +27,8 @@ public class SuccessCaseResponseDTO {
 		this.title = successCase.getTitle();
 		this.content = successCase.getContent();
 		this.isApproved = successCase.getIsApproved();
+		this.createdDate = successCase.getCreatedDate();
+		this.updatedDate = successCase.getUpdatedDate();
 	}
 
 }
