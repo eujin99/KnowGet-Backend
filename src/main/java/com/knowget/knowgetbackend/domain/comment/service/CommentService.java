@@ -2,20 +2,19 @@ package com.knowget.knowgetbackend.domain.comment.service;
 
 import java.util.List;
 
-import com.knowget.knowgetbackend.domain.comment.dto.CommentRequestDto;
-import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDto;
-import com.knowget.knowgetbackend.global.entity.Comment;
+import com.knowget.knowgetbackend.domain.comment.dto.CommentDeleteDTO;
+import com.knowget.knowgetbackend.domain.comment.dto.CommentRequestDTO;
+import com.knowget.knowgetbackend.domain.comment.dto.CommentResponseDTO;
+import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
 
 public interface CommentService {
-	//create
-	String createComment(CommentRequestDto commentRequestDto);
 
-	//read
-	List<Comment> getComments(Integer caseId);
+	String saveComment(CommentRequestDTO commentRequestDto);
 
-	//update
-	String updateComment(Integer commentId, CommentUpdateDto commentUpdateDto);
+	List<CommentResponseDTO> findComments(Integer caseId);
 
-	//delete
-	String deleteComment(Integer commentId, String userId);
+	String updateComment(CommentUpdateDTO commentUpdateDTO);
+
+	String deleteComment(CommentDeleteDTO commentDeleteDTO);
+
 }
