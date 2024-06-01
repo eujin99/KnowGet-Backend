@@ -34,6 +34,24 @@ public class CommentServiceImpl implements CommentService {
 	private final ReplyRepository replyRepository;
 
 	/**
+	 * 특정 취업 성공사례 게시글에 달린 모든 댓글 조회
+	 *
+	 * @param caseId 취업 성공사례 게시글 ID
+	 * @return 특정 취업 성공사례 게시글에 달린 모든 댓글 리스트
+	 * @throws SuccessCaseNotFoundException 존재하지 않는 게시글일 경우
+	 * @author Jihwan
+	 * @see CommentResponseDTO
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public List<CommentResponseDTO> findComments(Integer caseId) {
+		successCaseRepository.findById(caseId)
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다"));
+		List<Comment> comments = commentRepository.findBySuccessCaseIdOrderByCreatedDateAsc(caseId);
+		return comments.stream().map(CommentResponseDTO::new).collect(Collectors.toList());
+	}
+
+	/**
 	 * 취업 성공사례 게시글에 대한 댓글 작성
 	 *
 	 * @param commentRequestDTO caseId : 취업 성공사례 게시글 ID, username : 사용자 ID, content : 댓글 내용
@@ -64,29 +82,12 @@ public class CommentServiceImpl implements CommentService {
 	}
 
 	/**
-	 * 특정 취업 성공사례 게시글에 달린 모든 댓글 조회
-	 *
-	 * @param caseId 취업 성공사례 게시글 ID
-	 * @return 특정 취업 성공사례 게시글에 달린 모든 댓글 리스트
-	 * @throws SuccessCaseNotFoundException 존재하지 않는 게시글일 경우
-	 * @author Jihwan
-	 * @see CommentResponseDTO
-	 */
-	@Override
-	@Transactional(readOnly = true)
-	public List<CommentResponseDTO> findComments(Integer caseId) {
-		successCaseRepository.findById(caseId)
-			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다"));
-		List<Comment> comments = commentRepository.findBySuccessCaseIdOrderByCreatedDateAsc(caseId);
-		return comments.stream().map(CommentResponseDTO::new).collect(Collectors.toList());
-	}
-
-	/**
 	 * 특정 취업 성공사례 게시글에 달린 댓글 수정
 	 *
 	 * @param commentUpdateDTO caseId : 취업 성공사례 게시글 ID, commentId : 댓글 ID, username : 사용자 ID, content : 수정할 댓글 내용
 	 * @return 댓글 수정 성공 여부 메시지 + CommentId
 	 * @throws CommentNotFoundException 존재하지 않는 댓글일 경우
+	 * @throws RequestFailedException   댓글 수정에 실패했을 경우
 	 * @author Jihwan
 	 */
 	@Override
@@ -98,7 +99,7 @@ public class CommentServiceImpl implements CommentService {
 			comment.updateContent(commentUpdateDTO.getContent());
 			return "댓글이 수정되었습니다 : [CommentId=" + comment.getCommentId() + "]";
 		} catch (Exception e) {
-			return "[Error] 댓글 수정에 실패했습니다 : " + e.getMessage();
+			throw new RequestFailedException("[Error] 댓글 수정에 실패했습니다 : " + e.getMessage());
 		}
 	}
 
@@ -108,6 +109,7 @@ public class CommentServiceImpl implements CommentService {
 	 * @param commentDeleteDTO caseId : 취업 성공사례 게시글 ID, commentId : 댓글 ID, username : 사용자 ID
 	 * @return 댓글 삭제 성공 여부 메시지
 	 * @throws CommentNotFoundException 존재하지 않는 댓글일 경우
+	 * @throws RequestFailedException   댓글 삭제에 실패했을 경우
 	 * @author Jihwan
 	 */
 	@Override
@@ -117,11 +119,11 @@ public class CommentServiceImpl implements CommentService {
 			Comment comment = commentRepository.findById(commentDeleteDTO.getCommentId())
 				.orElseThrow(() -> new CommentNotFoundException("존재하지 않는 댓글입니다"));
 			replyRepository.deleteAll(
-				replyRepository.findByCommentCommentIdBOrderByCreatedDateAsc(comment.getCommentId()));
+				replyRepository.findAllByCommentIdOrderByCreatedDateAsc(comment.getCommentId()));
 			commentRepository.delete(comment);
 			return "댓글이 삭제되었습니다";
 		} catch (Exception e) {
-			return "[Error] 댓글 삭제에 실패했습니다 : " + e.getMessage();
+			throw new RequestFailedException("[Error] 댓글 삭제에 실패했습니다 : " + e.getMessage());
 		}
 	}
 

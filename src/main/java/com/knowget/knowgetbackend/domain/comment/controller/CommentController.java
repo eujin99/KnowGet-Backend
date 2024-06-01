@@ -32,6 +32,20 @@ public class CommentController {
 	private final CommentService commentService;
 
 	/**
+	 * 특정 성공 사례 게시글에 달린 모든 댓글 조회
+	 *
+	 * @param caseId 취업 성공사례 게시글 ID
+	 * @return 특정 취업 성공사례 게시글에 달린 모든 댓글 리스트
+	 * @author Jihwan
+	 * @see CommentResponseDTO
+	 */
+	@GetMapping(value = "/{caseId}/comments", produces = {MediaType.APPLICATION_JSON_VALUE})
+	public ResponseEntity<List<CommentResponseDTO>> findComments(@PathVariable("caseId") Integer caseId) {
+		List<CommentResponseDTO> commentResponseDTOList = commentService.findComments(caseId);
+		return new ResponseEntity<>(commentResponseDTOList, HttpStatus.OK);
+	}
+
+	/**
 	 * 취업 성공사례 게시글에 대한 댓글 작성
 	 *
 	 * @param caseId            취업 성공사례 게시글 ID
@@ -49,20 +63,6 @@ public class CommentController {
 		String message = commentService.saveComment(commentRequestDTO);
 
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.CREATED);
-	}
-
-	/**
-	 * 특정 성공 사례 게시글에 달린 모든 댓글 조회
-	 *
-	 * @param caseId 취업 성공사례 게시글 ID
-	 * @return 특정 취업 성공사례 게시글에 달린 모든 댓글 리스트
-	 * @author Jihwan
-	 * @see CommentResponseDTO
-	 */
-	@GetMapping(value = "/{caseId}/comments", produces = {MediaType.APPLICATION_JSON_VALUE})
-	public ResponseEntity<List<CommentResponseDTO>> findComments(@PathVariable("caseId") Integer caseId) {
-		List<CommentResponseDTO> commentResponseDTOList = commentService.findComments(caseId);
-		return new ResponseEntity<>(commentResponseDTOList, HttpStatus.OK);
 	}
 
 	/**

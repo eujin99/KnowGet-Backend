@@ -10,6 +10,7 @@ import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundExcept
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.domain.reply.exception.ReplyNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
@@ -59,6 +60,11 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(RequestFailedException.class)
 	public ResponseEntity<ResultMessageDTO> handleRequestFailedException(RequestFailedException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ReplyNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleReplyNotFoundException(ReplyNotFoundException e) {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
