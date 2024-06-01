@@ -1,10 +1,7 @@
 package com.knowget.knowgetbackend.global.entity;
 
-import java.util.Set;
-
 import com.knowget.knowgetbackend.global.common.BaseTime;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -13,8 +10,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
 import lombok.Builder;
@@ -42,10 +37,6 @@ public class Comment extends BaseTime {
 
 	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
-
-	@OneToMany(mappedBy = "comment", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-	@OrderBy("createdDate ASC")
-	private Set<Reply> replies;
 
 	@Builder
 	public Comment(SuccessCase successCase, User user, String content) {
