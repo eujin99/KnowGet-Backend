@@ -13,6 +13,7 @@ import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
 import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.repository.CommentRepository;
+import com.knowget.knowgetbackend.domain.reply.repository.ReplyRepository;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
@@ -21,6 +22,7 @@ import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
+import jakarta.persistence.EntityManager;
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -30,6 +32,8 @@ public class CommentServiceImpl implements CommentService {
 	private final CommentRepository commentRepository;
 	private final UserRepository userRepository;
 	private final SuccessCaseRepository successCaseRepository;
+	private final ReplyRepository replyRepository;
+	private final EntityManager entityManager;
 
 	/**
 	 * 취업 성공사례 게시글에 대한 댓글 작성
@@ -114,7 +118,9 @@ public class CommentServiceImpl implements CommentService {
 		try {
 			Comment comment = commentRepository.findById(commentDeleteDTO.getCommentId())
 				.orElseThrow(() -> new CommentNotFoundException("존재하지 않는 댓글입니다"));
-			commentRepository.deleteById(comment.getCommentId());
+			replyRepository.deleteAll(comment.getReplies());
+			commentRepository.delete(comment);
+			entityManager.flush();
 			return "댓글이 삭제되었습니다";
 		} catch (Exception e) {
 			return "[Error] 댓글 삭제에 실패했습니다 : " + e.getMessage();

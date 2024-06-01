@@ -20,6 +20,7 @@ import com.knowget.knowgetbackend.domain.comment.dto.CommentRequestDTO;
 import com.knowget.knowgetbackend.domain.comment.dto.CommentResponseDTO;
 import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
 import com.knowget.knowgetbackend.domain.comment.service.CommentService;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -39,7 +40,7 @@ public class CommentController {
 	 * @author Jihwan
 	 */
 	@PostMapping("/{caseId}/comment")
-	public ResponseEntity<String> saveComment(@PathVariable("caseId") Integer caseId,
+	public ResponseEntity<ResultMessageDTO> saveComment(@PathVariable("caseId") Integer caseId,
 		@RequestBody CommentRequestDTO commentRequestDTO) {
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -47,7 +48,7 @@ public class CommentController {
 		commentRequestDTO.setUsername(username);
 		String message = commentService.saveComment(commentRequestDTO);
 
-		return new ResponseEntity<>(message, HttpStatus.CREATED);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.CREATED);
 	}
 
 	/**
@@ -74,7 +75,7 @@ public class CommentController {
 	 * @author Jihwan
 	 */
 	@PatchMapping("/{caseId}/comment/{commentId}")
-	public ResponseEntity<String> updateComment(@PathVariable("caseId") Integer caseId,
+	public ResponseEntity<ResultMessageDTO> updateComment(@PathVariable("caseId") Integer caseId,
 		@PathVariable("commentId") Integer commentId, @RequestBody CommentUpdateDTO commentUpdateDTO) {
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -83,7 +84,7 @@ public class CommentController {
 		commentUpdateDTO.setUsername(username);
 		String message = commentService.updateComment(commentUpdateDTO);
 
-		return new ResponseEntity<>(message, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class CommentController {
 	 * @author Jihwan
 	 */
 	@DeleteMapping("/{caseId}/comment/{commentId}")
-	public ResponseEntity<String> deleteComment(@PathVariable("caseId") Integer caseId,
+	public ResponseEntity<ResultMessageDTO> deleteComment(@PathVariable("caseId") Integer caseId,
 		@PathVariable("commentId") Integer commentId) {
 
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
@@ -106,7 +107,7 @@ public class CommentController {
 			.build();
 		String message = commentService.deleteComment(commentDeleteDTO);
 
-		return new ResponseEntity<>(message, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 }
