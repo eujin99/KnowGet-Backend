@@ -118,8 +118,6 @@ public class CommentServiceImpl implements CommentService {
 		try {
 			Comment comment = commentRepository.findById(commentDeleteDTO.getCommentId())
 				.orElseThrow(() -> new CommentNotFoundException("존재하지 않는 댓글입니다"));
-			replyRepository.deleteAll(
-				replyRepository.findAllByCommentIdOrderByCreatedDateAsc(comment.getCommentId()));
 			commentRepository.delete(comment);
 			return "댓글이 삭제되었습니다";
 		} catch (Exception e) {
