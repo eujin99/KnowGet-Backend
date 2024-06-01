@@ -13,7 +13,6 @@ import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
 import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.repository.CommentRepository;
-import com.knowget.knowgetbackend.domain.reply.repository.ReplyRepository;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
@@ -31,7 +30,6 @@ public class CommentServiceImpl implements CommentService {
 	private final CommentRepository commentRepository;
 	private final UserRepository userRepository;
 	private final SuccessCaseRepository successCaseRepository;
-	private final ReplyRepository replyRepository;
 
 	/**
 	 * 특정 취업 성공사례 게시글에 달린 모든 댓글 조회
