@@ -21,4 +21,8 @@ public interface SuccessCaseService {
 
 	// SuccessCase 검색 - By Using "Keyword"
 	List<SuccessCaseResponseDTO> searchSuccessCase(String keyword);
+
+	// SuccessCase 승인상태 업데이트
+	Short updateSuccessCaseApproval(Integer caseId, Short status);
+
 }
