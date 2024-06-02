@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -65,5 +66,14 @@ public class SuccessCaseController {
 	public ResponseEntity<List<SuccessCaseResponseDTO>> searchSuccessCase(@RequestParam String keyword) {
 		List<SuccessCaseResponseDTO> successCases = successCaseService.searchSuccessCase(keyword);
 		return ResponseEntity.ok(successCases);
+	}
+
+	// SuccessCase 승인상태 업데이트
+	// postman 사용법 : PUT으로 요청 route : http://localhost:8080/api/v1/success-case/approval/{caseId}
+	@PutMapping("/approval/{caseId}")
+	public ResponseEntity<Short> updateSuccessCaseApproval(@PathVariable Integer caseId,
+		@RequestParam Short status) {
+		Short updatedStatus = successCaseService.updateSuccessCaseApproval(caseId, status);
+		return ResponseEntity.ok(updatedStatus);
 	}
 }
