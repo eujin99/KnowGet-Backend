@@ -1,5 +1,8 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.knowget.knowgetbackend.global.common.BaseTime;
 
 import jakarta.persistence.Column;
@@ -30,6 +33,7 @@ public class Answer extends BaseTime {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "counseling_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Counseling counseling;
 
 	@ManyToOne(fetch = FetchType.EAGER)
