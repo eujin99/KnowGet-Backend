@@ -57,8 +57,8 @@ public class User {
 		this.prefJob = prefJob;
 	}
 
-	public void updateIsActive() {
-		this.isActive = false;
+	public void updateIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }
