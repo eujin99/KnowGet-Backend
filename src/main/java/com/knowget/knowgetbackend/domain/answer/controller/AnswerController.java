@@ -14,6 +14,7 @@ import com.knowget.knowgetbackend.domain.answer.dto.AnswerModfiyDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
 import com.knowget.knowgetbackend.domain.answer.service.AnswerService;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -44,11 +45,11 @@ public class AnswerController {
 	 * @author 근엽
 	 */
 	@PostMapping("/")
-	public ResponseEntity<String> saveAnswer(@RequestBody AnswerRequestDTO answerRequestDTO) {
+	public ResponseEntity<ResultMessageDTO> saveAnswer(@RequestBody AnswerRequestDTO answerRequestDTO) {
 
-		String answer = answerService.saveAnswer(answerRequestDTO);
+		String message = answerService.saveAnswer(answerRequestDTO);
 
-		return new ResponseEntity<>(answer, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 	/** 답변 수정
@@ -59,10 +60,11 @@ public class AnswerController {
 	 * @author 근엽
 	 */
 	@PatchMapping("/{id}")
-	public ResponseEntity<String> updateAnswer(@PathVariable Integer id, @RequestBody AnswerModfiyDTO answerModfiyDTO) {
-		String updateAnswer = answerService.updateAnswer(id, answerModfiyDTO);
+	public ResponseEntity<ResultMessageDTO> updateAnswer(@PathVariable Integer id,
+		@RequestBody AnswerModfiyDTO answerModfiyDTO) {
+		String message = answerService.updateAnswer(id, answerModfiyDTO);
 
-		return new ResponseEntity<>(updateAnswer, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 	/** 답변 삭제
@@ -72,10 +74,10 @@ public class AnswerController {
 	 * @author 근엽
 	 */
 	@DeleteMapping("/{id}")
-	public ResponseEntity<String> deleteAnswer(@PathVariable Integer id) {
-		String deleteAnswer = answerService.deleteAnswer(id);
+	public ResponseEntity<ResultMessageDTO> deleteAnswer(@PathVariable Integer id) {
+		String message = answerService.deleteAnswer(id);
 
-		return new ResponseEntity<>(deleteAnswer, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 }

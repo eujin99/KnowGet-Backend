@@ -52,6 +52,10 @@ public class AnswerServiceImpl implements AnswerService {
 	public String saveAnswer(AnswerRequestDTO answerRequestDTO) {
 		Counseling counseling = counselingRepository.findById(answerRequestDTO.getCounselingId()).orElseThrow(
 			() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
+		if (counseling.getIsAnswered()) {
+			throw new IllegalArgumentException("[ERROR]이미 답변이 존재합니다.");
+		}
+
 		counseling.updateIsAnswered(true);
 
 		// String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
