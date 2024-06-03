@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingRequestDTO;
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
 import com.knowget.knowgetbackend.domain.counseling.service.CounselingService;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -56,10 +57,10 @@ public class CounselingController {
 	 * @author 근엽
 	 */
 	@PostMapping("/")
-	public ResponseEntity<String> saveCounseling(
+	public ResponseEntity<ResultMessageDTO> saveCounseling(
 		@RequestBody CounselingRequestDTO counselingRequestDTO) {
-		String couseling = counselingService.saveCounseling(counselingRequestDTO);
+		String message = counselingService.saveCounseling(counselingRequestDTO);
 
-		return new ResponseEntity<>(couseling, HttpStatus.OK);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 }
