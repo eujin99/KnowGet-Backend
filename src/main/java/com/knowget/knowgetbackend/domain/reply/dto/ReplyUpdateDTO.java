@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReplyRequestDTO {
+public class ReplyUpdateDTO {
 
 	private Integer commentId;
+	private Integer replyId;
 	private String username;
 	@NotNull
 	private String content;

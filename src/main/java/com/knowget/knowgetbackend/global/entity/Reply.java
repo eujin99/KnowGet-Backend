@@ -1,5 +1,8 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.knowget.knowgetbackend.global.common.BaseTime;
 
 import jakarta.persistence.Column;
@@ -29,6 +32,7 @@ public class Reply extends BaseTime {
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "comment_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Comment comment;
 
 	@ManyToOne(fetch = FetchType.EAGER)

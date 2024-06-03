@@ -9,9 +9,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CommentUpdateDTO {
+
 	private Integer caseId;
 	private Integer commentId;
 	private String username;
 	@NotNull
 	private String content;
+	
 }

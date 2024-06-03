@@ -10,8 +10,10 @@ import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundExcept
 import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.domain.reply.exception.ReplyNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -22,43 +24,48 @@ public class GlobalExceptionHandler {
 	}
 
 	@ExceptionHandler(IllegalArgumentException.class)
-	public ResponseEntity<String> handleIllegalArgumentException(IllegalArgumentException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ResultMessageDTO> handleIllegalArgumentException(IllegalArgumentException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(UserNotFoundException.class)
-	public ResponseEntity<String> handleUserNotFoundException(UserNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ResultMessageDTO> handleUserNotFoundException(UserNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(InvalidPasswordException.class)
-	public ResponseEntity<String> handleInvalidPasswordException(InvalidPasswordException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
+	public ResponseEntity<ResultMessageDTO> handleInvalidPasswordException(InvalidPasswordException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 
 	@ExceptionHandler(SuccessCaseNotFoundException.class)
-	public ResponseEntity<String> handleSuccessCaseNotFoundException(SuccessCaseNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ResultMessageDTO> handleSuccessCaseNotFoundException(SuccessCaseNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(CommentNotFoundException.class)
-	public ResponseEntity<String> handleCommentNotFoundException(CommentNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ResultMessageDTO> handleCommentNotFoundException(CommentNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 	@ExceptionHandler(AnswerNotFoundException.class)
-	public ResponseEntity<String> handleAnswerNotFoundException(AnswerNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	public ResponseEntity<ResultMessageDTO> handleAnswerNotFoundException(AnswerNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(CounselingNotFoundException.class)
-	public ResponseEntity<String> handleCounselingNotFoundException(CounselingNotFoundException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.NOT_FOUND);
+	public ResponseEntity<ResultMessageDTO> handleCounselingNotFoundException(CounselingNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
 	}
 
 	@ExceptionHandler(RequestFailedException.class)
-	public ResponseEntity<String> handleRequestFailedException(RequestFailedException e) {
-		return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
+	public ResponseEntity<ResultMessageDTO> handleRequestFailedException(RequestFailedException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ReplyNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleReplyNotFoundException(ReplyNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
 }

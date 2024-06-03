@@ -9,9 +9,9 @@ import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
 
 public interface CommentService {
 
-	String saveComment(CommentRequestDTO commentRequestDto);
-
 	List<CommentResponseDTO> findComments(Integer caseId);
+
+	String saveComment(CommentRequestDTO commentRequestDto);
 
 	String updateComment(CommentUpdateDTO commentUpdateDTO);
 
