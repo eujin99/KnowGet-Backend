@@ -1,5 +1,7 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -34,10 +36,19 @@ public class Bookmark {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
+	@Column(name = "is_bookmarked", nullable = false)
+	@ColumnDefault("true")
+	private Boolean isBookmarked;
+
 	@Builder
 	public Bookmark(Post post, User user) {
 		this.post = post;
 		this.user = user;
+		this.isBookmarked = true;
+	}
+
+	public void updateBookmark() {
+		this.isBookmarked = !this.isBookmarked;
 	}
 
 }

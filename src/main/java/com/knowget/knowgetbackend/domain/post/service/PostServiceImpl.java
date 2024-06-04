@@ -2,7 +2,7 @@ package com.knowget.knowgetbackend.domain.post.service;
 
 import org.springframework.stereotype.Service;
 
-import com.knowget.knowgetbackend.domain.post.repository.PostServiceRepository;
+import com.knowget.knowgetbackend.domain.post.repository.PostRepository;
 
 import lombok.RequiredArgsConstructor;
 
@@ -10,6 +10,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
-	PostServiceRepository postServiceRepository;
+	PostRepository postRepository;
 
 }

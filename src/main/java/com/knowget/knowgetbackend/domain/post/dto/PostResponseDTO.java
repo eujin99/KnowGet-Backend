@@ -9,4 +9,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class PostResponseDTO {
 
+	private String title;
+
 }
