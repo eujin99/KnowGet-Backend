@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.service.SuccessCaseService;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import lombok.RequiredArgsConstructor;
 
@@ -68,12 +69,12 @@ public class SuccessCaseController {
 		return ResponseEntity.ok(successCases);
 	}
 
-	// SuccessCase 승인상태 업데이트
+	// SuccessCase 승인상태 업데이트 (관리자 입장에서 승인)
 	// postman 사용법 : PUT으로 요청 route : http://localhost:8080/api/v1/success-case/approval/{caseId}
 	@PutMapping("/approval/{caseId}")
-	public ResponseEntity<Short> updateSuccessCaseApproval(@PathVariable Integer caseId,
+	public ResponseEntity<ResultMessageDTO> updateSuccessCaseApproval(@PathVariable Integer caseId,
 		@RequestParam Short status) {
-		Short updatedStatus = successCaseService.updateSuccessCaseApproval(caseId, status);
-		return ResponseEntity.ok(updatedStatus);
+		String updatedStatus = successCaseService.updateSuccessCaseApproval(caseId, status);
+		return ResponseEntity.ok(new ResultMessageDTO(updatedStatus));
 	}
 }

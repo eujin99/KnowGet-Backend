@@ -21,24 +21,25 @@ public class Post {
 	@Column(name = "post_id")
 	private String postId;
 
-	@Column(name = "code", nullable = false)
-	private String code;
+	@Column(name = "title", nullable = false)
+	private String title;
 
 	@Column(name = "location", nullable = false)
 	private String location;
 
-	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
-	private String content;
+	@Column(name = "code", nullable = false)
+	private String code;
 
-	@Column(name = "reg_date")
+	@Column(name = "reg_date", nullable = false)
 	private LocalDate regDate;
 
 	@Builder
-	public Post(String postId, String code, String location, String content) {
+	public Post(String postId, String title, String location, String code, LocalDate regDate) {
 		this.postId = postId;
-		this.code = code;
+		this.title = title;
 		this.location = location;
-		this.content = content;
+		this.code = code;
+		this.regDate = regDate;
 	}
 
 }

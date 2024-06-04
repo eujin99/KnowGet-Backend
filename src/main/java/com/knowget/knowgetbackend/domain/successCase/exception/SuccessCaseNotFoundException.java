@@ -1,4 +1,4 @@
-package com.knowget.knowgetbackend.domain.comment.exception;
+package com.knowget.knowgetbackend.domain.successCase.exception;
 
 public class SuccessCaseNotFoundException extends RuntimeException {
 

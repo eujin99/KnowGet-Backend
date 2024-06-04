@@ -7,10 +7,11 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
-import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.jobGuide.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.domain.post.exception.PostNotFoundException;
 import com.knowget.knowgetbackend.domain.reply.exception.ReplyNotFoundException;
+import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
@@ -65,6 +66,11 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(ReplyNotFoundException.class)
 	public ResponseEntity<ResultMessageDTO> handleReplyNotFoundException(ReplyNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(PostNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handlePostNotFoundException(PostNotFoundException e) {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
