@@ -1,19 +1,22 @@
 package com.knowget.knowgetbackend.domain.successCase.service;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -36,9 +39,14 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	@Override
 	@Transactional(readOnly = true)
 	public SuccessCaseResponseDTO getSuccessCase(Integer caseId) {
-		Optional<SuccessCase> successCase = successCaseRepository.findById(caseId);
-		return successCase.map(SuccessCaseResponseDTO::new).orElse(null);
-		//caseId에 해당하는 successCase를 반환!
+		SuccessCase successCase;
+		try {
+			successCase = successCaseRepository.findById(caseId)
+				.orElseThrow(() -> new SuccessCaseNotFoundException(+caseId + "번 게시글을 찾을 수 없습니다."));
+		} catch (Exception e) {
+			throw new SuccessCaseNotFoundException(e.getMessage());
+		}
+		return new SuccessCaseResponseDTO(successCase);
 	}
 
 	/**
@@ -61,6 +69,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	 *
 	 * @param successCaseRequestDTO username : 사용자 ID, title : 게시글 제목, content : 게시글 내용
 	 * @return SuccessCaseResponseDTO
+	 * @throws UserNotFoundException 존재하지 않는 게시글일 경우
 	 * @author MJ
 	 */
 
@@ -68,17 +77,21 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	@Override
 	@Transactional
 	public SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO) {
+		// 사용자 조회 및 예외 처리
 		User user = userRepository.findByUsername(successCaseRequestDTO.getUsername())
-			.orElse(null);
+			.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 
+		// SuccessCase 생성
 		SuccessCase successCase = SuccessCase.builder()
-			.user(user)
 			.title(successCaseRequestDTO.getTitle())
 			.content(successCaseRequestDTO.getContent())
+			.user(user)
 			.build();
 
-		//SuccessCase에 저장
+		// SuccessCase 저장
 		successCaseRepository.save(successCase);
+
+		// 응답 DTO 생성 및 반환
 		return new SuccessCaseResponseDTO(successCase);
 	}
 
@@ -94,15 +107,16 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	// 4. SuccessCase 삭제
 	@Override
 	@Transactional
-	public String deleteSuccessCase(Integer caseId) {
+	public ResultMessageDTO deleteSuccessCase(Integer caseId) {
 		// 존재하는지 확인
-		if (!successCaseRepository.existsById(caseId)) {
-			throw new ResourceNotFoundException("등록된" + caseId + "번 성공사례가 없습니다.");
+		try {
+			SuccessCase successCase = successCaseRepository.findById(caseId)
+				.orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 게시글입니다."));
+			successCaseRepository.deleteById(caseId);
+			return new ResultMessageDTO("해당 글이 삭제 되었습니다");
+		} catch (Exception e) {
+			throw new RequestFailedException("삭제에 실패했습니다 : " + e.getMessage());
 		}
-
-		// 삭제
-		successCaseRepository.deleteById(caseId);
-		return "해당 글이 삭제 되었습니다";
 	}
 
 	/**
