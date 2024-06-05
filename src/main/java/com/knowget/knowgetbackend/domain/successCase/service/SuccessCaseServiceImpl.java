@@ -3,6 +3,7 @@ package com.knowget.knowgetbackend.domain.successCase.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -73,26 +74,58 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	 * @author MJ
 	 */
 
-	// 3. SuccessCase 생성 - save
+	// 3. SuccessCase 생성 - save(try-catch ver.)
+	// @Override
+	// @Transactional
+	// public SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO) {
+	// 	try {
+	// 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+	//
+	// 		// 사용자 조회 및 예외 처리
+	// 		User user = userRepository.findByUsername(successCaseRequestDTO.getUsername())
+	// 			.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+	//
+	// 		// SuccessCase 생성
+	// 		SuccessCase successCase = SuccessCase.builder()
+	// 			.title(successCaseRequestDTO.getTitle())
+	// 			.content(successCaseRequestDTO.getContent())
+	// 			.user(user)
+	// 			.build();
+	//
+	// 		// SuccessCase 저장
+	// 		successCaseRepository.save(successCase);
+	//
+	// 		// 응답 DTO 생성 및 반환
+	// 		return new SuccessCaseResponseDTO(successCase);
+	// 	} catch (Exception e) {
+	// 		throw new UserNotFoundException(e.getMessage());
+	// 	}
+	// }
 	@Override
 	@Transactional
-	public SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO) {
-		// 사용자 조회 및 예외 처리
-		User user = userRepository.findByUsername(successCaseRequestDTO.getUsername())
-			.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+	public ResultMessageDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO) {
+		try {
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
-		// SuccessCase 생성
-		SuccessCase successCase = SuccessCase.builder()
-			.title(successCaseRequestDTO.getTitle())
-			.content(successCaseRequestDTO.getContent())
-			.user(user)
-			.build();
+			// 사용자 조회 및 예외 처리
+			User user = userRepository.findByUsername(successCaseRequestDTO.getUsername())
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 
-		// SuccessCase 저장
-		successCaseRepository.save(successCase);
+			// SuccessCase 생성
+			SuccessCase successCase = SuccessCase.builder()
+				.title(successCaseRequestDTO.getTitle())
+				.content(successCaseRequestDTO.getContent())
+				.user(user)
+				.build();
 
-		// 응답 DTO 생성 및 반환
-		return new SuccessCaseResponseDTO(successCase);
+			// SuccessCase 저장
+			successCaseRepository.save(successCase);
+
+			// 응답 DTO 생성 및 반환
+			return new ResultMessageDTO("SuccessCase가 성공적으로 생성되었습니다.");
+		} catch (Exception e) {
+			throw new UserNotFoundException(e.getMessage());
+		}
 	}
 
 	/**
@@ -132,6 +165,9 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	@Transactional(readOnly = true)
 	public List<SuccessCaseResponseDTO> searchSuccessCase(String keyword) {
 		List<SuccessCase> successCases = successCaseRepository.findByTitleContaining(keyword);
+		if (successCases.isEmpty()) {
+			throw new ResourceNotFoundException("해당 검색어와 일치하는 제목 게시글이 없습니다");
+		}
 		return successCases.stream().map(SuccessCaseResponseDTO::new).collect(Collectors.toList());
 	}
 

@@ -45,11 +45,10 @@ public class SuccessCaseController {
 
 	// 3. SuccessCase 생성
 	// postman 사용법 : username / title / content 입력 후 post로 요청 : http://localhost:8080/api/v1/success-case
-	// 성공 시 200 OK 반환
 	@PostMapping
-	public ResponseEntity<SuccessCaseResponseDTO> createSuccessCase(
+	public ResponseEntity<ResultMessageDTO> createSuccessCase(
 		@RequestBody SuccessCaseRequestDTO successCaseRequestDTO) {
-		SuccessCaseResponseDTO successCase = successCaseService.createSuccessCase(successCaseRequestDTO);
+		ResultMessageDTO successCase = successCaseService.createSuccessCase(successCaseRequestDTO);
 		return ResponseEntity.ok(successCase);
 	}
 

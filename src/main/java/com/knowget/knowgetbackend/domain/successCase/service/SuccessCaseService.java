@@ -15,7 +15,7 @@ public interface SuccessCaseService {
 	List<SuccessCaseResponseDTO> getAllSuccessCases();
 
 	// 3. SuccessCase 생성
-	SuccessCaseResponseDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO);
+	ResultMessageDTO createSuccessCase(SuccessCaseRequestDTO successCaseRequestDTO);
 
 	// 4. SuccessCase 삭제
 	ResultMessageDTO deleteSuccessCase(Integer caseId);
