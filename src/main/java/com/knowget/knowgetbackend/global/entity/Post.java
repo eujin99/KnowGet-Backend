@@ -30,6 +30,9 @@ public class Post {
 	@Column(name = "title", nullable = false)
 	private String title;
 
+	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
+	private String content;
+
 	@Column(name = "location", nullable = false)
 	private String location;
 
@@ -40,9 +43,10 @@ public class Post {
 	private LocalDate regDate;
 
 	@Builder
-	public Post(String regNum, String title, String location, String code, LocalDate regDate) {
+	public Post(String regNum, String title, String content, String location, String code, LocalDate regDate) {
 		this.regNum = regNum;
 		this.title = title;
+		this.content = content;
 		this.location = location;
 		this.code = code;
 		this.regDate = regDate;
