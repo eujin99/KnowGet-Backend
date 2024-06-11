@@ -32,14 +32,14 @@ public class PostRequestDTO {
 	private String weekWorkHr; // 주당 근무 시간
 	private String joFeinsrSbscrbNm; // 4대 보험
 	private String rceptClosNm; // 접수 마감일
-	private String rceptMthIemNm; // 접수 방법 아이템 이름
+	private String rceptMthIemNm; // 전형 장소
 	private String modelMthNm; // 전형 방법
-	private String rceptMthNm; // 접수 방법 이름
-	private String presentnPapersNm; // 제출 서류 이름
+	private String rceptMthNm; // 접수 방법
+	private String presentnPapersNm; // 제출 서류
 	private String mngrNm; // 담당자 이름
 	private String mngrPhonNo; // 담당자 전화번호
 	private String mngrInsttNm; // 담당자 소속기관 이름
-	private String bassAdresCn; // 회사 주소
+	private String bassAdresCn; // 기업 주소
 	private String joSj; // 구인 제목
 	private String joRegDt; // 등록일
 	private String guiLn; // 모집 요강
