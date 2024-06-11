@@ -7,5 +7,4 @@ import com.knowget.knowgetbackend.global.entity.Post;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
-
 }

@@ -7,12 +7,11 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.knowget.knowgetbackend.domain.comment.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.exception.ResourceNotFoundException;
-import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
+import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
