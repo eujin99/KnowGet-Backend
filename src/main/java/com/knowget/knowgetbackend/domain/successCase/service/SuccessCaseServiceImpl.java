@@ -10,6 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
+import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
