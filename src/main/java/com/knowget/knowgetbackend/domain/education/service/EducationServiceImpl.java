@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import com.knowget.knowgetbackend.global.entity.Education;
+import com.knowget.knowgetbackend.domain.education.dto.EducationResponseDTO;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 @Service
@@ -31,15 +31,15 @@ public class EducationServiceImpl implements EducationService {
 
 	// 1. 모든 교육강의 가져오기
 	@Override
-	public List<Education> getAllEducations() {
-		String url = baseUrl + "/1/1000"; // 1000번째까지 가져오기
+	public List<EducationResponseDTO> getAllEducations() {
+		String url = baseUrl + "/1/100"; // 1000번째까지 가져오기
 		return getEducationsFromApi(url);
 	}
 
 	// 2. 교육강의 검색하기
 	@Override
-	public List<Education> searchEducations(String keyword) {
-		List<Education> result = getAllEducations().stream() // 모든 교육강의 stream으로
+	public List<EducationResponseDTO> searchEducations(String keyword) {
+		List<EducationResponseDTO> result = getAllEducations().stream() // 모든 교육강의 stream으로
 			.filter(education -> education.getCourseNm().contains(keyword)) // education의 courseNm에 keyword가 포함되어있는지.
 			// education data -> stream화 --> filtering --> list화
 			.toList();
@@ -54,7 +54,7 @@ public class EducationServiceImpl implements EducationService {
 
 	// 3. 모집중인 교육강의 가져오기
 	@Override
-	public List<Education> getRecruitingEducations() {
+	public List<EducationResponseDTO> getRecruitingEducations() {
 		LocalDate today = LocalDate.now();
 		// openAPI - courseRequestStrDt, courseRequestEndDt가 'yyyyMMdd' or 'yyyyMMddHHmm' 형식으로 되어있음
 		DateTimeFormatter formatter1 = DateTimeFormatter.ofPattern("yyyyMMdd"); // 'yyyyMMdd' 형식 - type 1
@@ -83,7 +83,7 @@ public class EducationServiceImpl implements EducationService {
 
 	// OpenAPI로부터 교육강의 데이터를 가져오는 메소드
 	// 사용 이유: OpenAPI로부터 데이터를 가져오는 과정이 중복되기 때문에 메소드로 분리
-	private List<Education> getEducationsFromApi(String url) {
+	private List<EducationResponseDTO> getEducationsFromApi(String url) {
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
 		if (response.getStatusCode() == HttpStatus.OK) {
@@ -95,10 +95,10 @@ public class EducationServiceImpl implements EducationService {
 					JSONArray jsonArray = offlineCourse.getJSONArray(
 						"row");
 
-					List<Education> educations = new ArrayList<>();
+					List<EducationResponseDTO> educations = new ArrayList<>();
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONObject educationJson = jsonArray.getJSONObject(i);
-						Education education = new Education(
+						EducationResponseDTO education = new EducationResponseDTO(
 							educationJson.getString("COURSE_NM"),
 							educationJson.getString("COURSE_REQUEST_STR_DT"),
 							educationJson.getString("COURSE_REQUEST_END_DT"),
