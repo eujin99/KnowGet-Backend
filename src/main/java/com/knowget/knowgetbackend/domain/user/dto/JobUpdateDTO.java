@@ -1,4 +1,4 @@
-package com.knowget.knowgetbackend.domain.post.dto;
+package com.knowget.knowgetbackend.domain.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,8 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostRequestDTO {
+public class JobUpdateDTO {
 
-	private String title;
+	private Short job;
+	private String username;
 
 }

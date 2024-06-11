@@ -24,6 +24,6 @@ public interface SuccessCaseService {
 	List<SuccessCaseResponseDTO> searchSuccessCase(String keyword);
 
 	// 6. SuccessCase 승인상태 업데이트
-	Short updateSuccessCaseApproval(Integer caseId, Short status);
-
+	String updateSuccessCaseApproval(Integer caseId, Short status);
+  
 }

@@ -12,16 +12,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CounselingResponseDTO {
+
 	private Integer counselingId;
-
 	private String user;
-
 	private String category;
-
 	private String content;
-
 	private Boolean isAnswered;
-
 	private LocalDateTime sentDate;
 
 	public CounselingResponseDTO(Counseling counseling) {

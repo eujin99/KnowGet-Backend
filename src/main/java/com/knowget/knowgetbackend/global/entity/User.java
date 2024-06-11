@@ -49,6 +49,10 @@ public class User {
 		this.isActive = true;
 	}
 
+	public void updatePassword(String newPassword) {
+		this.password = newPassword;
+	}
+
 	public void updatePrefLocation(String prefLocation) {
 		this.prefLocation = prefLocation;
 	}
@@ -57,8 +61,8 @@ public class User {
 		this.prefJob = prefJob;
 	}
 
-	public void updateIsActive() {
-		this.isActive = false;
+	public void updateIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

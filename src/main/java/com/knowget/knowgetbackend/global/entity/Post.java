@@ -4,6 +4,8 @@ import java.time.LocalDate;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -19,26 +21,35 @@ public class Post {
 
 	@Id
 	@Column(name = "post_id")
-	private String postId;
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer postId;
 
-	@Column(name = "code", nullable = false)
-	private String code;
+	@Column(name = "reg_num", nullable = false)
+	private String regNum;
 
-	@Column(name = "location", nullable = false)
-	private String location;
+	@Column(name = "title", nullable = false)
+	private String title;
 
 	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
 
-	@Column(name = "reg_date")
+	@Column(name = "location", nullable = false)
+	private String location;
+
+	@Column(name = "code", nullable = false)
+	private String code;
+
+	@Column(name = "reg_date", nullable = false)
 	private LocalDate regDate;
 
 	@Builder
-	public Post(String postId, String code, String location, String content) {
-		this.postId = postId;
-		this.code = code;
-		this.location = location;
+	public Post(String regNum, String title, String content, String location, String code, LocalDate regDate) {
+		this.regNum = regNum;
+		this.title = title;
 		this.content = content;
+		this.location = location;
+		this.code = code;
+		this.regDate = regDate;
 	}
 
 }

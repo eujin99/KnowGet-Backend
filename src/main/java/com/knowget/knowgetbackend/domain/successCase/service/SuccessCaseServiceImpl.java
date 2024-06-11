@@ -12,6 +12,7 @@ import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.exception.ResourceNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
+import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
@@ -182,9 +183,17 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	// 6. SuccessCase 승인상태 업데이트
 	@Override
 	@Transactional
-	public Short updateSuccessCaseApproval(Integer caseId, Short status) {
-		successCaseRepository.updateApprovalStatus(caseId, status);
-		return status;
+	public String updateSuccessCaseApproval(Integer caseId, Short status) {
+		String result = switch (status) {
+			case 1 -> "승인되었습니다";
+			case 2 -> "거절되었습니다";
+			default -> "승인 대기 상태로 변경되었습니다";
+		};
+		SuccessCase successCase = successCaseRepository.findById(caseId)
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 해당 게시글이 존재하지 않습니다"));
+		successCase.updateIsApproved(status);
+		// successCaseRepository.updateApprovalStatus(caseId, status);
+		return caseId + "번 취업 성공사례 게시가 " + result;
 	}
 
 }

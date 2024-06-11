@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.knowget.knowgetbackend.global.entity.Post;
 
 @Repository
-public interface PostServiceRepository extends JpaRepository<Post, Integer> {
-	
+public interface PostRepository extends JpaRepository<Post, Integer> {
+
 }

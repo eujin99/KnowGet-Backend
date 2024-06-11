@@ -25,7 +25,8 @@ public class CounselingServiceImpl implements CounselingService {
 	private final CounselingRepository counselingRepository;
 	private final UserRepository userRepository;
 
-	/** 최신 순으로 상담 목록 조회
+	/**
+	 * 최신 순으로 상담 목록 조회 (관리자 입장에서 모든 상담 조회)
 	 *
 	 * @return List<CounselingResponseDTO> 상담 목록
 	 * @author 근엽
@@ -39,12 +40,13 @@ public class CounselingServiceImpl implements CounselingService {
 			.collect(Collectors.toList());
 	}
 
-	/** 상담 상세 조회
+	/**
+	 * 상담 상세 조회
 	 *
 	 * @param id
 	 * @return CounselingResponseDTO 상담 내용
-	 * @author 근엽
 	 * @throws CounselingNotFoundException
+	 * @author 근엽
 	 */
 	@Override
 	@Transactional(readOnly = true)
@@ -55,12 +57,13 @@ public class CounselingServiceImpl implements CounselingService {
 		return new CounselingResponseDTO(counseling);
 	}
 
-	/** 상담 작성
+	/**
+	 * 상담 작성
 	 *
 	 * @param counselingRequestDTO
 	 * @return String 작성 완료 메시지
-	 * @author 근엽
 	 * @throws UserNotFoundException
+	 * @author 근엽
 	 */
 	@Override
 	public String saveCounseling(CounselingRequestDTO counselingRequestDTO) {
