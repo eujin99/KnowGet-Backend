@@ -22,4 +22,11 @@ public interface PostService {
 	 * @author 윾진
 	 */
 	List<PostResponseDTO> getAllPosts();
+
+	// 근무지로 필터링된 게시글 반환
+	List<PostResponseDTO> getPostsByLocation(String gu);
+
+	// 모집 직종 코드로 필터링된 게시글 반환
+	List<PostResponseDTO> getPostsByJobCode(String code);
+
 }

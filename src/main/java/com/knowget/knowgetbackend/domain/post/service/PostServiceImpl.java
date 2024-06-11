@@ -45,6 +45,20 @@ public class PostServiceImpl implements PostService {
 			.collect(Collectors.toList());
 	}
 
+	@Override
+	public List<PostResponseDTO> getPostsByLocation(String gu) {
+		return postRepository.findByWorkPararBassAdresCnContaining(gu).stream()
+			.map(this::convertToDTO)
+			.collect(Collectors.toList());
+	}
+
+	@Override
+	public List<PostResponseDTO> getPostsByJobCode(String code) {
+		return postRepository.findByRcritJssfcCmmnCodeSe(code).stream()
+			.map(this::convertToDTO)
+			.collect(Collectors.toList());
+	}
+
 	/**
 	 * 요청 DTO를 엔티티로 변환.
 	 * @param dto 변환할 요청 DTO.
