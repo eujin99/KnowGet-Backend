@@ -76,5 +76,4 @@ public class SuccessCaseController {
 		String updateResult = successCaseService.updateSuccessCaseApproval(caseId, status);
 		return ResponseEntity.ok(new ResultMessageDTO(updateResult));
 	}
-  
 }

@@ -29,12 +29,28 @@ public class EducationServiceImpl implements EducationService {
 		this.restTemplate = restTemplateBuilder.build();
 	}
 
+	/**
+	 * 1. 모든 교육강의 가져오기
+	 *
+	 * @param None
+	 * @return List<EducationResponseDTO> 모든 교육강의 리스트
+	 * @author MJ
+	 */
 	// 1. 모든 교육강의 가져오기
 	@Override
 	public List<EducationResponseDTO> getAllEducations() {
 		String url = baseUrl + "/1/100"; // 1000번째까지 가져오기
 		return getEducationsFromApi(url);
 	}
+
+	/**
+	 * 2. 교육강의 검색하기
+	 *
+	 * @param keyword 검색 키워드
+	 * @return List<EducationResponseDTO> 검색 결과 리스트
+	 * @throws RequestFailedException 검색 결과가 없을 때
+	 * @author MJ
+	 */
 
 	// 2. 교육강의 검색하기
 	@Override
@@ -51,6 +67,15 @@ public class EducationServiceImpl implements EducationService {
 
 		return result;
 	}
+
+	/**
+	 * 3. 모집중인 교육강의 가져오기
+	 *
+	 * @param None
+	 * @return List<EducationResponseDTO> 모집중인 교육강의 리스트
+	 * @throws DateTimeParseException 날짜 형식 오류
+	 * @author MJ
+	 */
 
 	// 3. 모집중인 교육강의 가져오기
 	@Override
@@ -80,6 +105,14 @@ public class EducationServiceImpl implements EducationService {
 			})
 			.collect(Collectors.toList()); // stream to List
 	}
+
+	/**
+	 *
+	 * @param String url
+	 * @return List<EducationResponseDTO> 교육강의 리스트
+	 * @throws RuntimeException OpenAPI 데이터 가져오기 실패
+	 * @author MJ
+	 */
 
 	// OpenAPI로부터 교육강의 데이터를 가져오는 메소드
 	// 사용 이유: OpenAPI로부터 데이터를 가져오는 과정이 중복되기 때문에 메소드로 분리
