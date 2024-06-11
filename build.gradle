@@ -45,6 +45,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
     //swagger 추가
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.2.0'
+    //json 추가
+    implementation 'org.json:json:20231013'
 }
 
 tasks.named('test') {
