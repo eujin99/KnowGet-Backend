@@ -45,7 +45,7 @@ public class AdminServiceImpl implements AdminService {
 	public String updateIsActive(Integer id, Boolean isActive) {
 		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("[ERROR] 존재하지 않는 사용자입니다."));
 		user.updateIsActive(isActive);
-		if (isActive == false) {
+		if (!isActive) {
 			return "회원이 비활성화되었습니다.";
 		}
 		return "회원이 활성화되었습니다.";

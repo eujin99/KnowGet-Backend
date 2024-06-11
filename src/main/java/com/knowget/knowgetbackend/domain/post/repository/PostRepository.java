@@ -18,4 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	// 모집 직종 코드로 게시글 검색
 	List<Post> findByRcritJssfcCmmnCodeSe(String code);
+
+	Boolean existsByJoRegistNo(String joRegistNo);
+
 }

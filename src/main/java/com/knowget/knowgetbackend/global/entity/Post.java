@@ -25,11 +25,11 @@ public class Post {
 	private Integer postId;
 
 	@JsonProperty("JO_REQST_NO")
-	@Column(name = "jo_reqst_no")
+	@Column(name = "jo_reqst_no", unique = true, nullable = false)
 	private String joReqstNo;
 
 	@JsonProperty("JO_REGIST_NO")
-	@Column(name = "jo_regist_no")
+	@Column(name = "jo_regist_no", unique = true, nullable = false)
 	private String joRegistNo;
 
 	@JsonProperty("CMPNY_NM")

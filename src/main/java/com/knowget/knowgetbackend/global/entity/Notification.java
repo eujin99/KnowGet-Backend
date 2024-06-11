@@ -33,6 +33,10 @@ public class Notification extends SentTime {
 	@JoinColumn(name = "user_id", nullable = false)
 	private User user;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "post_id", nullable = false)
+	private Post post;
+
 	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
 
@@ -41,8 +45,9 @@ public class Notification extends SentTime {
 	private Boolean isRead;
 
 	@Builder
-	public Notification(User user, String content) {
+	public Notification(User user, Post post, String content) {
 		this.user = user;
+		this.post = post;
 		this.content = content;
 		this.isRead = false;
 	}

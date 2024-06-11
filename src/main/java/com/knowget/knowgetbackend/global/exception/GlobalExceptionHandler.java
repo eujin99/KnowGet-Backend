@@ -65,4 +65,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
 	}
 
+	@ExceptionHandler(NotificationNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleNotificationNotFoundException(NotificationNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
 }
