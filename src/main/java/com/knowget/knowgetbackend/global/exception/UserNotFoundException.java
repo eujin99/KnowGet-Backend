@@ -1,7 +1,9 @@
-package com.knowget.knowgetbackend.domain.successCase.exception;
+package com.knowget.knowgetbackend.global.exception;
 
 public class UserNotFoundException extends RuntimeException {
+
 	public UserNotFoundException(String message) {
 		super(message);
 	}
+
 }

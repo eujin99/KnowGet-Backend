@@ -9,11 +9,11 @@ import org.springframework.transaction.annotation.Transactional;
 import com.knowget.knowgetbackend.domain.user.SignInResponse;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignInDTO;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignUpDTO;
-import com.knowget.knowgetbackend.domain.user.exception.InvalidPasswordException;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.config.security.TokenProvider;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.InvalidPasswordException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

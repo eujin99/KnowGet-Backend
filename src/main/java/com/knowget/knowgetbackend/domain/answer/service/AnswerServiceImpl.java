@@ -7,13 +7,13 @@ import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerModfiyDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
-import com.knowget.knowgetbackend.domain.answer.exception.AnswerNotFoundException;
 import com.knowget.knowgetbackend.domain.answer.repository.AnswerRepository;
-import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
 import com.knowget.knowgetbackend.global.entity.Admin;
 import com.knowget.knowgetbackend.global.entity.Answer;
 import com.knowget.knowgetbackend.global.entity.Counseling;
+import com.knowget.knowgetbackend.global.exception.AnswerNotFoundException;
+import com.knowget.knowgetbackend.global.exception.CounselingNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -25,12 +25,13 @@ public class AnswerServiceImpl implements AnswerService {
 	private final AdminRepository adminRepository;
 	private final CounselingRepository counselingRepository;
 
-	/** 답변 상세 조회
+	/**
+	 * 답변 상세 조회
 	 *
 	 * @param id
 	 * @return AnswerResponseDTO 답변 내용
-	 * @author 근엽
 	 * @throws AnswerNotFoundException
+	 * @author 근엽
 	 */
 	@Transactional(readOnly = true)
 	@Override
@@ -40,12 +41,13 @@ public class AnswerServiceImpl implements AnswerService {
 		return new AnswerResponseDTO(ans);
 	}
 
-	/** 답변 작성
+	/**
+	 * 답변 작성
 	 *
 	 * @param answerRequestDTO
 	 * @return String 작성 완료 메시지
-	 * @author 근엽
 	 * @throws CounselingNotFoundException
+	 * @author 근엽
 	 */
 	@Transactional
 	@Override
@@ -73,13 +75,14 @@ public class AnswerServiceImpl implements AnswerService {
 
 	}
 
-	/** 답변 수정
+	/**
+	 * 답변 수정
 	 *
 	 * @param id
 	 * @param answerModfiyDTO
 	 * @return String 수정 완료 메시지
-	 * @author 근엽
 	 * @throws AnswerNotFoundException
+	 * @author 근엽
 	 */
 	@Transactional
 	@Override
@@ -92,12 +95,13 @@ public class AnswerServiceImpl implements AnswerService {
 
 	}
 
-	/** 답변 삭제
+	/**
+	 * 답변 삭제
 	 *
 	 * @param id
 	 * @return String 삭제 완료 메시지
-	 * @author 근엽
 	 * @throws AnswerNotFoundException
+	 * @author 근엽
 	 */
 	@Transactional
 	@Override

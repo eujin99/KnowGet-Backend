@@ -6,8 +6,4 @@ public class RequestFailedException extends RuntimeException {
 		super(message);
 	}
 
-	public RequestFailedException(String message, Throwable cause) {
-		super(message, cause);
-	}
-
 }

@@ -10,16 +10,16 @@ import com.knowget.knowgetbackend.domain.comment.dto.CommentDeleteDTO;
 import com.knowget.knowgetbackend.domain.comment.dto.CommentRequestDTO;
 import com.knowget.knowgetbackend.domain.comment.dto.CommentResponseDTO;
 import com.knowget.knowgetbackend.domain.comment.dto.CommentUpdateDTO;
-import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.repository.CommentRepository;
-import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Comment;
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
+import com.knowget.knowgetbackend.global.exception.SuccessCaseNotFoundException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

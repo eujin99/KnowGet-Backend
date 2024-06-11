@@ -6,20 +6,20 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.knowget.knowgetbackend.domain.comment.exception.CommentNotFoundException;
 import com.knowget.knowgetbackend.domain.comment.repository.CommentRepository;
 import com.knowget.knowgetbackend.domain.reply.dto.ReplyDeleteDTO;
 import com.knowget.knowgetbackend.domain.reply.dto.ReplyRequestDTO;
 import com.knowget.knowgetbackend.domain.reply.dto.ReplyResponseDTO;
 import com.knowget.knowgetbackend.domain.reply.dto.ReplyUpdateDTO;
-import com.knowget.knowgetbackend.domain.reply.exception.ReplyNotFoundException;
 import com.knowget.knowgetbackend.domain.reply.repository.ReplyRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Comment;
 import com.knowget.knowgetbackend.global.entity.Reply;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.CommentNotFoundException;
+import com.knowget.knowgetbackend.global.exception.ReplyNotFoundException;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

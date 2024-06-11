@@ -15,12 +15,12 @@ import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Counseling;
 import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

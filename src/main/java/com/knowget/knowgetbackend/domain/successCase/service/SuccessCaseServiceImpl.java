@@ -9,16 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseRequestDTO;
 import com.knowget.knowgetbackend.domain.successCase.dto.SuccessCaseResponseDTO;
-import com.knowget.knowgetbackend.domain.successCase.exception.SuccessCaseNotFoundException;
-import com.knowget.knowgetbackend.domain.successCase.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 import com.knowget.knowgetbackend.global.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.global.exception.SuccessCaseNotFoundException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,14 +40,13 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	@Override
 	@Transactional(readOnly = true)
 	public SuccessCaseResponseDTO getSuccessCase(Integer caseId) {
-		SuccessCase successCase;
 		try {
-			successCase = successCaseRepository.findById(caseId)
-				.orElseThrow(() -> new SuccessCaseNotFoundException(+caseId + "번 게시글을 찾을 수 없습니다."));
+			SuccessCase successCase = successCaseRepository.findById(caseId)
+				.orElseThrow(() -> new SuccessCaseNotFoundException(caseId + "번 게시글을 찾을 수 없습니다"));
+			return new SuccessCaseResponseDTO(successCase);
 		} catch (Exception e) {
-			throw new SuccessCaseNotFoundException(e.getMessage());
+			throw new RequestFailedException("[Error] : " + e.getMessage());
 		}
-		return new SuccessCaseResponseDTO(successCase);
 	}
 
 	/**
@@ -64,7 +62,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	public List<SuccessCaseResponseDTO> getAllSuccessCases() {
 		List<SuccessCase> successCases = successCaseRepository.findAll();
 		if (successCases.isEmpty()) {
-			throw new ResourceNotFoundException("등록된 게시글이 없습니다.");
+			throw new ResourceNotFoundException("[Error] : 등록된 게시글이 없습니다");
 		}
 		return successCases.stream().map(SuccessCaseResponseDTO::new).toList();
 	}
@@ -100,9 +98,9 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 			successCaseRepository.save(successCase);
 
 			// 응답 DTO 생성 및 반환
-			return new ResultMessageDTO("SuccessCase가 성공적으로 생성되었습니다.");
+			return new ResultMessageDTO("SuccessCase가 성공적으로 생성되었습니다");
 		} catch (Exception e) {
-			throw new UserNotFoundException(e.getMessage());
+			throw new RequestFailedException("[Error] : " + e.getMessage());
 		}
 	}
 
@@ -122,11 +120,11 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 		// 존재하는지 확인
 		try {
 			SuccessCase successCase = successCaseRepository.findById(caseId)
-				.orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 게시글입니다."));
+				.orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 게시글입니다"));
 			successCaseRepository.deleteById(caseId);
 			return new ResultMessageDTO("해당 글이 삭제 되었습니다");
 		} catch (Exception e) {
-			throw new RequestFailedException("삭제에 실패했습니다 : " + e.getMessage());
+			throw new RequestFailedException("[Error] 삭제에 실패했습니다 : " + e.getMessage());
 		}
 	}
 
@@ -144,7 +142,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	public List<SuccessCaseResponseDTO> searchSuccessCase(String keyword) {
 		List<SuccessCase> successCases = successCaseRepository.findByTitleContaining(keyword);
 		if (successCases.isEmpty()) {
-			throw new ResourceNotFoundException("해당 검색어와 일치하는 제목 게시글이 없습니다");
+			throw new ResourceNotFoundException("[Error] : 해당 검색어와 일치하는 제목 게시글이 없습니다");
 		}
 		return successCases.stream().map(SuccessCaseResponseDTO::new).collect(Collectors.toList());
 	}
@@ -167,7 +165,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 			default -> "승인 대기 상태로 변경되었습니다";
 		};
 		SuccessCase successCase = successCaseRepository.findById(caseId)
-			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 해당 게시글이 존재하지 않습니다"));
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] : 해당 게시글이 존재하지 않습니다"));
 		successCase.updateIsApproved(status);
 		// successCaseRepository.updateApprovalStatus(caseId, status);
 		return caseId + "번 취업 성공사례 게시가 " + result;

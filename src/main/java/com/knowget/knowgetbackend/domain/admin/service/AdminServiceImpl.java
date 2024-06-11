@@ -8,9 +8,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.admin.dto.AdminResponseDTO;
 import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,7 +21,8 @@ public class AdminServiceImpl implements AdminService {
 	private final AdminRepository adminRepository;
 	private final UserRepository userRepository;
 
-	/** 회원 목록 조회
+	/**
+	 * 회원 목록 조회
 	 *
 	 * @return List<AdminResponseDTO>
 	 */
@@ -32,7 +33,8 @@ public class AdminServiceImpl implements AdminService {
 		return userRepository.findAll().stream().map(AdminResponseDTO::new).collect(Collectors.toList());
 	}
 
-	/** 회원 상태 변경
+	/**
+	 * 회원 상태 변경
 	 *
 	 * @param id
 	 * @param isActive

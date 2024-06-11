@@ -5,14 +5,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.bookmark.dto.BookmarkRequestDTO;
 import com.knowget.knowgetbackend.domain.bookmark.repository.BookmarkRepository;
-import com.knowget.knowgetbackend.domain.post.exception.PostNotFoundException;
 import com.knowget.knowgetbackend.domain.post.repository.PostRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Bookmark;
 import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.PostNotFoundException;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

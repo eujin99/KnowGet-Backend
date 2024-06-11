@@ -9,12 +9,12 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingRequestDTO;
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
-import com.knowget.knowgetbackend.domain.counseling.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
-import com.knowget.knowgetbackend.domain.user.exception.UserNotFoundException;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Counseling;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.CounselingNotFoundException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 

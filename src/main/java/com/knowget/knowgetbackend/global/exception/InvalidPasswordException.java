@@ -1,4 +1,4 @@
-package com.knowget.knowgetbackend.domain.user.exception;
+package com.knowget.knowgetbackend.global.exception;
 
 public class InvalidPasswordException extends RuntimeException {
 
