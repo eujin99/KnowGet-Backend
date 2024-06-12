@@ -35,6 +35,63 @@
 == <br/>
 
 <details>
+<summary>성공 사례</summary>
+
+<br/>
+
+  - 성공 사례 작성 - 성공
+  <img width="843" alt="성공 사례 작성" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/3991d91d-bdf5-48ae-af5f-7768f4083268">
+  - 성공 사례 작성 - 실패
+  <img width="843" alt="성공 사례 작성" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/f759314e-19e3-4446-9ccc-1e1c99ae9298">
+
+  - 성공 사례 전체 목록 조회 - 성공
+  <img width="843" alt="성공 사례 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/0c888cbd-de78-402b-ab7b-6ede711ed701">
+  - 성공 사례 전체 목록 조회 - 실패
+  <img width="843" alt="성공 사례 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/36ad0a44-9647-4bcd-929b-69d2bf4c2fb7">
+
+  - 성공 사례 특정 게시글 조회 - 성공
+  <img width="843" alt="성공 사례 특정 게시글 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/99efbd1f-d805-4b2c-bf6b-ebbab77fcd5b">
+  - 성공 사례 특정 게시글 조회 - 실패
+  <img width="843" alt="성공 사례 특정 게시글 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/4d2f9229-01b8-4e7a-a808-aa24537605da">
+
+  - 성공 사례 삭제 - 성공
+  <img width="843" alt="성공 사례 삭제" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/154d37fc-ab3b-4023-bee2-2f0a7ba4df07">
+  - 성공 사례 삭제 - 실패
+  <img width="843" alt="성공 사례 삭제" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/90472d1a-1ed6-4065-86d5-967551e15e44">
+
+  - 성공 사례 키워드로 검색 - 성공
+  <img width="843" alt="성공 사례 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/f860d879-86e1-48d5-86df-6fd800c9d942">
+  - 성공 사례 키워드로 검색 - 실패
+  <img width="843" alt="성공 사례 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/8f6c15a0-cda4-44d6-bfd1-380f78b1082b">
+
+  - 성공 사례 승인상태 업데이트 - 성공
+  <img width="843" alt="성공 사례 승인상태 업데이트" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/ddc83a05-4bd3-4045-9756-aef4243c4e2b">
+  - 성공 사례 승인상태 업데이트 - 실패
+  <img width="843" alt="성공 사례 승인상태 업데이트" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/93b52ce0-a928-4b49-93ed-3dddfcd809fe">
+
+== <br/>
+
+<details>
+<summary>교육</summary>
+
+<br/>
+
+  - 교육 강의 전체 목록 조회 - 성공
+  <img width="843" alt="교육 강의 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/0ee252a3-d49b-404a-9fd8-ed1b805edf3d)
+">
+
+  - 교육 강의 키워드로 검색 - 성공
+  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/a6128e8e-ed61-497c-ae10-7829c4ccaafa)
+">
+  - 교육 강의 키워드로 검색 - 실패
+  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/510fa238-7798-4b9d-b226-e42461ad8fd4)
+">
+
+  - 모집중인 교육 강의 조회 - 성공
+  <img width="843" alt="모집중인 교육 강의 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/c22032fc-3242-45f0-aa52-6db4101b6213">
+
+
+<details>
 <summary>상담하기</summary>
 
 <br/>
