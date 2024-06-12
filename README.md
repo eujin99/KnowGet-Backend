@@ -1,4 +1,4 @@
-# be05-fin-5team-Chicken-KnowGet
+<img width="1366" alt="특정 댓글에 달린 답글 삭제 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/e75d6de2-ce74-4d17-b950-2da57ec30f7c"># be05-fin-5team-Chicken-KnowGet
 ![waving](https://capsule-render.vercel.app/api?type=waving&width=100%&height=300&text=Chicken%20팀의%20KnowGet%20프로젝트&fontAlign=50&fontAlignY=40&color=gradient&fontSize=40)
 
 
@@ -47,37 +47,6 @@
 ---
 
 ### 단위 테스트
-
-<details>
-
-<summary>관리자 페이지</summary>
-
-<br/>
-
-- 회원 목록 조회
-<img width="843" alt="회원 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/c6ee4577-c33b-43ed-bc0a-e592a8cf58e4">
-
-<br/>
-
-- 회원 활성화
-<img width="843" alt="회원 활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/d124cdea-a00c-4a06-a2e2-fb2066fb63c2">
-
-<br/>
-
-- 회원 비활성화 
-<img width="843" alt="회원 비활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
-
-<br/>
-
-- 회원 활성화 에러
-<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/66d09cdd-4649-4540-8cf5-8149da6020d6">
-
-<br/>
-
-- 회원 비활성화 에러
-<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/874880ca-3a31-43cc-9f39-a192aa6a9bcf">
-
-</details>
 
 
 <details>
@@ -177,68 +146,162 @@
 
 <details>
   
-<summary>취업 성공 사례</summary>
+<summary>취업 성공사례</summary>
 
 <br/>
 
-  - 성공 사례 작성 - 성공
+  - 취업 성공 사례작성 - 성공
   <img width="843" alt="성공 사례 작성" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/3991d91d-bdf5-48ae-af5f-7768f4083268">
   
   <br/>
 
-  - 성공 사례 작성 - 실패
+  - 취업 성공 사례작성 - 실패
   <img width="843" alt="성공 사례 작성" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/f759314e-19e3-4446-9ccc-1e1c99ae9298">
   
   <br/>
 
-  - 성공 사례 전체 목록 조회 - 성공
+  - 취업 성공사례 전체 목록 조회 - 성공
   <img width="843" alt="성공 사례 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/0c888cbd-de78-402b-ab7b-6ede711ed701">
   
   <br/>
 
-  - 성공 사례 전체 목록 조회 - 실패
+  - 취업 성공사례 전체 목록 조회 - 실패
   <img width="843" alt="성공 사례 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/36ad0a44-9647-4bcd-929b-69d2bf4c2fb7">
   
   <br/>
 
-  - 성공 사례 특정 게시글 조회 - 성공
+  - 취업 성공사례 특정 게시글 조회 - 성공
   <img width="843" alt="성공 사례 특정 게시글 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/99efbd1f-d805-4b2c-bf6b-ebbab77fcd5b">
   
   <br/>
 
-  - 성공 사례 특정 게시글 조회 - 실패
+  - 취업 성공사례 특정 게시글 조회 - 실패
   <img width="843" alt="성공 사례 특정 게시글 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/4d2f9229-01b8-4e7a-a808-aa24537605da">
   
   <br/>
 
-  - 성공 사례 삭제 - 성공
+  - 취업 성공사례 삭제 - 성공
   <img width="843" alt="성공 사례 삭제" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/154d37fc-ab3b-4023-bee2-2f0a7ba4df07">
   
   <br/>
 
-  - 성공 사례 삭제 - 실패
+  - 취업 성공사례 삭제 - 실패
   <img width="843" alt="성공 사례 삭제" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/90472d1a-1ed6-4065-86d5-967551e15e44">
 
   <br/>
 
-  - 성공 사례 키워드로 검색 - 성공
+  - 취업 성공사례 키워드로 검색 - 성공
   <img width="843" alt="성공 사례 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/f860d879-86e1-48d5-86df-6fd800c9d942">
   
   <br/>
 
-  - 성공 사례 키워드로 검색 - 실패
+  - 취업 성공사례 키워드로 검색 - 실패
   <img width="843" alt="성공 사례 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/8f6c15a0-cda4-44d6-bfd1-380f78b1082b">
 
   <br/>
 
-  - 성공 사례 승인상태 업데이트 - 성공
-  <img width="843" alt="성공 사례 승인상태 업데이트" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/ddc83a05-4bd3-4045-9756-aef4243c4e2b">
+  - 취업 성공사례 승인상태 업데이트 - 성공
+  <img width="843" alt="성공 사례 승인상태 업데이트 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/51a7fbf7-bd1f-44b5-b982-6bd53c75c961">
+
+  <br/>
+
+  - 취업 성공사례 승인상태 업데이트 - 실패
+  <img width="843" alt="성공 사례 승인상태 업데이트 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/8cd6ff43-444a-45f1-acaf-8c514cb619b3">
+
+</details>
+
+
+<details>
+
+  <summary>취업 성공사례 댓글</summary>
   
   <br/>
 
-  - 성공 사례 승인상태 업데이트 - 실패
-  <img width="843" alt="성공 사례 승인상태 업데이트" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/93b52ce0-a928-4b49-93ed-3dddfcd809fe">
+  - 취업 성공사례 게시글에 대한 댓글 작성 - 성공
+  <img width="843" alt="취업 성공사례 게시글에 대한 댓글 작성 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/bf82e9e3-3c29-4be7-98b7-14d5eeb740cf">
+  
+  <br/>
 
+  - 취업 성공사례 게시글에 대한 댓글 작성 - 실패
+  <img width="843" alt="취업 성공사례 게시글에 대한 댓글 작성 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/1f0e0895-f380-459b-94aa-e55ce5c10296">
+
+  <br/>
+
+  - 특정 성공 사례 게시글에 달린 모든 댓글 조회 - 성공
+  <img width="843" alt="특정 성공 사례 게시글에 달린 모든 댓글 조회 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/aea7c846-6a1a-42fb-a64e-0d02c721a845">
+
+  <br/>
+
+  - 특정 성공 사례 게시글에 달린 모든 댓글 조회 - 실패
+  <img width="843" alt="특정 성공 사례 게시글에 달린 모든 댓글 조회 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/09863236-0324-41ca-9abb-d2336222b27f">
+
+  <br/>
+
+  - 특정 취업 성공사례 게시글에 달린 댓글 수정 - 성공
+  <img width="843" alt="특정 취업 성공사례 게시글에 달린 댓글 수정 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/f6bb2d2f-ff98-45ae-b4f8-8dabf15c56f8">
+
+  <br/>
+
+  - 특정 취업 성공사례 게시글에 달린 댓글 수정 - 실패
+  <img width="843" alt="특정 취업 성공사례 게시글에 달린 댓글 수정 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/470c9085-21dd-421c-a280-2103406e5599">
+
+  <br/>
+
+  - 특정 취업 성공사례 게시글에 달린 댓글 삭제 - 성공
+  <img width="843" alt="특정 취업 성공사례 게시글에 달린 댓글 삭제 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/19fd8802-3ab4-4d67-a299-dc0e38a12743">
+
+  <br/>
+
+  - 특정 취업 성공사례 게시글에 달린 댓글 삭제 - 실패
+  <img width="843" alt="특정 취업 성공사례 게시글에 달린 댓글 삭제 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/26eaaed8-127c-4b85-a189-e3ef5d85025a">
+  
+</details>
+
+
+<details>
+
+  <summary>취업 성공사례 댓글에 대한 답글</summary>
+
+  <br/>
+
+  - 특정 댓글에 답글 작성 - 성공
+  <img width="843" alt="특정 댓글에 답글 작성 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/12a1600f-b6ae-4d72-8f3c-c448492e2a0a">
+
+  <br/>
+
+  - 특정 댓글에 답글 작성 - 실패
+  <img width="843" alt="특정 댓글에 답글 작성 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/960ca4b9-8020-4a4e-af45-d38f8e86e66e">
+
+  <br/>
+
+  - 특정 댓글에 달린 모든 답글 조회 - 성공
+  <img width="843" alt="특정 댓글에 달린 모든 답글 조회 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/6a732998-4ac5-43dc-932f-8e7ad35817fc">
+
+  <br/>
+
+  - 특정 댓글에 달린 모든 답글 조회 - 실패
+  <img width="843" alt="특정 댓글에 달린 모든 답글 조회 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/405e9654-5d9f-4c41-9316-7065972ee69c">
+
+  <br/>
+
+  -  특정 댓글에 달린 답글 수정 - 성공
+  <img width="843" alt=" 특정 댓글에 달린 답글 수정 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/bca2fed1-0159-4f9b-aeeb-f666d9de6f3b">
+
+  <br/>
+
+  -  특정 댓글에 달린 답글 수정 - 실패
+  <img width="843" alt=" 특정 댓글에 달린 답글 수정 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/54edeabb-897f-4105-a6f9-812bbc793878">
+
+  <br/>
+
+  -  특정 댓글에 달린 답글 삭제 - 성공
+  <img width="843" alt="특정 댓글에 달린 답글 삭제 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/2bf47004-adb1-47fc-b6a4-aa271873da49">
+
+  <br/>
+
+  -  특정 댓글에 달린 답글 삭제 - 실패
+  <img width="843" alt="특정 댓글에 달린 답글 삭제 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/becc819c-a976-41e0-96ea-dbb3ab296460">
+  
 </details>
 
 
@@ -313,5 +376,37 @@
 
 - 상담 답변 삭제 에러
 <img width="843" alt="상담 답변 삭제 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/bfa2fccf-1efd-41c8-b607-b60ce6bc61ed">
+
+</details>
+
+
+<details>
+
+<summary>관리자 페이지</summary>
+
+<br/>
+
+- 회원 목록 조회
+<img width="843" alt="회원 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/c6ee4577-c33b-43ed-bc0a-e592a8cf58e4">
+
+<br/>
+
+- 회원 활성화
+<img width="843" alt="회원 활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/d124cdea-a00c-4a06-a2e2-fb2066fb63c2">
+
+<br/>
+
+- 회원 비활성화 
+<img width="843" alt="회원 비활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
+
+<br/>
+
+- 회원 활성화 에러
+<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/66d09cdd-4649-4540-8cf5-8149da6020d6">
+
+<br/>
+
+- 회원 비활성화 에러
+<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/874880ca-3a31-43cc-9f39-a192aa6a9bcf">
 
 </details>
