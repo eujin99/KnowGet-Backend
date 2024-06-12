@@ -1,4 +1,4 @@
-<img width="1366" alt="특정 댓글에 달린 답글 삭제 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/e75d6de2-ce74-4d17-b950-2da57ec30f7c"># be05-fin-5team-Chicken-KnowGet
+# be05-fin-5team-Chicken-KnowGet
 ![waving](https://capsule-render.vercel.app/api?type=waving&width=100%&height=300&text=Chicken%20팀의%20KnowGet%20프로젝트&fontAlign=50&fontAlignY=40&color=gradient&fontSize=40)
 
 
