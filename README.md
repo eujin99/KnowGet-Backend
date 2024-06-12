@@ -37,8 +37,7 @@
 [API 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2024008045#gid=2024008045)
 
 6. [ERD] <br>
-![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/b12c11c7-9154-4e31-926e-ea55d1710cc4)
-
+![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0f4da61e-7d73-4ab0-af08-00733cbdc77c)
 
 7. [시스템 아키텍쳐] <br>
 ![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/06a82f4b-a2c2-4f92-a83a-dc5f146bbf22)
