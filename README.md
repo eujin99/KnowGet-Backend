@@ -31,3 +31,37 @@
 ![image](https://github.com/beyond-sw-camp/be05-fin-5team-Chicken-KnowGet/assets/155924495/75e885d9-2675-49a1-813b-4dddf82fa15d)
 
 
+== <br/>
+
+<details>
+<summary>상담하기</summary>
+  상담 작성
+  <img width="843" alt="상담 작성" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/75cd41af-b579-4e4c-a32a-d447ddd23e36">
+
+<br/>
+
+상담 작성 에러
+<img width="843" alt="상담 작성 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/a4ef1c7e-8044-45e2-ae50-4e6663009620">
+
+<br/>
+
+상담 목록 조회
+<img width="843" alt="상담 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/aae01db6-277c-4ca2-a01c-3ea4187862a9">
+
+
+<br/>
+
+상담 상세 조회
+<img width="843" alt="상담 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/18d4a1b3-80bb-4fc1-8f40-fc137eba2ece">
+
+<br/>
+
+상담 상세 조회 에러
+<img width="843" alt="상담 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/3955c806-6a98-4a80-b510-ad95155ad494">
+
+
+</details>
+
+
+
+
