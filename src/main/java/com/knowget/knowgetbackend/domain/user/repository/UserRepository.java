@@ -19,6 +19,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 	@Query("SELECT u FROM User u WHERE u.username = :username")
 	Optional<User> findByUsername(@Param("username") String username);
 
-	List<User> findByPrefLocationOrPrefJob(String prefLocation, Short prefJob);
+	List<User> findByPrefLocationOrPrefJob(String prefLocation, String prefJob);
 
 }

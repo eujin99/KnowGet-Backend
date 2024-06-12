@@ -33,15 +33,15 @@ public class User {
 	@Column(name = "pref_location", nullable = false)
 	private String prefLocation;
 
-	@Column(name = "pref_job", nullable = false, columnDefinition = "TINYINT(1)")
-	private Short prefJob;
+	@Column(name = "pref_job", nullable = false)
+	private String prefJob;
 
 	@Column(name = "is_active", nullable = false)
 	@ColumnDefault("true")
 	private Boolean isActive;
 
 	@Builder
-	public User(String username, String password, String prefLocation, Short prefJob) {
+	public User(String username, String password, String prefLocation, String prefJob) {
 		this.username = username;
 		this.password = password;
 		this.prefLocation = prefLocation;
@@ -57,7 +57,7 @@ public class User {
 		this.prefLocation = prefLocation;
 	}
 
-	public void updatePrefJob(Short prefJob) {
+	public void updatePrefJob(String prefJob) {
 		this.prefJob = prefJob;
 	}
 

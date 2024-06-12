@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JobUpdateDTO {
 
-	private Short job;
+	private String job;
 	private String username;
 
 }
