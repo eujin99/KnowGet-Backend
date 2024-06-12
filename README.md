@@ -101,6 +101,16 @@
   - 일자리 공고 필터링 - 직종코드
   <img width="843" alt="취업 가이드 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/878275bd-555e-4518-b940-1ffbc3d37f8f">
 
+  <br/>
+
+  - 북마크 상태 변경 - 성공
+  <img width="843" alt="북마크 상태 변경 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/96bf3c51-284f-4e52-9633-ea6dca3c8e0a">
+
+  <br/>
+
+  - 북마크 상태 변경 - 실패
+  <img width="843" alt="북마크 상태 변경 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/4961f5ea-5166-4178-b98e-a70866278e09">
+
 </details>
 
 
