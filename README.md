@@ -1,5 +1,5 @@
 # be05-fin-5team-Chicken-KnowGet
-![waving](https://capsule-render.vercel.app/api?type=waving&width=max-content&height=300&text=Chicken%20팀의%20KnowGet%20프로젝트&fontAlign=50&fontAlignY=40&color=gradient&fontSize=40)
+![waving](https://capsule-render.vercel.app/api?type=waving&width=100%&height=300&text=Chicken%20팀의%20KnowGet%20프로젝트&fontAlign=50&fontAlignY=40&color=gradient&fontSize=40)
 
 
 
