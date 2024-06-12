@@ -49,7 +49,135 @@
 ### 단위 테스트
 
 <details>
-<summary>성공 사례</summary>
+
+<summary>관리자 페이지</summary>
+
+<br/>
+
+- 회원 목록 조회
+<img width="843" alt="회원 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/c6ee4577-c33b-43ed-bc0a-e592a8cf58e4">
+
+<br/>
+
+- 회원 활성화
+<img width="843" alt="회원 활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/d124cdea-a00c-4a06-a2e2-fb2066fb63c2">
+
+<br/>
+
+- 회원 비활성화 
+<img width="843" alt="회원 비활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
+
+<br/>
+
+- 회원 활성화 에러
+<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/66d09cdd-4649-4540-8cf5-8149da6020d6">
+
+<br/>
+
+- 회원 비활성화 에러
+<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/874880ca-3a31-43cc-9f39-a192aa6a9bcf">
+
+</details>
+
+
+<details>
+
+<summary>일자리 공고</summary>
+
+<br/>
+
+- 일자리 공고 목록 조회
+<img width="843" alt="취업 가이드 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/6a4d0b64-1696-4f30-89e0-09782451070c">
+
+<br/>
+
+- 일자리 공고 필터링 - 지역명
+<img width="843" alt="취업 가이드 상세 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/09e1e247-be48-4ea5-8462-e0e7878c155e">
+
+<br/>
+
+- 일자리 공고 필터링 - 직종코드
+<img width="843" alt="취업 가이드 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/878275bd-555e-4518-b940-1ffbc3d37f8f">
+
+<br/>
+
+</details>
+
+
+<details>
+<summary>교육</summary>
+
+  - 교육 강의 전체 목록 조회 - 성공
+  <img width="843" alt="교육 강의 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/0ee252a3-d49b-404a-9fd8-ed1b805edf3d">
+
+  <br/>
+
+  - 교육 강의 키워드로 검색 - 성공
+  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/a6128e8e-ed61-497c-ae10-7829c4ccaafa">
+
+  <br/>
+  
+  - 교육 강의 키워드로 검색 - 실패
+  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/510fa238-7798-4b9d-b226-e42461ad8fd4">
+
+  <br/>
+
+  - 모집중인 교육 강의 조회 - 성공
+  <img width="843" alt="모집중인 교육 강의 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/c22032fc-3242-45f0-aa52-6db4101b6213">
+
+</details>
+
+
+<details>
+
+<summary>취업 가이드</summary>
+
+<br/>
+
+- 취업 가이드 목록 조회
+<img width="843" alt="취업 가이드 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/98a04b46-ea98-4ad9-96d8-464921cde5d8">
+
+<br/>
+
+- 취업 가이드 상세 조회
+<img width="843" alt="취업 가이드 상세 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/02ef6926-da38-462b-b106-f33a31fe55df">
+
+<br/>
+
+- 취업 가이드 상세 조회 예외 처리
+<img width="843" alt="취업 가이드 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/d556c78b-6c43-4d0d-87a2-ad27d280cecd">
+
+<br/>
+
+- 취업 가이드 게시글 등록
+<img width="843" alt="취업 가이드 게시글 등록" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
+
+<br/>
+
+- 취업 가이드 수정
+<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/cc3f5b5c-ea09-436d-888e-326a00d150bc">
+
+<br/>
+
+- 취업 가이드 수정 예외 처리
+<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/6e8f492f-42a1-4489-a331-8c30a69a42a8">
+
+- 취업 가이드 삭제
+<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/a2e6255c-0e90-493b-93bb-63686837a615">
+
+<br/>
+
+- 취업 가이드 삭제 예외 처리
+<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/dabb76b0-e44e-4561-970a-30df77105d00">
+
+<br/>
+
+</details>
+
+
+<details>
+  
+<summary>취업 성공 사례</summary>
 
 <br/>
 
@@ -111,34 +239,11 @@
   - 성공 사례 승인상태 업데이트 - 실패
   <img width="843" alt="성공 사례 승인상태 업데이트" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/93b52ce0-a928-4b49-93ed-3dddfcd809fe">
 
-
 </details>
 
+
 <details>
-<summary>교육</summary>
-
-
-  - 교육 강의 전체 목록 조회 - 성공
-  <img width="843" alt="교육 강의 전체 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/0ee252a3-d49b-404a-9fd8-ed1b805edf3d">
-
-  <br/>
-
-  - 교육 강의 키워드로 검색 - 성공
-  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/a6128e8e-ed61-497c-ae10-7829c4ccaafa">
-
-  <br/>
   
-  - 교육 강의 키워드로 검색 - 실패
-  <img width="843" alt="교육 강의 키워드로 검색" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/510fa238-7798-4b9d-b226-e42461ad8fd4">
-
-  <br/>
-
-  - 모집중인 교육 강의 조회 - 성공
-  <img width="843" alt="모집중인 교육 강의 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155809042/c22032fc-3242-45f0-aa52-6db4101b6213">
-
-</details>
-
-<details>
 <summary>상담하기</summary>
 
 <br/>
@@ -168,7 +273,6 @@
 <img width="843" alt="상담 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/3955c806-6a98-4a80-b510-ad95155ad494">
 
 </details>
-  
 
 
 <details>
@@ -209,112 +313,5 @@
 
 - 상담 답변 삭제 에러
 <img width="843" alt="상담 답변 삭제 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/bfa2fccf-1efd-41c8-b607-b60ce6bc61ed">
-
-
-</details>
-
-
-<details>
-
-<summary>관리자 페이지</summary>
-
-<br/>
-
-- 회원 목록 조회
-<img width="843" alt="회원 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/c6ee4577-c33b-43ed-bc0a-e592a8cf58e4">
-
-<br/>
-
-- 회원 활성화
-<img width="843" alt="회원 활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/d124cdea-a00c-4a06-a2e2-fb2066fb63c2">
-
-<br/>
-
-- 회원 비활성화 
-<img width="843" alt="회원 비활성화" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
-
-<br/>
-
-- 회원 활성화 에러
-<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/66d09cdd-4649-4540-8cf5-8149da6020d6">
-
-<br/>
-
-- 회원 비활성화 에러
-<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/874880ca-3a31-43cc-9f39-a192aa6a9bcf">
-
-
-</details>
-
-
-
-<details>
-
-<summary>취업 가이드</summary>
-
-<br/>
-
-- 취업 가이드 목록 조회
-<img width="843" alt="취업 가이드 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/98a04b46-ea98-4ad9-96d8-464921cde5d8">
-
-<br/>
-
-- 취업 가이드 상세 조회
-<img width="843" alt="취업 가이드 상세 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/02ef6926-da38-462b-b106-f33a31fe55df">
-
-<br/>
-
-- 취업 가이드 상세 조회 예외 처리
-<img width="843" alt="취업 가이드 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/d556c78b-6c43-4d0d-87a2-ad27d280cecd">
-
-<br/>
-
-- 취업 가이드 게시글 등록
-<img width="843" alt="취업 가이드 게시글 등록" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/62838d9e-0b64-4ebd-9691-2e3efe51945f">
-
-<br/>
-
-- 취업 가이드 수정
-<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/cc3f5b5c-ea09-436d-888e-326a00d150bc">
-
-<br/>
-
-- 취업 가이드 수정 예외 처리
-<img width="843" alt=" 회원 비활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/6e8f492f-42a1-4489-a331-8c30a69a42a8">
-
-- 취업 가이드 삭제
-<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/a2e6255c-0e90-493b-93bb-63686837a615">
-
-<br/>
-
-- 취업 가이드 삭제 예외 처리
-<img width="843" alt="회원 활성화 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/dabb76b0-e44e-4561-970a-30df77105d00">
-
-<br/>
-
-
-</details>
-
-
-<details>
-
-<summary>일자리 공고</summary>
-
-<br/>
-
-- 일자리 공고 목록 조회
-<img width="843" alt="취업 가이드 목록 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/6a4d0b64-1696-4f30-89e0-09782451070c">
-
-<br/>
-
-- 일자리 공고 필터링 - 지역명
-<img width="843" alt="취업 가이드 상세 조회" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/09e1e247-be48-4ea5-8462-e0e7878c155e">
-
-<br/>
-
-- 일자리 공고 필터링 - 직종코드
-<img width="843" alt="취업 가이드 상세 조회 에러" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/155924495/878275bd-555e-4518-b940-1ffbc3d37f8f">
-
-<br/>
 
 </details>
