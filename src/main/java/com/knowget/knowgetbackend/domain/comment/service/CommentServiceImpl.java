@@ -44,7 +44,7 @@ public class CommentServiceImpl implements CommentService {
 	@Transactional(readOnly = true)
 	public List<CommentResponseDTO> findComments(Integer caseId) {
 		successCaseRepository.findById(caseId)
-			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 존재하지 않는 게시글입니다"));
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] 댓글을 불러오는데에 실패했습니다 : 존재하지 않는 게시글입니다"));
 		List<Comment> comments = commentRepository.findBySuccessCaseIdOrderByCreatedDateAsc(caseId);
 		return comments.stream().map(CommentResponseDTO::new).collect(Collectors.toList());
 	}
