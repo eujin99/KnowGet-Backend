@@ -14,7 +14,7 @@ public class PostResponseDTO {
 	private String bsnsSumryCn; // 사업 요약 내용
 	private String rcritJssfcCmmnCodeSe; // 모집 직종 코드
 	private String jobcodeNm; // 모집 직종 이름
-	private Double rcritNmprCo; // 모집 인원 수
+	private Integer rcritNmprCo; // 모집 인원 수
 	private String acdmcrCmmnCodeSe; // 학력 코드
 	private String acdmcrNm; // 학력 이름
 	private String emplymStleCmmnCodeSe; // 고용 형태 코드
@@ -43,4 +43,6 @@ public class PostResponseDTO {
 	private String joSj; // 구인 제목
 	private String joRegDt; // 등록일
 	private String guiLn; // 모집 요강
+	private String gu; // 근무지 구
+	private String jobCode; // 변환된 직종 코드
 }
