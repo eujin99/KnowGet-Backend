@@ -70,9 +70,9 @@ public class SuccessCaseController {
 
 	// 6. SuccessCase 승인상태 업데이트
 	// postman 사용법 : Patch으로 요청 route : http://localhost:8080/api/v1/success-case/approval/{caseId}
-	@PatchMapping("/approval/{caseId}")
+	@PatchMapping("/approval/{caseId}/{status}")
 	public ResponseEntity<ResultMessageDTO> updateSuccessCaseApproval(@PathVariable Integer caseId,
-		@RequestParam Short status) {
+		@PathVariable Short status) {
 		String updateResult = successCaseService.updateSuccessCaseApproval(caseId, status);
 		return ResponseEntity.ok(new ResultMessageDTO(updateResult));
 	}
