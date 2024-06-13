@@ -20,11 +20,19 @@ public class BookmarkController {
 
 	private final BookmarkService bookmarkService;
 
-	@PostMapping("/{postId}")
-	public ResponseEntity<ResultMessageDTO> bookmark(@PathVariable("postId") Integer postId) {
+	/**
+	 * 북마크 상태 변경
+	 *
+	 * @param joRegistNo 구인공고 등록번호
+	 * @return 북마크 상태 변경 결과 메시지
+	 * @apiNote 북마크 상태 변경 결과 메시지 예시: 북마크 상태가 변경되었습니다 : [북마크=true]
+	 * @author Jihwan
+	 */
+	@PostMapping("/{joRegistNo}")
+	public ResponseEntity<ResultMessageDTO> bookmark(@PathVariable("joRegistNo") String joRegistNo) {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		BookmarkRequestDTO bookmarkRequestDTO = BookmarkRequestDTO.builder()
-			.postId(postId)
+			.joRegistNo(joRegistNo)
 			.username(username)
 			.build();
 		String message = bookmarkService.bookmark(bookmarkRequestDTO);
