@@ -62,7 +62,7 @@ public class NotificationController {
 	 * @author Jihwan
 	 */
 	@PostMapping("/read/{notificationId}")
-	public ResponseEntity<Void> markAsRead(@PathVariable Integer notificationId) {
+	public ResponseEntity<Void> markAsRead(@PathVariable Long notificationId) {
 		notificationService.markAsRead(notificationId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
@@ -77,7 +77,7 @@ public class NotificationController {
 	 * @author Jihwan
 	 */
 	@DeleteMapping("/{notificationId}")
-	public ResponseEntity<Void> deleteNotification(@PathVariable Integer notificationId) {
+	public ResponseEntity<Void> deleteNotification(@PathVariable Long notificationId) {
 		notificationService.deleteNotification(notificationId);
 		return new ResponseEntity<>(HttpStatus.OK);
 	}

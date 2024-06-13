@@ -10,7 +10,7 @@ import com.knowget.knowgetbackend.global.entity.Notification;
 import com.knowget.knowgetbackend.global.entity.User;
 
 @Repository
-public interface NotificationRepository extends JpaRepository<Notification, Integer> {
+public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
 	List<Notification> findByUser(User user);
 

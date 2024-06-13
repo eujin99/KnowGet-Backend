@@ -27,7 +27,7 @@ public class Notification extends SentTime {
 	@Id
 	@Column(name = "notification_id")
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer notificationId;
+	private Long notificationId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "user_id", nullable = false)

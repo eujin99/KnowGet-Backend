@@ -38,7 +38,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 */
 	@Override
 	public void sendNotification(User user, Post post) {
-		String message = "[너겟 알리미] " + user.getUserId() + "님이 관심 가질 만한 구인공고가 등록되었습니다.\n "
+		String message = "[너겟 알리미] " + user.getUsername() + "님이 관심 가질 만한 구인공고가 등록되었습니다.\n"
 			+ "제목: " + post.getJoSj() + "\n"
 			+ "근무 지역: " + post.getWorkPararBassAdresCn() + "\n"
 			+ "직종: " + post.getJobcodeNm();
@@ -107,7 +107,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
-	public void markAsRead(Integer notificationId) {
+	public void markAsRead(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
 				.orElseThrow(() -> new NotificationNotFoundException("존재하지 않는 알림입니다"));
@@ -115,7 +115,6 @@ public class NotificationServiceImpl implements NotificationService {
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 알림을 읽음으로 변경하는데에 실패했습니다 : " + e.getMessage());
 		}
-
 	}
 
 	/**
@@ -128,7 +127,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
-	public void deleteNotification(Integer notificationId) {
+	public void deleteNotification(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
 				.orElseThrow(() -> new NotificationNotFoundException("존재하지 않는 알림입니다"));
