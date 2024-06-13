@@ -1,7 +1,10 @@
 package com.knowget.knowgetbackend.domain.post.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -11,10 +14,12 @@ import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 import com.knowget.knowgetbackend.domain.post.service.PostService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
+@RequestMapping("/api/v1/posts")
 @RequiredArgsConstructor
-@RequestMapping("/posts")
 public class PostController {
 
 	private final PostService postService;
@@ -53,5 +58,19 @@ public class PostController {
 	public List<PostResponseDTO> getPostsByJobCode(@RequestParam String code) {
 		return postService.getPostsByJobCode(code);
 	}
-	
+
+	/**
+	 * 스케쥴러 없이 명시적으로 Open API를 통해 일자리 정보를 가져와 저장
+	 *
+	 * @return HTTP 상태 코드 200 (OK)
+	 * @author Jihwan
+	 */
+	@GetMapping("/fetch-posts")
+	public ResponseEntity<Void> fetchPosts() {
+		log.info("post fetching started at {}", LocalDateTime.now());
+		int insertCount = postService.fetchPosts(1, 100);
+		log.info("fetched {} posts at {}", insertCount, LocalDateTime.now());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
 }

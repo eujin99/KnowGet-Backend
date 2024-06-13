@@ -1,6 +1,7 @@
 package com.knowget.knowgetbackend.domain.post.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -12,6 +13,8 @@ import com.knowget.knowgetbackend.global.entity.Post;
  */
 @Repository
 public interface PostRepository extends JpaRepository<Post, Integer> {
+
+	Optional<Post> findByJoRegistNo(String joRegistNo);
 
 	// 근무지 (구)로 게시글 검색
 	List<Post> findByWorkPararBassAdresCnContaining(String gu);
