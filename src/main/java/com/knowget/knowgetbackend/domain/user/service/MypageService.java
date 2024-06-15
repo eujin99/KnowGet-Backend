@@ -11,7 +11,7 @@ import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 
 public interface MypageService {
 
-	List<PostResponseDTO> getBookmarkList(String username);
+	List<PostResponseDTO> getBookmarkList();
 
 	String updatePrefLocation(LocationUpdateDTO locationUpdateDTO);
 

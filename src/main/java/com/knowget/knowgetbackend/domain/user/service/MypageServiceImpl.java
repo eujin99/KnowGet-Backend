@@ -37,9 +37,8 @@ public class MypageServiceImpl implements MypageService {
 	private final BookmarkRepository bookmarkRepository;
 
 	/**
-	 * 사용자의 북마크 목록 조회
+	 * 사용자가 북마크한 공고 목록 조회
 	 *
-	 * @param username 사용자 ID
 	 * @return 북마크 목록
 	 * @throws RequestFailedException 북마크 목록 조회에 실패했을 때
 	 * @author Jihwan
@@ -47,9 +46,12 @@ public class MypageServiceImpl implements MypageService {
 	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<PostResponseDTO> getBookmarkList(String username) {
+	public List<PostResponseDTO> getBookmarkList() {
 		try {
-			return bookmarkRepository.findByUsername(username).stream()
+			String username = SecurityContextHolder.getContext().getAuthentication().getName();
+			User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+			return bookmarkRepository.findByUser(user).stream()
 				.map(Bookmark::getPost)
 				.toList()
 				.stream()
@@ -61,7 +63,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	/**
-	 * 사용자의 희망 근무지역을 변경
+	 * 사용자의 근무 희망 지역을 변경
 	 *
 	 * @param locationUpdateDTO username : 사용자 ID, location : 변경할 근무지역
 	 * @return 변경 성공 여부 메시지
@@ -83,7 +85,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	/**
-	 * 사용자의 희망 근무직종을 변경
+	 * 사용자의 근무 희망 직종을 변경
 	 *
 	 * @param jobUpdateDTO username : 사용자 ID, job : 변경할 직종
 	 * @return 변경 성공 여부 메시지
@@ -133,7 +135,7 @@ public class MypageServiceImpl implements MypageService {
 	}
 
 	/**
-	 * 사용자가 등록한 상담 목록 조회
+	 * 사용자가 요청한 상담 목록 조회
 	 *
 	 * @return 상담 목록
 	 * @throws UserNotFoundException 사용자를 찾을 수 없을 때

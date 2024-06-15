@@ -30,7 +30,7 @@ public class MypageController {
 	private final MypageService mypageService;
 
 	/**
-	 * 사용자의 북마크 목록 조회
+	 * 사용자가 북마크한 공고 목록 조회
 	 *
 	 * @return 북마크 목록
 	 * @author Jihwan
@@ -38,13 +38,12 @@ public class MypageController {
 	 */
 	@GetMapping("/bookmark")
 	public ResponseEntity<List<PostResponseDTO>> getBookmarkList() {
-		String username = SecurityContextHolder.getContext().getAuthentication().getName();
-		List<PostResponseDTO> bookmarkList = mypageService.getBookmarkList(username);
+		List<PostResponseDTO> bookmarkList = mypageService.getBookmarkList();
 		return ResponseEntity.ok(bookmarkList);
 	}
 
 	/**
-	 * 사용자의 희망 근무지역을 변경
+	 * 사용자의 근무 희망 지역을 변경
 	 *
 	 * @param locationUpdateDTO location : 변경할 근무지역
 	 * @return 변경 성공 여부 메시지
@@ -59,7 +58,7 @@ public class MypageController {
 	}
 
 	/**
-	 * 사용자의 희망 직종을 변경
+	 * 사용자의 근무 희망 직종을 변경
 	 *
 	 * @param jobUpdateDTO job : 변경할 직종
 	 * @return 변경 성공 여부 메시지
@@ -89,7 +88,7 @@ public class MypageController {
 	}
 
 	/**
-	 * 사용자가 등록한 상담 목록 조회
+	 * 사용자가 요청한 상담 목록 조회
 	 *
 	 * @return 상담 목록
 	 * @author Jihwan
