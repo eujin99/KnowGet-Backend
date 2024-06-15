@@ -25,19 +25,21 @@ public class CounselingController {
 
 	private final CounselingService counselingService;
 
-	/** 최신 순으로 상담 목록 조회
+	/**
+	 * 최신 순으로 상담 목록 조회
 	 *
 	 * @return ResponseEntity<List < CounselingResponseDTO>> 상담 목록
 	 * @author 근엽
 	 */
-	@GetMapping("/")
+	@GetMapping
 	public ResponseEntity<List<CounselingResponseDTO>> getAllCounseling() {
 		List<CounselingResponseDTO> counselingList = counselingService.getAllCounseling();
 
 		return new ResponseEntity<>(counselingList, HttpStatus.OK);
 	}
 
-	/** 상담 상세 조회
+	/**
+	 * 상담 상세 조회
 	 *
 	 * @param id
 	 * @return ResponseEntity<CounselingResponseDTO> 상담 내용
@@ -50,13 +52,14 @@ public class CounselingController {
 		return new ResponseEntity<>(counseling, HttpStatus.OK);
 	}
 
-	/** 상담 작성
+	/**
+	 * 상담 작성
 	 *
 	 * @param counselingRequestDTO
 	 * @return ResponseEntity<String> 작성 완료 메시지
 	 * @author 근엽
 	 */
-	@PostMapping("/")
+	@PostMapping
 	public ResponseEntity<ResultMessageDTO> saveCounseling(
 		@RequestBody CounselingRequestDTO counselingRequestDTO) {
 		String message = counselingService.saveCounseling(counselingRequestDTO);

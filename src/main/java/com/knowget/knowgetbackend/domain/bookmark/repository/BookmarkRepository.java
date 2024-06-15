@@ -15,7 +15,6 @@ public interface BookmarkRepository extends JpaRepository<Bookmark, Integer> {
 	@Query("SELECT b FROM Bookmark b WHERE b.post = :post AND b.user = :user")
 	Optional<Bookmark> findByPostAndUser(Post post, User user);
 
-	@Query("SELECT b FROM Bookmark b WHERE b.user.username = :username")
-	List<Bookmark> findByUsername(String username);
+	List<Bookmark> findByUser(User user);
 
 }

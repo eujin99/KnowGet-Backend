@@ -25,7 +25,8 @@ public class AnswerController {
 
 	private final AnswerService answerService;
 
-	/** 답변 상세 조회
+	/**
+	 * 답변 상세 조회
 	 *
 	 * @param id
 	 * @return ResponseEntity<AnswerResponseDTO> 답변 내용
@@ -38,13 +39,14 @@ public class AnswerController {
 		return new ResponseEntity<>(answer, HttpStatus.OK);
 	}
 
-	/** 답변 작성
+	/**
+	 * 답변 작성
 	 *
 	 * @param answerRequestDTO
 	 * @return ResponseEntity<String> 작성 완료 메시지
 	 * @author 근엽
 	 */
-	@PostMapping("/")
+	@PostMapping
 	public ResponseEntity<ResultMessageDTO> saveAnswer(@RequestBody AnswerRequestDTO answerRequestDTO) {
 
 		String message = answerService.saveAnswer(answerRequestDTO);
@@ -52,7 +54,8 @@ public class AnswerController {
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
-	/** 답변 수정
+	/**
+	 * 답변 수정
 	 *
 	 * @param id
 	 * @param answerModfiyDTO
@@ -67,7 +70,8 @@ public class AnswerController {
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
-	/** 답변 삭제
+	/**
+	 * 답변 삭제
 	 *
 	 * @param id
 	 * @return ResponseEntity<String> 삭제 완료 메시지
