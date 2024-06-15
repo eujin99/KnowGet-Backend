@@ -84,6 +84,52 @@
 
 <details>
 
+  <summary>알림</summary>
+
+  <br/>
+
+  - 읽지 않은 알림 개수 불러오기 - 성공
+  <img width="843" alt="읽지 않은 알림 개수 불러오기 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/e0731f48-8b31-4372-bdad-e1b2e3832f20">
+
+  <br/>
+
+  - 읽지 않은 알림 개수 불러오기 - 실패
+  <img width="843" alt="읽지 않은 알림 개수 불러오기 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/edc4d0b6-5ac7-48a5-b68e-fa6233f8e996">
+
+  <br/>
+
+  - 사용자의 모든 알림을 불러오기 - 성공
+  <img width="843" alt="사용자의 모든 알림을 불러오기 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/4ecffc1f-419e-463e-92b4-72876152c7cb">
+
+  <br/>
+
+  - 사용자의 모든 알림을 불러오기 - 실패
+  <img width="843" alt="사용자의 모든 알림을 불러오기 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/4b5fd70c-048d-4996-acb7-332fd3afe119">
+
+  <br/>
+
+  - 알림을 읽음 처리 - 성공
+  <img width="843" alt="알림을 읽음 처리 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/77376cc6-9499-421a-8e72-b08f48b04adb">
+
+  <br/>
+
+  - 알림을 읽음 처리 - 실패
+  <img width="843" alt="알림을 읽음 처리 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/be55675a-ce0c-42dc-a5a3-db90112fd899">
+
+  <br/>
+
+  - 알림 삭제 - 성공
+  <img width="843" alt="알림 삭제 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/5c3b8aee-baaf-45ca-b411-c5d621d42190">
+
+  <br/>
+
+  - 알림 삭제 - 실패
+  <img width="1368" alt="알림 삭제 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0a94c1f6-12c2-457e-b7e9-0ffcfc68e057">
+  
+</details>
+
+<details>
+
   <summary>일자리 공고</summary>
 
   <br/>
