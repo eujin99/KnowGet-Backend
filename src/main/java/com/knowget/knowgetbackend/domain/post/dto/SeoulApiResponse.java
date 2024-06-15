@@ -20,4 +20,5 @@ public class SeoulApiResponse {
 	public static class GetJobInfo {
 		private List<Post> row; // 일자리 정보 목록
 	}
+
 }

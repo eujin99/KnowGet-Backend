@@ -84,7 +84,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 
 			// 사용자 조회 및 예외 처리
-			User user = userRepository.findByUsername(successCaseRequestDTO.getUsername())
+			User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 
 			// SuccessCase 생성
@@ -121,7 +121,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 		try {
 			SuccessCase successCase = successCaseRepository.findById(caseId)
 				.orElseThrow(() -> new ResourceNotFoundException("존재하지 않는 게시글입니다"));
-			successCaseRepository.deleteById(caseId);
+			successCaseRepository.delete(successCase);
 			return new ResultMessageDTO("해당 글이 삭제 되었습니다");
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 삭제에 실패했습니다 : " + e.getMessage());

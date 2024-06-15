@@ -19,6 +19,6 @@ public class UserSignUpDTO {
 	private String prefLocation;
 
 	@NotEmpty(message = "직업은 필수항목 입니다.")
-	private Short prefJob;
+	private String prefJob;
 
 }

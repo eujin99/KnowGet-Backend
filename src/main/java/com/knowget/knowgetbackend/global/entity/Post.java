@@ -25,11 +25,11 @@ public class Post {
 	private Integer postId;
 
 	@JsonProperty("JO_REQST_NO")
-	@Column(name = "jo_reqst_no")
+	@Column(name = "jo_reqst_no", unique = true, nullable = false)
 	private String joReqstNo;
 
 	@JsonProperty("JO_REGIST_NO")
-	@Column(name = "jo_regist_no")
+	@Column(name = "jo_regist_no", unique = true, nullable = false)
 	private String joRegistNo;
 
 	@JsonProperty("CMPNY_NM")
@@ -37,7 +37,7 @@ public class Post {
 	private String cmpnyNm;
 
 	@JsonProperty("BSNS_SUMRY_CN")
-	@Column(name = "bsns_sumry_cn")
+	@Column(name = "bsns_sumry_cn", columnDefinition = "TEXT(1000)")
 	private String bsnsSumryCn;
 
 	@JsonProperty("RCRIT_JSSFC_CMMN_CODE_SE")
@@ -50,7 +50,7 @@ public class Post {
 
 	@JsonProperty("RCRIT_NMPR_CO")
 	@Column(name = "rcrit_nmpr_co")
-	private Double rcritNmprCo;
+	private Integer rcritNmprCo;
 
 	@JsonProperty("ACDMCR_CMMN_CODE_SE")
 	@Column(name = "acdmcr_cmmn_code_se")
@@ -164,14 +164,20 @@ public class Post {
 	@Column(name = "gui_ln")
 	private String guiLn;
 
+	@Column(name = "gu", nullable = false)
+	private String gu;
+
+	@Column(name = "job_code", nullable = false)
+	private String jobCode;
+
 	@Builder
 	public Post(String joReqstNo, String joRegistNo, String cmpnyNm, String bsnsSumryCn, String rcritJssfcCmmnCodeSe,
-		String jobcodeNm, Double rcritNmprCo, String acdmcrCmmnCodeSe, String acdmcrNm, String emplymStleCmmnCodeSe,
+		String jobcodeNm, Integer rcritNmprCo, String acdmcrCmmnCodeSe, String acdmcrNm, String emplymStleCmmnCodeSe,
 		String emplymStleCmmnMm, String workPararBassAdresCn, String subwayNm, String dtyCn, String careerCndCmmnCodeSe,
 		String careerCndNm, String hopeWage, String retGrantsNm, String workTimeNm, String workTmNm, String holidayNm,
 		String weekWorkHr, String joFeinsrSbscrbNm, String rceptClosNm, String rceptMthIemNm, String modelMthNm,
 		String rceptMthNm, String presentnPapersNm, String mngrNm, String mngrPhonNo, String mngrInsttNm,
-		String bassAdresCn, String joSj, String joRegDt, String guiLn) {
+		String bassAdresCn, String joSj, String joRegDt, String guiLn, String gu, String jobCode) {
 		this.joReqstNo = joReqstNo;
 		this.joRegistNo = joRegistNo;
 		this.cmpnyNm = cmpnyNm;
@@ -207,5 +213,8 @@ public class Post {
 		this.joSj = joSj;
 		this.joRegDt = joRegDt;
 		this.guiLn = guiLn;
+		this.gu = gu;
+		this.jobCode = jobCode;
 	}
+
 }

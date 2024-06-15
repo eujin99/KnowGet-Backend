@@ -32,7 +32,7 @@ public class ReplyServiceImpl implements ReplyService {
 	private final UserRepository userRepository;
 
 	/**
-	 * 특정 댓글에 달린 답글 조회
+	 * 특정 댓글에 달린 모든 답글 조회
 	 *
 	 * @param commentId 답글이 달린 댓글 ID
 	 * @return 특정 댓글에 달린 답글 리스트
@@ -44,13 +44,13 @@ public class ReplyServiceImpl implements ReplyService {
 	@Transactional(readOnly = true)
 	public List<ReplyResponseDTO> findReplies(Integer commentId) {
 		commentRepository.findById(commentId)
-			.orElseThrow(() -> new CommentNotFoundException("[Error] 존재하지 않는 댓글입니다"));
+			.orElseThrow(() -> new CommentNotFoundException("[Error] 답글을 불러오는데에 실패했습니다 : 존재하지 않는 댓글입니다"));
 		List<Reply> replies = replyRepository.findAllByCommentIdOrderByCreatedDateAsc(commentId);
 		return replies.stream().map(ReplyResponseDTO::new).collect(Collectors.toList());
 	}
 
 	/**
-	 * 특정 댓글에 달린 답글 작성
+	 * 특정 댓글에 답글 작성
 	 *
 	 * @param replyRequestDTO commentId : 답글이 달린 댓글 ID, username : 사용자 ID, content : 답글 내용
 	 * @return 답글 작성 성공 여부 메시지

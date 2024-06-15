@@ -1,5 +1,6 @@
 package com.knowget.knowgetbackend.domain.user.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,5 +18,7 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	@Query("SELECT u FROM User u WHERE u.username = :username")
 	Optional<User> findByUsername(@Param("username") String username);
+
+	List<User> findByPrefLocationOrPrefJob(String prefLocation, String prefJob);
 
 }

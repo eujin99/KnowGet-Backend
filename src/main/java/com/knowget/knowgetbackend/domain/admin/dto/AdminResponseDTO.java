@@ -13,7 +13,7 @@ public class AdminResponseDTO {
 	private Integer userId;
 	private String userName;
 	private String prefLocation;
-	private Short prefJob;
+	private String prefJob;
 	private Boolean isActive;
 
 	public AdminResponseDTO(User user) {

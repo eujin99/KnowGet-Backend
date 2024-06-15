@@ -8,12 +8,12 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BookmarkRequestDTO {
 
-	private Integer postId;
+	private String joRegistNo;
 	private String username;
 
 	@Builder
-	public BookmarkRequestDTO(Integer postId, String username) {
-		this.postId = postId;
+	public BookmarkRequestDTO(String joRegistNo, String username) {
+		this.joRegistNo = joRegistNo;
 		this.username = username;
 	}
 
