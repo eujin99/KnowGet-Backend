@@ -84,6 +84,73 @@
 
 <details>
 
+  <summary>마이페이지</summary>
+
+  <br/>
+
+  - 근무 희망 지역 변경 - 성공
+  <img width="843" alt="근무 희망 지역 변경 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/6a15f7e4-0836-4498-8c6e-fd890225731f">
+
+  <br/>
+
+  - 근무 희망 지역 변경 - 실패
+  <img width="843" alt="근무 희망 지역 변경 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/63b96b4f-3820-4e4e-be26-df4be6fb695f">
+
+  <br/>
+
+  - 근무 희망 직종 변경 - 성공
+  <img width="843" alt="근무 희망 직종 변경 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/958a8f30-b0ff-4eb8-b74d-d3cf20d72ae6">
+
+  <br/>
+
+  - 근무 희망 직종 변경 - 실패
+  <img width="843" alt="근무 희망 직종 변경 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/1fed8f6b-938c-4e3d-a4b8-5679112ec832">
+
+  <br/>
+
+  - 비밀번호 변경 - 성공
+  <img width="843" alt="비밀번호 변경 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/4cdec2f5-3cb3-42dd-aa68-cb5d21e15ee9">
+
+  <br/>
+  
+  - 비밀번호 변경 - 실패
+  <img width="843" alt="비밀번호 변경 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/64efddcc-511e-4e38-a42d-64900f319af8">
+  
+  <br/>
+
+  - 요청한 상담 목록 조회 - 성공
+  <img width="843" alt="요청한 상담 목록 조회 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/95f4051f-ab8d-48ab-bb46-323cba6a296e">
+
+  <br/>
+
+  - 요청한 상담 목록 조회 - 실패
+  <img width="843" alt="요청한 상담 목록 조회 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/c9eee668-25ee-4290-8380-eb57f19bc376">
+
+  <br/>
+  
+  - 작성한 취업 성공사례 게시글 목록 조회 - 성공
+  <img width="843" alt="작성한 취업 성공사례 게시글 목록 조회 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/34cffa91-be31-4a5d-ace6-d71d691bc908">
+
+  <br/>
+
+  - 작성한 취업 성공사례 게시글 목록 조회 - 실패
+  <img width="843" alt="작성한 취업 성공사례 게시글 목록 조회 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0d33836f-b082-4940-8a6b-96cb4873bb05">
+
+  <br/>
+  
+  - 북마크한 공고 목록 조회 - 성공
+  <img width="843" alt="북마크한 공고 목록 조회 성공" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/ecfd6470-f864-41ae-964b-8219a816e1da">
+
+  <br/>
+
+  - 북마크한 공고 목록 조회 - 실패
+  <img width="843" alt="북마크한 공고 목록 조회 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/90ffbe0a-b39b-4640-a9f9-7efc2d1062d8">
+  
+</details>
+
+
+<details>
+
   <summary>알림</summary>
 
   <br/>
@@ -124,7 +191,7 @@
   <br/>
 
   - 알림 삭제 - 실패
-  <img width="1368" alt="알림 삭제 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0a94c1f6-12c2-457e-b7e9-0ffcfc68e057">
+  <img width="843" alt="알림 삭제 실패" src="https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0a94c1f6-12c2-457e-b7e9-0ffcfc68e057">
   
 </details>
 
