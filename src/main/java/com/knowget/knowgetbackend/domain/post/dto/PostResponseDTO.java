@@ -1,5 +1,7 @@
 package com.knowget.knowgetbackend.domain.post.dto;
 
+import com.knowget.knowgetbackend.global.entity.Post;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +10,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostResponseDTO {
+
+	private Integer postId; // 게시글 번호
 	private String joReqstNo; // 구인 신청 번호
 	private String joRegistNo; // 구인 등록 번호
 	private String cmpnyNm; // 회사 이름
@@ -45,4 +49,46 @@ public class PostResponseDTO {
 	private String guiLn; // 모집 요강
 	private String gu; // 근무지 구
 	private String jobCode; // 변환된 직종 코드
+
+	public PostResponseDTO(Post post) {
+		this.postId = post.getPostId();
+		this.joReqstNo = post.getJoReqstNo();
+		this.joRegistNo = post.getJoRegistNo();
+		this.cmpnyNm = post.getCmpnyNm();
+		this.bsnsSumryCn = post.getBsnsSumryCn();
+		this.rcritJssfcCmmnCodeSe = post.getRcritJssfcCmmnCodeSe();
+		this.jobcodeNm = post.getJobcodeNm();
+		this.rcritNmprCo = post.getRcritNmprCo();
+		this.acdmcrCmmnCodeSe = post.getAcdmcrCmmnCodeSe();
+		this.acdmcrNm = post.getAcdmcrNm();
+		this.emplymStleCmmnCodeSe = post.getEmplymStleCmmnCodeSe();
+		this.emplymStleCmmnMm = post.getEmplymStleCmmnMm();
+		this.workPararBassAdresCn = post.getWorkPararBassAdresCn();
+		this.subwayNm = post.getSubwayNm();
+		this.dtyCn = post.getDtyCn();
+		this.careerCndCmmnCodeSe = post.getCareerCndCmmnCodeSe();
+		this.careerCndNm = post.getCareerCndNm();
+		this.hopeWage = post.getHopeWage();
+		this.retGrantsNm = post.getRetGrantsNm();
+		this.workTimeNm = post.getWorkTimeNm();
+		this.workTmNm = post.getWorkTmNm();
+		this.holidayNm = post.getHolidayNm();
+		this.weekWorkHr = post.getWeekWorkHr();
+		this.joFeinsrSbscrbNm = post.getJoFeinsrSbscrbNm();
+		this.rceptClosNm = post.getRceptClosNm();
+		this.rceptMthIemNm = post.getRceptMthIemNm();
+		this.modelMthNm = post.getModelMthNm();
+		this.rceptMthNm = post.getRceptMthNm();
+		this.presentnPapersNm = post.getPresentnPapersNm();
+		this.mngrNm = post.getMngrNm();
+		this.mngrPhonNo = post.getMngrPhonNo();
+		this.mngrInsttNm = post.getMngrInsttNm();
+		this.bassAdresCn = post.getBassAdresCn();
+		this.joSj = post.getJoSj();
+		this.joRegDt = post.getJoRegDt();
+		this.guiLn = post.getGuiLn();
+		this.gu = post.getGu();
+		this.jobCode = post.getJobCode();
+	}
+
 }

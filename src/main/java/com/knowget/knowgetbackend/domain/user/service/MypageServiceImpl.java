@@ -8,16 +8,18 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.knowget.knowgetbackend.domain.bookmark.repository.BookmarkRepository;
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
+import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepository;
 import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
+import com.knowget.knowgetbackend.global.entity.Bookmark;
 import com.knowget.knowgetbackend.global.entity.Counseling;
-import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
@@ -32,11 +34,30 @@ public class MypageServiceImpl implements MypageService {
 	private final PasswordEncoder passwordEncoder;
 	private final SuccessCaseRepository successCaseRepository;
 	private final CounselingRepository counselingRepository;
+	private final BookmarkRepository bookmarkRepository;
 
+	/**
+	 * 사용자의 북마크 목록 조회
+	 *
+	 * @param username 사용자 ID
+	 * @return 북마크 목록
+	 * @throws RequestFailedException 북마크 목록 조회에 실패했을 때
+	 * @author Jihwan
+	 * @see PostResponseDTO
+	 */
 	@Override
 	@Transactional(readOnly = true)
-	public List<Post> getBookmarkList() {
-		return List.of();
+	public List<PostResponseDTO> getBookmarkList(String username) {
+		try {
+			return bookmarkRepository.findByUsername(username).stream()
+				.map(Bookmark::getPost)
+				.toList()
+				.stream()
+				.map(PostResponseDTO::new)
+				.collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 북마크 목록 조회에 실패하였습니다 : " + e.getMessage());
+		}
 	}
 
 	/**

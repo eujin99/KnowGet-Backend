@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
+import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 import com.knowget.knowgetbackend.domain.user.service.MypageService;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
-import com.knowget.knowgetbackend.global.entity.Post;
 
 import lombok.RequiredArgsConstructor;
 
@@ -29,9 +29,17 @@ public class MypageController {
 
 	private final MypageService mypageService;
 
+	/**
+	 * 사용자의 북마크 목록 조회
+	 *
+	 * @return 북마크 목록
+	 * @author Jihwan
+	 * @see PostResponseDTO
+	 */
 	@GetMapping("/bookmark")
-	public ResponseEntity<List<Post>> getBookmarkList() {
-		List<Post> bookmarkList = mypageService.getBookmarkList();
+	public ResponseEntity<List<PostResponseDTO>> getBookmarkList() {
+		String username = SecurityContextHolder.getContext().getAuthentication().getName();
+		List<PostResponseDTO> bookmarkList = mypageService.getBookmarkList(username);
 		return ResponseEntity.ok(bookmarkList);
 	}
 

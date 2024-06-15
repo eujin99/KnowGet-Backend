@@ -310,6 +310,7 @@ public class PostServiceImpl implements PostService {
 	 */
 	private PostResponseDTO convertToDTO(Post entity) {
 		return new PostResponseDTO(
+			entity.getPostId(),
 			entity.getJoReqstNo(),
 			entity.getJoRegistNo(),
 			entity.getCmpnyNm(),
