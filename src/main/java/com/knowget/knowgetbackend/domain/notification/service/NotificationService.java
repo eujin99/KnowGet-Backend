@@ -12,9 +12,9 @@ public interface NotificationService {
 
 	List<NotificationResponseDTO> getNotifications(String username);
 
-	void markAsRead(Long notificationId);
+	String markAsRead(Long notificationId);
 
-	void deleteNotification(Long notificationId);
+	String deleteNotification(Long notificationId);
 
 	Integer getUnreadNotificationCount(String username);
 

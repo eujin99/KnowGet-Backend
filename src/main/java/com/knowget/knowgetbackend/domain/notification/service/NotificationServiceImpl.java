@@ -107,13 +107,15 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
-	public void markAsRead(Long notificationId) {
+	public String markAsRead(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
 				.orElseThrow(() -> new NotificationNotFoundException("존재하지 않는 알림입니다"));
 			notification.updateIsRead();
+			notificationRepository.save(notification);
+			return "알림을 읽음으로 변경하였습니다";
 		} catch (Exception e) {
-			throw new RequestFailedException("[Error] 알림을 읽음으로 변경하는데에 실패했습니다 : " + e.getMessage());
+			throw new RequestFailedException("[Error] 알림을 읽음으로 변경하는 데에 실패했습니다 : " + e.getMessage());
 		}
 	}
 
@@ -127,13 +129,14 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
-	public void deleteNotification(Long notificationId) {
+	public String deleteNotification(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
 				.orElseThrow(() -> new NotificationNotFoundException("존재하지 않는 알림입니다"));
 			notificationRepository.delete(notification);
+			return "알림을 삭제하였습니다";
 		} catch (Exception e) {
-			throw new RequestFailedException("[Error] 알림을 삭제하는데에 실패했습니다 : " + e.getMessage());
+			throw new RequestFailedException("[Error] 알림을 삭제하는 데에 실패했습니다 : " + e.getMessage());
 		}
 	}
 

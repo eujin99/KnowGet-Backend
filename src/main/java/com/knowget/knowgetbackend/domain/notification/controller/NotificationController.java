@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.knowget.knowgetbackend.domain.notification.dto.NotificationResponseDTO;
 import com.knowget.knowgetbackend.domain.notification.service.NotificationService;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 import com.knowget.knowgetbackend.global.exception.NotificationNotFoundException;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
@@ -45,7 +46,7 @@ public class NotificationController {
 	 * @throws NotificationNotFoundException 알림이 비어있는 경우
 	 * @author Jihwan
 	 */
-	@GetMapping
+	@GetMapping("/all")
 	public ResponseEntity<List<NotificationResponseDTO>> getNotifications() {
 		String username = SecurityContextHolder.getContext().getAuthentication().getName();
 		List<NotificationResponseDTO> notifications = notificationService.getNotifications(username);
@@ -62,9 +63,9 @@ public class NotificationController {
 	 * @author Jihwan
 	 */
 	@PostMapping("/read/{notificationId}")
-	public ResponseEntity<Void> markAsRead(@PathVariable Long notificationId) {
-		notificationService.markAsRead(notificationId);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<ResultMessageDTO> markAsRead(@PathVariable Long notificationId) {
+		String message = notificationService.markAsRead(notificationId);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 	/**
@@ -77,9 +78,9 @@ public class NotificationController {
 	 * @author Jihwan
 	 */
 	@DeleteMapping("/{notificationId}")
-	public ResponseEntity<Void> deleteNotification(@PathVariable Long notificationId) {
-		notificationService.deleteNotification(notificationId);
-		return new ResponseEntity<>(HttpStatus.OK);
+	public ResponseEntity<ResultMessageDTO> deleteNotification(@PathVariable Long notificationId) {
+		String message = notificationService.deleteNotification(notificationId);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 	}
 
 }
