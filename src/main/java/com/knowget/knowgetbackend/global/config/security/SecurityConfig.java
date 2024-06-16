@@ -25,8 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class SecurityConfig {
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-	private final String[] allowedUrls = {"/", "/signup/**", "/login/**", "/user/**", "/auth/**", "/qna/**",
-		"/comment/**", "/swagger-ui/**"};    // sign-up, sign-in, swagger-ui 추가
+	private final String[] allowedUrls = {"/"};    // sign-up, sign-in, swagger-ui 추가
 
 	@Bean
 	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -34,7 +33,7 @@ public class SecurityConfig {
 			.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
 			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 				CorsConfiguration config = new CorsConfiguration();
-				config.setAllowedOrigins(Collections.singletonList("http://localhost:8081"));
+				config.setAllowedOrigins(Collections.singletonList("http://localhost:9000"));
 				config.setAllowedMethods(Collections.singletonList("*"));
 				config.setAllowCredentials(true);
 				config.setAllowedHeaders(Collections.singletonList("*"));
@@ -45,9 +44,9 @@ public class SecurityConfig {
 			//.csrf(csrf -> csrf.ignoringRequestMatchers(PathRequest.toH2Console()))
 			.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
 			.authorizeHttpRequests(requests ->
-				requests.requestMatchers(allowedUrls).permitAll()
-					//.requestMatchers(PathRequest.toH2Console()).permitAll()
-					.anyRequest().authenticated()
+					// requests.requestMatchers(allowedUrls).permitAll()
+					requests.anyRequest().permitAll()
+				// .anyRequest().authenticated()
 			)
 			.sessionManagement(sessionManagement ->
 				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
