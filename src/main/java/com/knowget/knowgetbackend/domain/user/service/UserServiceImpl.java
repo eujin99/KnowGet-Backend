@@ -1,7 +1,5 @@
 package com.knowget.knowgetbackend.domain.user.service;
 
-import java.util.Optional;
-
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -13,6 +11,7 @@ import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.config.security.TokenProvider;
 import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.InvalidPasswordException;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -32,33 +31,43 @@ public class UserServiceImpl implements UserService {
 	 * @return 중복 여부 (True or False)
 	 * @author Jihwan
 	 */
+	@Override
 	public boolean checkUsername(String username) {
-		if (username == null) {
-			throw new IllegalArgumentException("[Error] 아이디가 입력되지 않았습니다.");
+		try {
+			if (username == null) {
+				throw new IllegalArgumentException("아이디가 입력되지 않았습니다");
+			}
+			return userRepository.checkUsername(username);
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 아이디 중복확인에 실패했습니다 : " + e.getMessage());
 		}
-		return userRepository.checkUsername(username);
 	}
 
 	/**
 	 * 사용자로부터 입력받은 값들로 회원가입을 진행
 	 *
-	 * @param userSignupDTO 사용자가 입력한 ID, 이름, 비밀번호, 전화번호, 이메일
+	 * @param userSignUpDTO 사용자가 입력한 ID, 이름, 비밀번호, 전화번호, 이메일
 	 * @return 회원가입 성공여부에 따른 결과 메시지
 	 * @author Jihwan
 	 */
+	@Override
 	@Transactional
-	public String signUp(UserSignUpDTO userSignupDTO) {
-		if (userSignupDTO == null) {
-			throw new IllegalArgumentException("[Error] 회원정보가 입력되지 않았습니다.");
+	public String register(UserSignUpDTO userSignUpDTO) {
+		try {
+			if (userSignUpDTO == null) {
+				throw new IllegalArgumentException("회원정보가 입력되지 않았습니다");
+			}
+			User user = User.builder()
+				.username(userSignUpDTO.getUsername())
+				.password(passwordEncoder.encode(userSignUpDTO.getPassword()))
+				.prefLocation(userSignUpDTO.getPrefLocation())
+				.prefJob(userSignUpDTO.getPrefJob())
+				.build();
+			userRepository.save(user);
+			return userSignUpDTO.getUsername() + "님 가입을 환영합니다.";
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 회원가입에 실패했습니다 : " + e.getMessage());
 		}
-		User user = User.builder()
-			.username(userSignupDTO.getUsername())
-			.password(passwordEncoder.encode(userSignupDTO.getPassword()))
-			.prefLocation(userSignupDTO.getPrefLocation())
-			.prefJob(userSignupDTO.getPrefJob())
-			.build();
-		userRepository.save(user);
-		return userSignupDTO.getUsername() + "님 가입을 환영합니다.";
 	}
 
 	/**
@@ -70,18 +79,20 @@ public class UserServiceImpl implements UserService {
 	 * @throws InvalidPasswordException 비밀번호가 일치하지 않을 때 발생하는 예외
 	 * @author Jihwan
 	 */
+	@Override
 	@Transactional
-	public SignInResponse signIn(UserSignInDTO userSignInDTO) {
-		Optional<User> user = userRepository.findByUsername(userSignInDTO.getUsername());
-		if (user.isPresent()) {
-			if (passwordEncoder.matches(userSignInDTO.getPassword(), user.get().getPassword())) {
-				String token = tokenProvider.createToken(String.format("%s:%s", user.get().getUsername(), "User"));
-				return new SignInResponse(user.get().getUsername(), "User", token);
+	public SignInResponse login(UserSignInDTO userSignInDTO) {
+		try {
+			User user = userRepository.findByUsername(userSignInDTO.getUsername())
+				.orElseThrow(() -> new InvalidPasswordException("입력하신 정보로 가입된 사용자가 없습니다"));
+			if (passwordEncoder.matches(userSignInDTO.getPassword(), user.getPassword())) {
+				String token = tokenProvider.createToken(String.format("%s:%s", user.getUsername(), "User"));
+				return new SignInResponse(user.getUsername(), "User", token);
 			} else {
-				throw new InvalidPasswordException("아이디 혹은 비밀번호가 일치하지 않습니다.");
+				throw new InvalidPasswordException("아이디 혹은 비밀번호가 일치하지 않습니다");
 			}
-		} else {
-			throw new UserNotFoundException("입력하신 정보로 가입된 사용자가 없습니다.");
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 로그인에 실패했습니다 : " + e.getMessage());
 		}
 	}
 

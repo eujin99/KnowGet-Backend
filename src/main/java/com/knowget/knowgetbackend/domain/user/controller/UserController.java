@@ -13,6 +13,7 @@ import com.knowget.knowgetbackend.domain.user.SignInResponse;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignInDTO;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignUpDTO;
 import com.knowget.knowgetbackend.domain.user.service.UserServiceImpl;
+import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -33,10 +34,7 @@ public class UserController {
 	 */
 	@PostMapping("/check-username")
 	public ResponseEntity<Boolean> checkUsername(@RequestBody Map<String, String> request) {
-		String username = request.get("id");
-		if (username == null) {
-			return new ResponseEntity<>(true, HttpStatus.NO_CONTENT);
-		}
+		String username = request.get("username");
 		boolean exists = userServiceImpl.checkUsername(username);
 		return new ResponseEntity<>(exists, HttpStatus.OK);
 	}
@@ -44,14 +42,14 @@ public class UserController {
 	/**
 	 * 사용자로부터 입력받은 값들로 회원가입을 진행
 	 *
-	 * @param userSignupDTO 사용자가 입력한 ID, 이름, 비밀번호, 전화번호, 이메일
+	 * @param userSignUpDTO 사용자가 입력한 ID, 이름, 비밀번호, 전화번호, 이메일
 	 * @return 회원가입 성공여부에 따른 결과 메시지
 	 * @author Jihwan
 	 */
-	@PostMapping("/signup")
-	public ResponseEntity<String> signUp(@RequestBody UserSignUpDTO userSignupDTO) {
-		String msg = userServiceImpl.signUp(userSignupDTO);
-		return new ResponseEntity<>(msg, HttpStatus.OK);
+	@PostMapping("/register")
+	public ResponseEntity<ResultMessageDTO> register(@RequestBody UserSignUpDTO userSignUpDTO) {
+		String msg = userServiceImpl.register(userSignUpDTO);
+		return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
 	}
 
 	/**
@@ -61,9 +59,9 @@ public class UserController {
 	 * @return 로그인 성공여부에 따른 결과 메시지
 	 * @author Jihwan
 	 */
-	@PostMapping("/signin")
-	public ResponseEntity<SignInResponse> signIn(@RequestBody @Valid UserSignInDTO userSignInDTO) {
-		SignInResponse msg = userServiceImpl.signIn(userSignInDTO);
+	@PostMapping("/login")
+	public ResponseEntity<SignInResponse> login(@RequestBody @Valid UserSignInDTO userSignInDTO) {
+		SignInResponse msg = userServiceImpl.login(userSignInDTO);
 		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
 
