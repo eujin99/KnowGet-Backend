@@ -41,7 +41,6 @@ public class PostServiceImpl implements PostService {
 
 	// 매 시 00분 마다 일자리 정보를 가져와 데이터베이스에 저장 및 알림 전송
 	@Scheduled(cron = "0 0 * * * ?")
-	@Transactional
 	public void scheduledFetch() {
 		log.info("post fetching started at {}", LocalDateTime.now());
 		int insertCount = fetchPosts(1, 100);
@@ -54,6 +53,8 @@ public class PostServiceImpl implements PostService {
 	 * @return 저장된 게시글 개수
 	 * @author Jihwan
 	 */
+	@Override
+	@Transactional
 	public Integer fetchPosts(int startIndex, int endIndex) {
 		String apiUrl = String.format("http://openapi.seoul.go.kr:8088/%s/json/GetJobInfo/%d/%d", apiKey, startIndex,
 			endIndex);
