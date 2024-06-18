@@ -16,11 +16,13 @@ public interface PostRepository extends JpaRepository<Post, Integer> {
 
 	Optional<Post> findByJoRegistNo(String joRegistNo);
 
+	List<Post> findAllByOrderByPostIdDesc();
+
 	// 근무지 (구)로 게시글 검색
-	List<Post> findByWorkPararBassAdresCnContaining(String gu);
+	List<Post> findByWorkPararBassAdresCnContainingOrderByPostIdDesc(String gu);
 
 	// 모집 직종 코드로 게시글 검색
-	List<Post> findByRcritJssfcCmmnCodeSe(String code);
+	List<Post> findByRcritJssfcCmmnCodeSeOrderByPostIdDesc(String code);
 
 	Boolean existsByJoRegistNo(String joRegistNo);
 

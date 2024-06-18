@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.notification.dto.NotificationResponseDTO;
 import com.knowget.knowgetbackend.domain.notification.repository.NotificationRepository;
@@ -61,6 +62,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public Integer getUnreadNotificationCount(String username) {
 		try {
 			User user = userRepository.findByUsername(username)
@@ -81,6 +83,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @throws RequestFailedException        알림을 불러오는데에 실패한 경우
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<NotificationResponseDTO> getNotifications(String username) {
 		try {
 			User user = userRepository.findByUsername(username)
@@ -107,6 +110,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
+	@Transactional
 	public String markAsRead(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
@@ -129,6 +133,7 @@ public class NotificationServiceImpl implements NotificationService {
 	 * @author Jihwan
 	 */
 	@Override
+	@Transactional
 	public String deleteNotification(Long notificationId) {
 		try {
 			Notification notification = notificationRepository.findById(notificationId)
