@@ -69,7 +69,7 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Override
 	@Transactional
 	public JobGuideResponseDTO createJobGuide(JobGuideRequestDTO jobGuideRequestDTO) {
-		Admin admin = adminRepository.findById(jobGuideRequestDTO.getAdminId()).orElse(null);
+		Admin admin = adminRepository.findByUsername(jobGuideRequestDTO.getUsername());
 
 		JobGuide jobGuide = JobGuide.builder()
 			.admin(admin)
@@ -132,8 +132,6 @@ public class JobGuideServiceImpl implements JobGuideService {
 	private JobGuideResponseDTO convertToDTO(JobGuide jobGuide) {
 		return new JobGuideResponseDTO(
 			jobGuide.getGuideId(),
-			jobGuide.getAdmin().getAdminId(),
-			jobGuide.getAdmin().getUsername(),
 			jobGuide.getTitle(),
 			jobGuide.getContent(),
 			jobGuide.getCreatedDate(),
