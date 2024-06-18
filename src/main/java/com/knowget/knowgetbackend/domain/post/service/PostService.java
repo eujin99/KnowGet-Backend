@@ -3,6 +3,7 @@ package com.knowget.knowgetbackend.domain.post.service;
 import java.util.List;
 
 import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
+import com.knowget.knowgetbackend.global.entity.Post;
 
 /**
  * 게시글 서비스 인터페이스.
@@ -10,6 +11,8 @@ import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 public interface PostService {
 
 	Integer fetchPosts(int startIndex, int endIndex);
+
+	void notifyUsers(Post post);
 
 	/**
 	 * 게시글 목록 저장.

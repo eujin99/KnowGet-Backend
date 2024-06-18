@@ -66,6 +66,7 @@ public class CounselingServiceImpl implements CounselingService {
 	 * @author 근엽
 	 */
 	@Override
+	@Transactional
 	public String saveCounseling(CounselingRequestDTO counselingRequestDTO) {
 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
 

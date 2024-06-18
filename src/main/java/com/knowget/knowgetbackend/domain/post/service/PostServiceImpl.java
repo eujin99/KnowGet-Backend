@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.knowget.knowgetbackend.domain.notification.service.NotificationService;
@@ -40,6 +41,7 @@ public class PostServiceImpl implements PostService {
 
 	// 매 시 00분 마다 일자리 정보를 가져와 데이터베이스에 저장 및 알림 전송
 	@Scheduled(cron = "0 0 * * * ?")
+	@Transactional
 	public void scheduledFetch() {
 		log.info("post fetching started at {}", LocalDateTime.now());
 		int insertCount = fetchPosts(1, 100);
@@ -79,7 +81,9 @@ public class PostServiceImpl implements PostService {
 	 * @param post 저장할 일자리 정보
 	 * @author Jihwan
 	 */
-	private void notifyUsers(Post post) {
+	@Override
+	@Transactional
+	public void notifyUsers(Post post) {
 		List<User> interestedUsers = userRepository.findByPrefLocationOrPrefJob(post.getGu(), (post.getJobCode()));
 
 		for (User user : interestedUsers) {
@@ -231,23 +235,26 @@ public class PostServiceImpl implements PostService {
 	 * @author 윾진
 	 */
 	@Override
+	@Transactional(readOnly = true)
 	public List<PostResponseDTO> getAllPosts() {
 		// 엔티티를 응답 DTO로 변환하여 반환
-		return postRepository.findAll().stream()
+		return postRepository.findAllByOrderByPostIdDesc().stream()
 			.map(this::convertToDTO)
 			.collect(Collectors.toList());
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PostResponseDTO> getPostsByLocation(String gu) {
-		return postRepository.findByWorkPararBassAdresCnContaining(gu).stream()
+		return postRepository.findByWorkPararBassAdresCnContainingOrderByPostIdDesc(gu).stream()
 			.map(this::convertToDTO)
 			.collect(Collectors.toList());
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<PostResponseDTO> getPostsByJobCode(String code) {
-		return postRepository.findByRcritJssfcCmmnCodeSe(code).stream()
+		return postRepository.findByRcritJssfcCmmnCodeSeOrderByPostIdDesc(code).stream()
 			.map(this::convertToDTO)
 			.collect(Collectors.toList());
 	}

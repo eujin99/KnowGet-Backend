@@ -47,7 +47,7 @@ public class PostResponseDTO {
 	private String joSj; // 구인 제목
 	private String joRegDt; // 등록일
 	private String guiLn; // 모집 요강
-	private String gu; // 근무지 구
+	private String gu; // 근무지(구)
 	private String jobCode; // 변환된 직종 코드
 
 	public PostResponseDTO(Post post) {

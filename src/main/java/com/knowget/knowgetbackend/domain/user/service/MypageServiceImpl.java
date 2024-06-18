@@ -165,7 +165,7 @@ public class MypageServiceImpl implements MypageService {
 	 * @see WrittenSuccessCaseDTO
 	 */
 	@Override
-	@Transactional
+	@Transactional(readOnly = true)
 	public List<WrittenSuccessCaseDTO> getAllSuccessList() {
 		try {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
