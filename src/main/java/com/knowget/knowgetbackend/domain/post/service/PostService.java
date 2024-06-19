@@ -30,6 +30,8 @@ public interface PostService {
 	 */
 	List<PostResponseDTO> getAllPosts();
 
+	PostResponseDTO getPostById(Integer postId);
+
 	// 근무지로 필터링된 게시글 반환
 	List<PostResponseDTO> getPostsByLocation(String gu);
 

@@ -21,6 +21,8 @@ import com.knowget.knowgetbackend.domain.post.repository.PostRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.PostNotFoundException;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -243,6 +245,23 @@ public class PostServiceImpl implements PostService {
 		return postRepository.findAllByOrderByPostIdDesc().stream()
 			.map(this::convertToDTO)
 			.collect(Collectors.toList());
+	}
+
+	/**
+	 * 일자리 공고 ID로 상세 조회
+	 *
+	 * @param postId 일자리 공고 ID
+	 * @return 일자리 공고 상세 정보
+	 * @author Jihwan
+	 */
+	@Override
+	public PostResponseDTO getPostById(Integer postId) {
+		try {
+			Post post = postRepository.findById(postId).orElseThrow(() -> new PostNotFoundException("존재하지 않는 게시글입니다"));
+			return convertToDTO(post);
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 게시글 조회에 실패하였습니다 : " + e.getMessage());
+		}
 	}
 
 	@Override
