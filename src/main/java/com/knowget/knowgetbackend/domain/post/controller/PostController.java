@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,6 +34,18 @@ public class PostController {
 	@GetMapping
 	public List<PostResponseDTO> getAllPosts() {
 		return postService.getAllPosts();
+	}
+
+	/**
+	 * 게시글 ID로 게시글을 조회
+	 *
+	 * @param postId 게시글 ID
+	 * @return 게시글 정보
+	 * @author Jihwan
+	 */
+	@GetMapping("/{postId}")
+	public PostResponseDTO getPostById(@PathVariable Integer postId) {
+		return postService.getPostById(postId);
 	}
 
 	/**
