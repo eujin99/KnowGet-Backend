@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.knowget.knowgetbackend.domain.user.SignInResponse;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignInDTO;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignUpDTO;
-import com.knowget.knowgetbackend.domain.user.service.UserServiceImpl;
+import com.knowget.knowgetbackend.domain.user.service.UserService;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
 import jakarta.validation.Valid;
@@ -23,7 +23,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UserController {
 
-	private final UserServiceImpl userServiceImpl;
+	private final UserService userService;
 
 	/**
 	 * 사용자로부터 입력받은 ID의 중복여부 확인
@@ -35,7 +35,7 @@ public class UserController {
 	@PostMapping("/check-username")
 	public ResponseEntity<Boolean> checkUsername(@RequestBody Map<String, String> request) {
 		String username = request.get("username");
-		boolean exists = userServiceImpl.checkUsername(username);
+		boolean exists = userService.checkUsername(username);
 		return new ResponseEntity<>(exists, HttpStatus.OK);
 	}
 
@@ -48,7 +48,7 @@ public class UserController {
 	 */
 	@PostMapping("/register")
 	public ResponseEntity<ResultMessageDTO> register(@RequestBody UserSignUpDTO userSignUpDTO) {
-		String msg = userServiceImpl.register(userSignUpDTO);
+		String msg = userService.register(userSignUpDTO);
 		return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
 	}
 
@@ -61,7 +61,7 @@ public class UserController {
 	 */
 	@PostMapping("/login")
 	public ResponseEntity<SignInResponse> login(@RequestBody @Valid UserSignInDTO userSignInDTO) {
-		SignInResponse msg = userServiceImpl.login(userSignInDTO);
+		SignInResponse msg = userService.login(userSignInDTO);
 		return new ResponseEntity<>(msg, HttpStatus.OK);
 	}
 
