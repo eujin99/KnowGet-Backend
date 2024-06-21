@@ -16,6 +16,7 @@ import com.knowget.knowgetbackend.domain.successCase.repository.SuccessCaseRepos
 import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
+import com.knowget.knowgetbackend.domain.user.dto.UserInfoDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Bookmark;
@@ -176,6 +177,31 @@ public class MypageServiceImpl implements MypageService {
 				.collect(Collectors.toList());
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 취업 성공사례 게시글 목록 조회에 실패하였습니다 : " + e.getMessage());
+		}
+	}
+
+	/**
+	 * 사용자 정보 조회
+	 *
+	 * @param username 사용자 계정명
+	 * @return 사용자 정보
+	 * @throws UserNotFoundException  사용자를 찾을 수 없을 때
+	 * @throws RequestFailedException 사용자 정보 조회에 실패했을 때
+	 * @author Jihwan
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public UserInfoDTO getUserInfo(String username) {
+		try {
+			User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+			return UserInfoDTO.builder()
+				.username(user.getUsername())
+				.prefLocation(user.getPrefLocation())
+				.prefJob(user.getPrefJob())
+				.build();
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 사용자 정보 조회에 실패하였습니다 : " + e.getMessage());
 		}
 	}
 

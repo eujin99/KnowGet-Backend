@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -16,9 +17,11 @@ import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
+import com.knowget.knowgetbackend.domain.user.dto.UserInfoDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 import com.knowget.knowgetbackend.domain.user.service.MypageService;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -111,6 +114,25 @@ public class MypageController {
 	public ResponseEntity<List<WrittenSuccessCaseDTO>> getSuccessList() {
 
 		return new ResponseEntity<>(mypageService.getAllSuccessList(), HttpStatus.OK);
+	}
+
+	/**
+	 * 사용자 정보 조회
+	 *
+	 * @return 사용자 정보
+	 * @throws RequestFailedException 로그인이 필요할 때
+	 * @author Jihwan
+	 * @see UserInfoDTO
+	 */
+	@GetMapping
+	public ResponseEntity<UserInfoDTO> getUserInfo() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !authentication.isAuthenticated()) {
+			throw new RequestFailedException("로그인이 필요합니다");
+		}
+		String username = authentication.getName();
+		UserInfoDTO userInfoDTO = mypageService.getUserInfo(username);
+		return ResponseEntity.ok(userInfoDTO);
 	}
 
 }
