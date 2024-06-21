@@ -41,7 +41,7 @@ public class BookmarkServiceImpl implements BookmarkService {
 		try {
 			User user = userRepository.findByUsername(bookmarkRequestDTO.getUsername())
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
-			Post post = postRepository.findByJoRegistNo(bookmarkRequestDTO.getJoRegistNo())
+			Post post = postRepository.findById(bookmarkRequestDTO.getPostId())
 				.orElseThrow(() -> new PostNotFoundException("존재하지 않는 공고입니다"));
 			Bookmark bookmark = bookmarkRepository.findByPostAndUser(post, user)
 				.orElse(null);
@@ -54,10 +54,34 @@ public class BookmarkServiceImpl implements BookmarkService {
 				return "북마크 상태가 변경되었습니다 : [북마크=" + result.getIsBookmarked() + "]";
 			} else {
 				bookmark.updateBookmark();
+				bookmarkRepository.save(bookmark);
 				return "북마크 상태가 변경되었습니다 : [북마크=" + bookmark.getIsBookmarked() + "]";
 			}
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 북마크에 실패하였습니다 : " + e.getMessage());
+		}
+	}
+
+	/**
+	 * 북마크 여부 확인
+	 *
+	 * @param username 사용자 ID
+	 * @param postId   구인공고 ID
+	 * @return 북마크 여부 (True or False)
+	 */
+	@Override
+	@Transactional(readOnly = true)
+	public Boolean isBookmarked(String username, Integer postId) {
+		try {
+			User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+			Post post = postRepository.findById(postId)
+				.orElseThrow(() -> new PostNotFoundException("존재하지 않는 공고입니다"));
+			Bookmark bookmark = bookmarkRepository.findByPostAndUser(post, user)
+				.orElse(null);
+			return bookmark != null && bookmark.getIsBookmarked();
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 북마크 여부 확인에 실패하였습니다 : " + e.getMessage());
 		}
 	}
 

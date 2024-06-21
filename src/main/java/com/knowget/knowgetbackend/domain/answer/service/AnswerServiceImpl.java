@@ -59,6 +59,7 @@ public class AnswerServiceImpl implements AnswerService {
 		}
 
 		counseling.updateIsAnswered(true);
+		counselingRepository.save(counseling);
 
 		// String adminId = SecurityContextHolder.getContext().getAuthentication().getName();
 		String adminId = "admin";

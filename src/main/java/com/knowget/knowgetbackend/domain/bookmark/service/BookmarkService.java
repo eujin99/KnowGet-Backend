@@ -6,4 +6,6 @@ public interface BookmarkService {
 
 	String bookmark(BookmarkRequestDTO bookmarkRequestDTO);
 
+	Boolean isBookmarked(String username, Integer postId);
+
 }
