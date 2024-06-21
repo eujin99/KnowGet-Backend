@@ -99,9 +99,9 @@ public class AnswerServiceImpl implements AnswerService {
 	/**
 	 * 답변 삭제
 	 *
-	 * @param id
+	 * @param id 답변 ID
 	 * @return String 삭제 완료 메시지
-	 * @throws AnswerNotFoundException
+	 * @throws AnswerNotFoundException 답변이 존재하지 않을 때 발생하는 예외
 	 * @author 근엽
 	 */
 	@Transactional
@@ -109,10 +109,6 @@ public class AnswerServiceImpl implements AnswerService {
 	public String deleteAnswer(Integer id) {
 		Answer answer = answerRepository.findById(id)
 			.orElseThrow(() -> new AnswerNotFoundException("[ERROR] 존재하지않는 답변입니다."));
-
-		Counseling counseling = counselingRepository.findById(answer.getCounseling().getCounselingId()).orElseThrow(
-			() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
-		counseling.updateIsAnswered(false);
 
 		answerRepository.delete(answer);
 		return "답변이 삭제되었습니다.";
