@@ -3,7 +3,6 @@ package com.knowget.knowgetbackend.domain.counseling.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -12,7 +11,6 @@ import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Counseling;
-import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.CounselingNotFoundException;
 import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
@@ -68,13 +66,10 @@ public class CounselingServiceImpl implements CounselingService {
 	@Override
 	@Transactional
 	public String saveCounseling(CounselingRequestDTO counselingRequestDTO) {
-		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-
-		User user = userRepository.findByUsername(userId)
-			.orElseThrow(() -> new UserNotFoundException("[ERROR] 회원정보가 입력되지 않았습니다."));
 
 		Counseling counseling = Counseling.builder()
-			.user(user)
+			.user(userRepository.findByUsername(counselingRequestDTO.getUsername())
+				.orElseThrow(() -> new UserNotFoundException("[ERROR] 해당 사용자를 찾을 수 없습니다.")))
 			.category(counselingRequestDTO.getCategory())
 			.content(counselingRequestDTO.getContent())
 			.build();

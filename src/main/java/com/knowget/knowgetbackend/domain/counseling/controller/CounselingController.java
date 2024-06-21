@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,6 +17,7 @@ import com.knowget.knowgetbackend.domain.counseling.dto.CounselingRequestDTO;
 import com.knowget.knowgetbackend.domain.counseling.dto.CounselingResponseDTO;
 import com.knowget.knowgetbackend.domain.counseling.service.CounselingService;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -62,6 +65,14 @@ public class CounselingController {
 	@PostMapping
 	public ResponseEntity<ResultMessageDTO> saveCounseling(
 		@RequestBody CounselingRequestDTO counselingRequestDTO) {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !authentication.isAuthenticated()) {
+			throw new RequestFailedException("로그인이 필요합니다");
+		}
+		String username = authentication.getName();
+
+		counselingRequestDTO.setUsername(username);
+
 		String message = counselingService.saveCounseling(counselingRequestDTO);
 
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
