@@ -7,6 +7,7 @@ import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
 import com.knowget.knowgetbackend.domain.user.dto.JobUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.LocationUpdateDTO;
 import com.knowget.knowgetbackend.domain.user.dto.PasswordUpdateDTO;
+import com.knowget.knowgetbackend.domain.user.dto.UserInfoDTO;
 import com.knowget.knowgetbackend.domain.user.dto.WrittenSuccessCaseDTO;
 
 public interface MypageService {
@@ -22,5 +23,7 @@ public interface MypageService {
 	List<CounselingResponseDTO> getCounselingList();
 
 	List<WrittenSuccessCaseDTO> getAllSuccessList();
+
+	UserInfoDTO getUserInfo(String username);
 
 }
