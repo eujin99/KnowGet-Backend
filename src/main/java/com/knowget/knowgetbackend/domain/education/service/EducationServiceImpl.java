@@ -106,7 +106,6 @@ public class EducationServiceImpl implements EducationService {
 	}
 
 	/**
-	 *
 	 * @param url
 	 * @return List<EducationResponseDTO> 교육강의 리스트
 	 * @throws RuntimeException OpenAPI 데이터 가져오기 실패
@@ -159,7 +158,6 @@ public class EducationServiceImpl implements EducationService {
 	}
 
 	/**
-	 *
 	 * @param courseRequestStrDt, courseRequestEndDt
 	 * @return boolean - True/False
 	 * @throws NumberFormatException 날짜 형식 오류
@@ -187,7 +185,7 @@ public class EducationServiceImpl implements EducationService {
 			// 1. 수강신청 종료 일자의 year - 수강신청 시작 일자의 year >= 2
 			// 2. 수강신청 시작&종료 일자의 month가 12를 초과하는 경우
 			// 3. 수강신청 시작&종료 일자의 date가 31을 초과하는 경우
-			if (Math.abs(endYear - startYear) >= 2 && (startMonth > 12 || endMonth > 12) && (startDate > 31
+			if (Math.abs(endYear - startYear) >= 2 || (startMonth > 12 || endMonth > 12) || (startDate > 31
 				|| endDate > 31)) {
 				return false;
 			}
