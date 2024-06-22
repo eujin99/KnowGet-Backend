@@ -205,4 +205,26 @@ public class MypageServiceImpl implements MypageService {
 		}
 	}
 
+	/**
+	 * 사용자 비활성화
+	 *
+	 * @param username 사용자 계정명
+	 * @return 비활성화 성공 여부 메시지
+	 * @throws UserNotFoundException  사용자를 찾을 수 없을 때
+	 * @throws RequestFailedException 사용자 비활성화에 실패했을 때
+	 * @author Jihwan
+	 */
+	@Override
+	public String deactivateUser(String username) {
+		try {
+			User user = userRepository.findByUsername(username)
+				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
+			user.updateIsActive(false);
+			userRepository.save(user);
+			return "사용자(" + user.getUsername() + ")가 비활성화되었습니다";
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 사용자 비활성화에 실패하였습니다 : " + e.getMessage());
+		}
+	}
+
 }
