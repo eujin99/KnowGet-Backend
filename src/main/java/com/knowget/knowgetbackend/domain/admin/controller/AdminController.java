@@ -25,7 +25,8 @@ public class AdminController {
 
 	private final AdminService adminService;
 
-	/** 회원 목록 조회
+	/**
+	 * 회원 목록 조회
 	 *
 	 * @return ResponseEntity<List < User>>
 	 * @author 근엽
@@ -38,16 +39,17 @@ public class AdminController {
 
 	}
 
-	/** 회원 상태 변경
+	/**
+	 * 회원 상태 변경
 	 *
-	 * @param id
-	 * @param adminModifyDTO
-	 * @return ResponseEntity<ResultMessageDTO> 회원 상태
+	 * @param userId         사용자 ID
+	 * @param adminModifyDTO 변경할 사용자 상태
+	 * @return ResponseEntity<ResultMessageDTO> 변경된 회원 상태
 	 */
-	@PatchMapping("/user/{id}")
-	public ResponseEntity<ResultMessageDTO> updateIsActive(@PathVariable("id") Integer id,
+	@PatchMapping("/user/{userId}")
+	public ResponseEntity<ResultMessageDTO> updateIsActive(@PathVariable("userId") Integer userId,
 		@RequestBody AdminModifyDTO adminModifyDTO) {
-		String message = adminService.updateIsActive(id, adminModifyDTO.getIsActive());
+		String message = adminService.updateIsActive(userId, adminModifyDTO.getIsActive());
 
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 

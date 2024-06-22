@@ -36,15 +36,17 @@ public class AdminServiceImpl implements AdminService {
 	/**
 	 * 회원 상태 변경
 	 *
-	 * @param id
-	 * @param isActive
-	 * @return String 회원 상태
+	 * @param userId   사용자 ID
+	 * @param isActive 변경할 사용자 상태
+	 * @return String 변경된 회원 상태
 	 */
 	@Override
 	@Transactional
-	public String updateIsActive(Integer id, Boolean isActive) {
-		User user = userRepository.findById(id).orElseThrow(() -> new UserNotFoundException("[ERROR] 존재하지 않는 사용자입니다."));
+	public String updateIsActive(Integer userId, Boolean isActive) {
+		User user = userRepository.findById(userId)
+			.orElseThrow(() -> new UserNotFoundException("[ERROR] 존재하지 않는 사용자입니다."));
 		user.updateIsActive(isActive);
+		userRepository.save(user);
 		if (!isActive) {
 			return "회원이 비활성화되었습니다.";
 		}

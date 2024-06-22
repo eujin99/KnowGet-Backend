@@ -79,6 +79,7 @@ public class MypageServiceImpl implements MypageService {
 			User user = userRepository.findByUsername(locationUpdateDTO.getUsername())
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 			user.updatePrefLocation(locationUpdateDTO.getLocation());
+			userRepository.save(user);
 			return "근무 희망 지역이 변경되었습니다";
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 근무 희망 지역 변경에 실패하였습니다 : " + e.getMessage());
@@ -102,6 +103,7 @@ public class MypageServiceImpl implements MypageService {
 			User user = userRepository.findByUsername(jobUpdateDTO.getUsername())
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 			user.updatePrefJob(jobUpdateDTO.getJob());
+			userRepository.save(user);
 			return "근무 희망 직종이 변경되었습니다";
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 근무 희망 직종 변경에 실패하였습니다 : " + e.getMessage());
@@ -129,6 +131,7 @@ public class MypageServiceImpl implements MypageService {
 			User user = userRepository.findByUsername(passwordUpdateDTO.getUsername())
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
 			user.updatePassword(passwordEncoder.encode(passwordUpdateDTO.getPassword()));
+			userRepository.save(user);
 			return "비밀번호가 변경되었습니다";
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 비밀번호 변경에 실패하였습니다 : " + e.getMessage());
