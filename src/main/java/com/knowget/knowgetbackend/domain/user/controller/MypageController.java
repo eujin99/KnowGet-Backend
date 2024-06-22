@@ -135,4 +135,22 @@ public class MypageController {
 		return ResponseEntity.ok(userInfoDTO);
 	}
 
+	/**
+	 * 사용자 비활성화
+	 *
+	 * @return 비활성화 성공 여부 메시지
+	 * @throws RequestFailedException 로그인이 필요할 때
+	 * @author Jihwan
+	 */
+	@PatchMapping("/deactivate")
+	public ResponseEntity<ResultMessageDTO> deactivateUser() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		if (authentication == null || !authentication.isAuthenticated()) {
+			throw new RequestFailedException("로그인이 필요합니다");
+		}
+		String username = authentication.getName();
+		String message = mypageService.deactivateUser(username);
+		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
+	}
+
 }

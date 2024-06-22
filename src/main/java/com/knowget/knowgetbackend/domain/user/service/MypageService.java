@@ -26,4 +26,6 @@ public interface MypageService {
 
 	UserInfoDTO getUserInfo(String username);
 
+	String deactivateUser(String username);
+
 }
