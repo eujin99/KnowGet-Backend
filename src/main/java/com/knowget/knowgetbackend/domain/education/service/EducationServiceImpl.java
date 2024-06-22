@@ -168,7 +168,7 @@ public class EducationServiceImpl implements EducationService {
 	// 2. 수강신청 시작&종료 일자의 month가 12를 초과하는 경우
 	// 3. 수강신청 시작&종료 일자의 date가 31을 초과하는 경우
 	// 를 false로 반환하였고, true만 return하는 것으로..! -> 반환 타입 : boolean
-	private boolean dateFiltering(String courseRequestStrDt, String courseRequestEndDt) {
+	protected boolean dateFiltering(String courseRequestStrDt, String courseRequestEndDt) {
 		try {
 			// 문자열 형식의 날짜 데이터를 정수형으로 변환
 			// 형식: 'yyyyMMdd' or 'yyyyMMddHHmm'로 이루어져 있음.
