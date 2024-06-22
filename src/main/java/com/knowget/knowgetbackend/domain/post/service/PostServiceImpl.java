@@ -160,7 +160,7 @@ public class PostServiceImpl implements PostService {
 	 * @return 추출된 구 이름
 	 * @author Jihwan
 	 */
-	private String extractGu(String guiLn) {
+	protected String extractGu(String guiLn) {
 		Pattern locationPattern = Pattern.compile("서울\\s(\\S+구)");
 		Matcher locationMatcher = locationPattern.matcher(guiLn);
 		if (locationMatcher.find()) {
@@ -208,7 +208,7 @@ public class PostServiceImpl implements PostService {
 	 * @see #JOB_CODE_PATTERNS
 	 * @see #createJobCodePatterns()
 	 */
-	private String convertJobCode(String code) {
+	protected String convertJobCode(String code) {
 		for (Map.Entry<Pattern, String> entry : JOB_CODE_PATTERNS.entrySet()) {
 			if (entry.getKey().matcher(code).find()) {
 				return entry.getValue();
