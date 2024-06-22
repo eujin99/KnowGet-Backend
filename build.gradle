@@ -68,6 +68,9 @@ dependencies {
 
     //json 추가
     implementation 'org.json:json:20231013'
+
+    // s3 추가
+    implementation "com.amazonaws:aws-java-sdk-s3:1.12.281"
 }
 
 tasks.named('test') {
