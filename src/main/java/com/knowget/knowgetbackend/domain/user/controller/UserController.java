@@ -9,13 +9,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.knowget.knowgetbackend.domain.user.SignInResponse;
-import com.knowget.knowgetbackend.domain.user.dto.UserSignInDTO;
 import com.knowget.knowgetbackend.domain.user.dto.UserSignUpDTO;
 import com.knowget.knowgetbackend.domain.user.service.UserService;
+import com.knowget.knowgetbackend.global.dto.AuthRequest;
+import com.knowget.knowgetbackend.global.dto.AuthResponse;
+import com.knowget.knowgetbackend.global.dto.RefreshTokenRequest;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+import com.knowget.knowgetbackend.global.service.AuthService;
 
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
 @RestController
@@ -24,6 +25,7 @@ import lombok.RequiredArgsConstructor;
 public class UserController {
 
 	private final UserService userService;
+	private final AuthService authService;
 
 	/**
 	 * 사용자로부터 입력받은 ID의 중복여부 확인
@@ -40,36 +42,57 @@ public class UserController {
 	}
 
 	/**
-	 * 사용자로부터 입력받은 값들로 회원가입을 진행
+	 * 사용자 회원가입
 	 *
-	 * @param userSignUpDTO 사용자가 입력한 ID, 이름, 비밀번호, 전화번호, 이메일
+	 * @param userSignUpDTO 사용자 회원가입 정보 (ID, 비밀번호, 선호지역, 선호직종)
 	 * @return 회원가입 성공여부에 따른 결과 메시지
 	 * @author Jihwan
 	 */
 	@PostMapping("/register")
 	public ResponseEntity<ResultMessageDTO> register(@RequestBody UserSignUpDTO userSignUpDTO) {
-		String msg = userService.register(userSignUpDTO);
-		return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
+		try {
+			String msg = userService.register(userSignUpDTO);
+			return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
+		} catch (Exception e) {
+			String errorMsg = "[Error] 회원가입 도중 오류가 발생했습니다 : " + e.getMessage();
+			return new ResponseEntity<>(new ResultMessageDTO(errorMsg), HttpStatus.BAD_REQUEST);
+		}
 	}
 
 	/**
 	 * 사용자 로그인
 	 *
-	 * @param userSignInDTO 사용자가 입력한 ID, 비밀번호
-	 * @return 로그인 성공여부에 따른 결과 메시지
+	 * @param authRequest 사용자가 입력한 ID, 비밀번호
+	 * @return 로그인 성공여부에 따른 결과 메시지와 토큰
 	 * @author Jihwan
 	 */
 	@PostMapping("/login")
-	public ResponseEntity<SignInResponse> login(@RequestBody @Valid UserSignInDTO userSignInDTO) {
-		SignInResponse msg = userService.login(userSignInDTO);
-		return new ResponseEntity<>(msg, HttpStatus.OK);
+	public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+		try {
+			AuthResponse authResponse = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
+			return new ResponseEntity<>(authResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ResultMessageDTO("[Error] 로그인 도중 오류가 발생했습니다 : " + e.getMessage()),
+				HttpStatus.BAD_REQUEST);
+		}
 	}
 
-	// @PostMapping("/logout")
-	// public ResponseEntity<String> logout(HttpServletRequest request) {
-	// 	String token = request.getHeader("Authorization");
-	// 	generalMemberService.logout(token);
-	// 	return new ResponseEntity<>("로그아웃 되었습니다.", HttpStatus.OK);
-	// }
+	/**
+	 * 토큰 갱신
+	 *
+	 * @param request 토큰 갱신 요청 (refreshToken)
+	 * @return 갱신된 토큰 (accessToken, refreshToken)
+	 * @author Jihwan
+	 */
+	@PostMapping("/refresh-token")
+	public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request) {
+		try {
+			AuthResponse authResponse = authService.refreshToken(request.getRefreshToken());
+			return ResponseEntity.ok(authResponse);
+		} catch (Exception e) {
+			return ResponseEntity.badRequest()
+				.body(new ResultMessageDTO("[Error] 토큰 갱신 도중 오류가 발생했습니다 : " + e.getMessage()));
+		}
+	}
 
 }

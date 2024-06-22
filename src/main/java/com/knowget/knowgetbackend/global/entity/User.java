@@ -2,6 +2,8 @@ package com.knowget.knowgetbackend.global.entity;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.knowget.knowgetbackend.global.common.BaseTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseTime {
 
 	@Id
 	@Column(name = "user_id")
@@ -40,12 +42,16 @@ public class User {
 	@ColumnDefault("true")
 	private Boolean isActive;
 
+	@Column(name = "role", nullable = false)
+	private String role;
+
 	@Builder
-	public User(String username, String password, String prefLocation, String prefJob) {
+	public User(String username, String password, String prefLocation, String prefJob, String role) {
 		this.username = username;
 		this.password = password;
 		this.prefLocation = prefLocation;
 		this.prefJob = prefJob;
+		this.role = role;
 		this.isActive = true;
 	}
 

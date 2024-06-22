@@ -167,6 +167,7 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 		SuccessCase successCase = successCaseRepository.findById(caseId)
 			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] : 해당 게시글이 존재하지 않습니다"));
 		successCase.updateIsApproved(status);
+		successCaseRepository.save(successCase);
 		// successCaseRepository.updateApprovalStatus(caseId, status);
 		return caseId + "번 취업 성공사례 게시가 " + result;
 	}

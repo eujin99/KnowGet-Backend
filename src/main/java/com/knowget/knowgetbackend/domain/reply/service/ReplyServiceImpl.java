@@ -95,6 +95,7 @@ public class ReplyServiceImpl implements ReplyService {
 			Reply reply = replyRepository.findById(replyUpdateDTO.getReplyId())
 				.orElseThrow(() -> new ReplyNotFoundException("존재하지 않는 답글입니다"));
 			reply.updateContent(replyUpdateDTO.getContent());
+			replyRepository.save(reply);
 			return "답글이 수정되었습니다 : [ReplyId=" + reply.getReplyId() + "]";
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 답글 수정에 실패했습니다 : " + e.getMessage());
