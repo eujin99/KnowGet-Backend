@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
@@ -68,6 +69,11 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(NotificationNotFoundException.class)
 	public ResponseEntity<ResultMessageDTO> handleNotificationNotFoundException(NotificationNotFoundException e) {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(MaxUploadSizeExceededException.class)
+	public ResponseEntity<ResultMessageDTO> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+		return new ResponseEntity<>(new ResultMessageDTO("File size exceeds limit!"), HttpStatus.PAYLOAD_TOO_LARGE);
 	}
 
 }

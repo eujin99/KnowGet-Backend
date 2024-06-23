@@ -23,8 +23,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class AwsS3Util {
-	@Value("${bucket1.name}")
+public class AwsS3Util2 {
+	@Value("${bucket2.name}")
 	private String bucketName;
 
 	private final AmazonS3 s3Client;
@@ -33,7 +33,6 @@ public class AwsS3Util {
 
 		if (file == null || file.isEmpty())
 			return "";
-
 		// 파일 크기 체크
 		if (file.getSize() > 52428800) { // 50MB = 50 * 1024 * 1024
 			throw new MaxUploadSizeExceededException(file.getSize());
@@ -67,9 +66,9 @@ public class AwsS3Util {
 		return mergedUrl.toString();
 	}
 
-	public byte[] downloadFile(String image) {
+	public byte[] downloadFile(String document) {
 
-		String filename = image.substring(image.lastIndexOf('/') + 1);
+		String filename = document.substring(document.lastIndexOf('/') + 1);
 
 		S3Object s3Object = s3Client.getObject(bucketName, filename);
 		S3ObjectInputStream inputStream = s3Object.getObjectContent();
