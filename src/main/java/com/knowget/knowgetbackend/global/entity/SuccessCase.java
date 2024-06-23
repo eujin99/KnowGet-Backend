@@ -39,9 +39,9 @@ public class SuccessCase extends BaseTime {
 	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
 
-	@Column(name = "is_approved", nullable = false, columnDefinition = "TINYINT(1)")
+	@Column(name = "is_approved", nullable = false)
 	@ColumnDefault("0")
-	private Short isApproved;
+	private Integer isApproved;
 
 	@Builder
 	public SuccessCase(User user, String title, String content) {
@@ -59,7 +59,7 @@ public class SuccessCase extends BaseTime {
 		this.content = content;
 	}
 
-	public void updateIsApproved(Short isApproved) {
+	public void updateIsApproved(Integer isApproved) {
 		this.isApproved = isApproved;
 	}
 

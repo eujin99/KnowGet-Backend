@@ -21,9 +21,9 @@ import org.springframework.web.multipart.MultipartFile;
 import com.knowget.knowgetbackend.domain.documentTransfer.repository.DocumentTransferRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util2;
-import com.knowget.knowgetbackend.global.entity.Admin;
 import com.knowget.knowgetbackend.global.entity.Document;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
+import com.knowget.knowgetbackend.global.entity.User;
 
 class DocumentTransferServiceImplTest {
 	@Mock
@@ -52,13 +52,16 @@ class DocumentTransferServiceImplTest {
 
 		List<MultipartFile> files = Arrays.asList(file1, file2);
 
-		Admin admin = Admin.builder()
+		User admin = User.builder()
 			.username("admin")
 			.password("password")
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		JobGuide jobGuide = JobGuide.builder()
-			.admin(admin)
+			.user(admin)
 			.title("Test Title")
 			.content("Test Content")
 			.build();

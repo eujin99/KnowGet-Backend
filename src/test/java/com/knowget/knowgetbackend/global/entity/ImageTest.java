@@ -7,19 +7,22 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class ImageTest {
-	private Admin admin;
+	private User admin;
 	private JobGuide jobGuide;
 
 	@BeforeEach
 	@DisplayName("설정 - Admin 및 JobGuide 객체 생성")
 	public void setUp() {
-		admin = Admin.builder()
+		admin = User.builder()
 			.username("admin")
 			.password("password")
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		jobGuide = JobGuide.builder()
-			.admin(admin)
+			.user(admin)
 			.title("Sample Job Guide")
 			.content("This is a sample job guide content")
 			.build();

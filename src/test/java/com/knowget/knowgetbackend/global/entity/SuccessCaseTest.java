@@ -45,7 +45,7 @@ class SuccessCaseTest {
 		assertThat(successCase.getUser()).isEqualTo(user);
 		assertThat(successCase.getTitle()).isEqualTo(title);
 		assertThat(successCase.getContent()).isEqualTo(content);
-		assertThat(successCase.getIsApproved()).isEqualTo((short)0);
+		assertThat(successCase.getIsApproved()).isEqualTo(0);
 	}
 
 	@Test
@@ -88,7 +88,7 @@ class SuccessCaseTest {
 	@DisplayName("SuccessCase 엔티티 승인 상태 업데이트 테스트")
 	public void testUpdateIsApproved() {
 		// Given
-		Short newIsApproved = 1;
+		Integer newIsApproved = 1;
 
 		// When
 		successCase.updateIsApproved(newIsApproved);

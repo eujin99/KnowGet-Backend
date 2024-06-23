@@ -12,13 +12,16 @@ class DocumentTest {
 	@BeforeEach
 	@DisplayName("설정 - Admin 및 JobGuide 객체 생성")
 	public void setUp() {
-		Admin admin = Admin.builder()
+		User admin = User.builder()
 			.username("admin")
 			.password("password")
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		jobGuide = JobGuide.builder()
-			.admin(admin)
+			.user(admin)
 			.title("Sample Job Guide")
 			.content("This is a sample job guide content")
 			.build();

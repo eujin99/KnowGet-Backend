@@ -87,7 +87,7 @@ public class CounselingServiceImplTest {
 
 		assertThatThrownBy(() -> counselingService.getCounselingById(1))
 			.isInstanceOf(CounselingNotFoundException.class)
-			.hasMessageContaining("[ERROR] 해당 상담을 찾을 수 없습니다.");
+			.hasMessageContaining("[Error] 해당 상담을 찾을 수 없습니다.");
 	}
 
 	@Test
@@ -119,6 +119,6 @@ public class CounselingServiceImplTest {
 
 		assertThatThrownBy(() -> counselingService.saveCounseling(requestDTO))
 			.isInstanceOf(UserNotFoundException.class)
-			.hasMessageContaining("[ERROR] 해당 사용자를 찾을 수 없습니다.");
+			.hasMessageContaining("[Error] 해당 사용자를 찾을 수 없습니다.");
 	}
 }

@@ -1,5 +1,7 @@
 package com.knowget.knowgetbackend.domain.jobGuide.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,16 +26,22 @@ public class JobGuideController {
 
 	/**
 	 * 취업가이드 목록 조회
+	 *
 	 * @return responseEntity에 취업가이드 목록 담고, 반환함 !!
 	 * @author 유진
 	 */
 	@GetMapping
 	public ResponseEntity<?> getAllJobGuides() {
-		return ResponseEntity.ok(jobGuideService.getAllJobGuides());
+		try {
+			return ResponseEntity.ok(jobGuideService.getAllJobGuides());
+		} catch (Exception e) {
+			return ResponseEntity.badRequest().body(new ArrayList<>());
+		}
 	}
 
 	/**
 	 * 특정 취업가이드 조회 (게시글 id로 조회함)
+	 *
 	 * @param id 조회할 취업가이드 게시글 id
 	 * @return responseEntity에 해당 id 게시글 담아서 반환함 !!
 	 * @author 유진
@@ -45,6 +53,7 @@ public class JobGuideController {
 
 	/**
 	 * 취업가이드 게시글 생성
+	 *
 	 * @param jobGuideRequestDTO 게시글 정보
 	 * @return responseEntity에 생성된 게시글 담아서 반환.
 	 * @author 유진
@@ -55,8 +64,9 @@ public class JobGuideController {
 	}
 
 	/**
-	 * 취업가이드 게시글ㄹ 수정
-	 * @param id 게시글 id
+	 * 취업가이드 게시글 수정
+	 *
+	 * @param id                 게시글 id
 	 * @param jobGuideRequestDTO 수정할 게시글 정보
 	 * @return responseEntity에 수정된 게시글 담아 반환
 	 * @author 유진
@@ -69,6 +79,7 @@ public class JobGuideController {
 
 	/**
 	 * 취업가이드 게시글 삭제
+	 *
 	 * @param id 삭제할 게시글 id
 	 * @return entity에 삭제 완료 상태 반환함..
 	 * @author 유진

@@ -17,7 +17,7 @@ public class SuccessCaseResponseDTO {
 	private String username;
 	private String title;
 	private String content;
-	private Short isApproved;
+	private Integer isApproved;
 	private LocalDateTime createdDate;
 	private LocalDateTime updatedDate;
 

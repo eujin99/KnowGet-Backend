@@ -6,13 +6,15 @@ import java.util.stream.Collectors;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideRequestDTO;
 import com.knowget.knowgetbackend.domain.jobGuide.dto.JobGuideResponseDTO;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
-import com.knowget.knowgetbackend.global.entity.Admin;
+import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
+import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 import com.knowget.knowgetbackend.global.exception.ResourceNotFoundException;
+import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -21,10 +23,7 @@ import lombok.RequiredArgsConstructor;
 public class JobGuideServiceImpl implements JobGuideService {
 
 	private final JobGuideRepository jobGuideRepository;
-	private final AdminRepository adminRepository;
-	// AdminRepository 있다고 치고!!
-	// 나중에 만들어줄거다요.
-	// 일단 admin 계정 admin으로 만들어뒀어욥. adminId = 3 입니다 !! (게시글 등록 때 사용)
+	private final UserRepository userRepository;
 
 	/**
 	 * 취업가이드 게시글 목록 조회
@@ -51,15 +50,19 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Override
 	@Transactional(readOnly = true)
 	public JobGuideResponseDTO getJobGuideById(Integer id) {
-		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
-		if (jobGuide == null) {
-			throw new ResourceNotFoundException("[Error] : 등록된" + id + "번 취업가이드가 없습니다. ");
+		try {
+			JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
+			if (jobGuide == null) {
+				throw new ResourceNotFoundException("등록된" + id + "번 취업가이드가 없습니다");
+			}
+			return convertToDTO(jobGuide);
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] : 취업가이드 조회에 실패했습니다 : " + e.getMessage());
 		}
-		return convertToDTO(jobGuide);
 	}
 
 	/**
-	 * 새로운 취업가이드 겍시글 생성
+	 * 새로운 취업가이드 게시글 생성
 	 *
 	 * @param jobGuideRequestDTO 생성할 게시글 정보
 	 * @return 생성됭 게시글
@@ -69,16 +72,22 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Override
 	@Transactional
 	public JobGuideResponseDTO createJobGuide(JobGuideRequestDTO jobGuideRequestDTO) {
-		Admin admin = adminRepository.findByUsername(jobGuideRequestDTO.getUsername());
+		try {
+			User admin = userRepository.findByUsername(jobGuideRequestDTO.getUsername())
+				.orElseThrow(
+					() -> new UserNotFoundException("등록된" + jobGuideRequestDTO.getUsername() + "이라는 사용자가 없습니다. "));
 
-		JobGuide jobGuide = JobGuide.builder()
-			.admin(admin)
-			.title(jobGuideRequestDTO.getTitle())
-			.content(jobGuideRequestDTO.getContent())
-			.build();
+			JobGuide jobGuide = JobGuide.builder()
+				.user(admin)
+				.title(jobGuideRequestDTO.getTitle())
+				.content(jobGuideRequestDTO.getContent())
+				.build();
 
-		jobGuideRepository.save(jobGuide);
-		return convertToDTO(jobGuide);
+			jobGuideRepository.save(jobGuide);
+			return convertToDTO(jobGuide);
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] : 가이드 작성에 실패했습니다 : " + e.getMessage());
+		}
 	}
 
 	/**
@@ -96,7 +105,7 @@ public class JobGuideServiceImpl implements JobGuideService {
 		JobGuide jobGuide = jobGuideRepository.findById(id).orElse(null);
 
 		if (jobGuide == null) {
-			throw new ResourceNotFoundException("[Error] : 등록된" + id + "번 취업가이드가 없습니다. 그러니 수정할 수 없겠죠?");
+			throw new ResourceNotFoundException("[Error] : 등록된" + id + "번 취업가이드가 없습니다");
 		}
 
 		jobGuide.updateTitle(jobGuideRequestDTO.getTitle());
@@ -115,11 +124,14 @@ public class JobGuideServiceImpl implements JobGuideService {
 	@Override
 	@Transactional
 	public void deleteJobGuide(Integer id) {
-		if (!jobGuideRepository.existsById(id)) {
-			throw new ResourceNotFoundException(
-				"[Error] : 등록된" + id + "번 취업가이드가 애초에 없습니다. 삭제할 것이 없어요. 있었는데 ? 아뇨 그냥 없어요.");
+		try {
+			if (!jobGuideRepository.existsById(id)) {
+				throw new ResourceNotFoundException("등록된" + id + "번 취업가이드가 없습니다");
+			}
+			jobGuideRepository.deleteById(id);
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] : 취업가이드 삭제에 실패했습니다 : " + e.getMessage());
 		}
-		jobGuideRepository.deleteById(id);
 	}
 
 	/**
@@ -132,6 +144,7 @@ public class JobGuideServiceImpl implements JobGuideService {
 	private JobGuideResponseDTO convertToDTO(JobGuide jobGuide) {
 		return new JobGuideResponseDTO(
 			jobGuide.getGuideId(),
+			jobGuide.getUser().getUsername(),
 			jobGuide.getTitle(),
 			jobGuide.getContent(),
 			jobGuide.getCreatedDate(),

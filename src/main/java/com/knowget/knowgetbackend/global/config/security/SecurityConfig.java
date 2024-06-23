@@ -28,7 +28,8 @@ public class SecurityConfig {
 
 	private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
-	private final String[] allowedUrls = {"/api/v1/user/**"};
+	private final String[] allowedUrls = {"/api/v1/user/**", "/api/v1/posts/**", "/api/v1/education/**"};
+	private final String[] protectedUrls = {"/api/v1/mypage/**", "/api/v1/notification/**", "/api/v1/bookmark/**"};
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {

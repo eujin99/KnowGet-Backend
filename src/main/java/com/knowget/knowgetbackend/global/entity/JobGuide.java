@@ -28,8 +28,8 @@ public class JobGuide extends BaseTime {
 	private Integer guideId;
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "admin_id", nullable = false)
-	private Admin admin;
+	@JoinColumn(name = "user_id", nullable = false)
+	private User user; // 작성자 (관리자)
 
 	@Column(name = "title", nullable = false)
 	private String title;
@@ -38,8 +38,8 @@ public class JobGuide extends BaseTime {
 	private String content;
 
 	@Builder
-	public JobGuide(Admin admin, String title, String content) {
-		this.admin = admin;
+	public JobGuide(User user, String title, String content) {
+		this.user = user;
 		this.title = title;
 		this.content = content;
 	}

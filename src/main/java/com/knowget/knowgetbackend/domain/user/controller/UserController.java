@@ -95,7 +95,7 @@ public class UserController {
 
 		if (refreshToken == null || !jwtUtil.validateToken(refreshToken)) {
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-				.body(new ResultMessageDTO("[Error] : 유효하지 않은 refreshToken"));
+				.body(new ResultMessageDTO("유효하지 않은 refreshToken"));
 		}
 
 		String username = jwtUtil.getUsernameFromToken(request.getRefreshToken());

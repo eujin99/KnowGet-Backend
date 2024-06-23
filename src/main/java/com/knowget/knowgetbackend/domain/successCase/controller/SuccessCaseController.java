@@ -72,7 +72,7 @@ public class SuccessCaseController {
 	// postman 사용법 : Patch으로 요청 route : http://localhost:8080/api/v1/success-case/approval/{caseId}
 	@PatchMapping("/approval/{caseId}/{status}")
 	public ResponseEntity<ResultMessageDTO> updateSuccessCaseApproval(@PathVariable Integer caseId,
-		@PathVariable Short status) {
+		@PathVariable Integer status) {
 		String updateResult = successCaseService.updateSuccessCaseApproval(caseId, status);
 		return ResponseEntity.ok(new ResultMessageDTO(updateResult));
 	}

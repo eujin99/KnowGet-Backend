@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.admin.dto.AdminResponseDTO;
 import com.knowget.knowgetbackend.domain.admin.dto.AdminSignupDTO;
-import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -20,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AdminServiceImpl implements AdminService {
 
-	private final AdminRepository adminRepository;
 	private final UserRepository userRepository;
 	private final PasswordEncoder passwordEncoder;
 
@@ -32,8 +31,11 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	@Transactional(readOnly = true)
 	public List<AdminResponseDTO> getAllUsers() {
-
-		return userRepository.findAll().stream().map(AdminResponseDTO::new).collect(Collectors.toList());
+		try {
+			return userRepository.findByRole("USER").stream().map(AdminResponseDTO::new).collect(Collectors.toList());
+		} catch (Exception e) {
+			throw new RequestFailedException("[Error] 회원 목록 조회에 실패했습니다 : " + e.getMessage());
+		}
 	}
 
 	/**
@@ -47,7 +49,7 @@ public class AdminServiceImpl implements AdminService {
 	@Transactional
 	public String updateIsActive(Integer userId, Boolean isActive) {
 		User user = userRepository.findById(userId)
-			.orElseThrow(() -> new UserNotFoundException("[ERROR] 존재하지 않는 사용자입니다."));
+			.orElseThrow(() -> new UserNotFoundException("[Error] 존재하지 않는 사용자입니다."));
 		user.updateIsActive(isActive);
 		userRepository.save(user);
 		if (!isActive) {
@@ -56,6 +58,14 @@ public class AdminServiceImpl implements AdminService {
 		return "회원이 활성화되었습니다.";
 	}
 
+	/**
+	 * 관리자 회원가입
+	 *
+	 * @param adminSignupDTO 관리자 회원가입 정보
+	 * @return String 회원가입 완료 메시지
+	 * @throws IllegalArgumentException 이미 존재하는 관리자일 경우
+	 * @author Jihwan
+	 */
 	@Transactional
 	public String register(AdminSignupDTO adminSignupDTO) {
 		if (userRepository.findByUsername(adminSignupDTO.getUsername()).isPresent()) {

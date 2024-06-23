@@ -15,7 +15,7 @@ public class WrittenSuccessCaseDTO {
 
 	private String title;
 	private String content;
-	private Short isApproved;
+	private Integer isApproved;
 	private LocalDateTime createdDate;
 
 	public WrittenSuccessCaseDTO(SuccessCase successCase) {
