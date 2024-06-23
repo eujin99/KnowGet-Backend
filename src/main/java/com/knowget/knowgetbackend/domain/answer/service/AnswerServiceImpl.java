@@ -8,7 +8,6 @@ import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
 import com.knowget.knowgetbackend.domain.answer.repository.AnswerRepository;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
-import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Answer;
 import com.knowget.knowgetbackend.global.entity.Counseling;
 import com.knowget.knowgetbackend.global.exception.AnswerNotFoundException;
@@ -21,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 public class AnswerServiceImpl implements AnswerService {
 
 	private final AnswerRepository answerRepository;
-	private final UserRepository userRepository;
 	private final CounselingRepository counselingRepository;
 
 	/**

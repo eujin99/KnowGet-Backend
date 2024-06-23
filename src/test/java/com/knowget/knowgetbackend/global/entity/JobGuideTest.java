@@ -8,17 +8,20 @@ import org.junit.jupiter.api.Test;
 
 class JobGuideTest {
 	private JobGuide jobGuide;
-	private Admin admin;
+	private User admin;
 
 	@BeforeEach
 	public void setUp() {
-		admin = Admin.builder()
+		admin = User.builder()
 			.username("adminuser")
 			.password("password")
+			.prefJob("NULL")
+			.prefLocation("NULL")
+			.role("ADMIN")
 			.build();
 
 		jobGuide = JobGuide.builder()
-			.admin(admin)
+			.user(admin)
 			.title("Job Guide Title")
 			.content("This is job guide content.")
 			.build();
@@ -28,19 +31,19 @@ class JobGuideTest {
 	@DisplayName("JobGuide 엔티티 생성 테스트")
 	public void testCreateJobGuide() {
 		// Given
-		Admin admin = this.admin;
+		User admin = this.admin;
 		String title = "Job Guide Title";
 		String content = "This is job guide content.";
 
 		// When
 		JobGuide jobGuide = JobGuide.builder()
-			.admin(admin)
+			.user(admin)
 			.title(title)
 			.content(content)
 			.build();
 
 		// Then
-		assertThat(jobGuide.getAdmin()).isEqualTo(admin);
+		assertThat(jobGuide.getUser()).isEqualTo(admin);
 		assertThat(jobGuide.getTitle()).isEqualTo(title);
 		assertThat(jobGuide.getContent()).isEqualTo(content);
 	}

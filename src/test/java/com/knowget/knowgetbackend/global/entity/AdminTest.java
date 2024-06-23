@@ -15,9 +15,12 @@ class AdminTest {
 		String password = "password";
 
 		// When
-		Admin admin = Admin.builder()
+		User admin = User.builder()
 			.username(username)
 			.password(password)
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		// Then
@@ -29,7 +32,7 @@ class AdminTest {
 	@DisplayName("Admin 엔티티 기본 생성자 테스트")
 	public void testDefaultConstructor() {
 		// When
-		Admin admin = new Admin();
+		User admin = new User();
 
 		// Then
 		assertThat(admin).isNotNull();

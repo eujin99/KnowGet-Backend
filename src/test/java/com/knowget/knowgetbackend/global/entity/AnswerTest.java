@@ -9,7 +9,7 @@ import org.junit.jupiter.api.Test;
 class AnswerTest {
 	private Answer answer;
 	private Counseling counseling;
-	private Admin admin;
+	private User admin;
 
 	@BeforeEach
 	public void setUp() {
@@ -24,14 +24,16 @@ class AnswerTest {
 			.content("This is a test content.")
 			.build();
 
-		admin = Admin.builder()
+		admin = User.builder()
 			.username("admin")
 			.password("password")
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		answer = Answer.builder()
 			.counseling(counseling)
-			.admin(admin)
 			.content("This is an answer")
 			.build();
 	}
@@ -41,19 +43,17 @@ class AnswerTest {
 	public void testCreateAnswer() {
 		// Given
 		Counseling counseling = this.counseling;
-		Admin admin = this.admin;
+		User admin = this.admin;
 		String content = "This is an answer";
 
 		// When
 		Answer answer = Answer.builder()
 			.counseling(counseling)
-			.admin(admin)
 			.content(content)
 			.build();
 
 		// Then
 		assertThat(answer.getCounseling()).isEqualTo(counseling);
-		assertThat(answer.getAdmin()).isEqualTo(admin);
 		assertThat(answer.getContent()).isEqualTo(content);
 	}
 

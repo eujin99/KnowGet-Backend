@@ -13,13 +13,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerModfiyDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
 import com.knowget.knowgetbackend.domain.answer.repository.AnswerRepository;
 import com.knowget.knowgetbackend.domain.counseling.repository.CounselingRepository;
-import com.knowget.knowgetbackend.global.entity.Admin;
+import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Answer;
 import com.knowget.knowgetbackend.global.entity.Counseling;
 import com.knowget.knowgetbackend.global.entity.User;
@@ -31,7 +30,7 @@ class AnswerServiceImplTest {
 	private AnswerRepository answerRepository;
 
 	@Mock
-	private AdminRepository adminRepository;
+	private UserRepository userRepository;
 
 	@Mock
 	private CounselingRepository counselingRepository;
@@ -41,7 +40,7 @@ class AnswerServiceImplTest {
 
 	private Answer answer;
 	private Counseling counseling;
-	private Admin admin;
+	private User admin;
 	private User user;
 
 	@BeforeEach
@@ -55,9 +54,12 @@ class AnswerServiceImplTest {
 			.prefJob("Developer")
 			.build();
 
-		admin = Admin.builder()
+		admin = User.builder()
 			.username("admin")
 			.password("password")
+			.prefLocation("NULL")
+			.prefJob("NULL")
+			.role("ADMIN")
 			.build();
 
 		counseling = Counseling.builder()
@@ -68,7 +70,6 @@ class AnswerServiceImplTest {
 
 		answer = Answer.builder()
 			.counseling(counseling)
-			.admin(admin)
 			.content("This is a test answer.")
 			.build();
 	}
@@ -101,7 +102,6 @@ class AnswerServiceImplTest {
 	@DisplayName("답변 작성 테스트 - 성공")
 	void testSaveAnswer() {
 		when(counselingRepository.findById(anyInt())).thenReturn(Optional.of(counseling));
-		when(adminRepository.findByUsername(anyString())).thenReturn(admin);
 		when(answerRepository.save(any(Answer.class))).thenReturn(answer);
 
 		AnswerRequestDTO requestDTO = new AnswerRequestDTO();
@@ -112,7 +112,6 @@ class AnswerServiceImplTest {
 
 		assertThat(result).isEqualTo("답변이 저장되었습니다.");
 		verify(counselingRepository, times(1)).findById(anyInt());
-		verify(adminRepository, times(1)).findByUsername(anyString());
 		verify(answerRepository, times(1)).save(any(Answer.class));
 	}
 
@@ -129,7 +128,7 @@ class AnswerServiceImplTest {
 			.isInstanceOf(CounselingNotFoundException.class)
 			.hasMessageContaining("해당 상담을 찾을 수 없습니다.");
 		verify(counselingRepository, times(1)).findById(anyInt());
-		verify(adminRepository, never()).findByUsername(anyString());
+		verify(userRepository, never()).findByUsername(anyString());
 		verify(answerRepository, never()).save(any(Answer.class));
 	}
 
@@ -174,7 +173,7 @@ class AnswerServiceImplTest {
 		assertThat(result).isEqualTo("답변이 삭제되었습니다.");
 		verify(answerRepository, times(1)).findById(anyInt());
 		verify(answerRepository, times(1)).delete(any(Answer.class));
-		
+
 	}
 
 	@Test
