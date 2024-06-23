@@ -7,14 +7,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.knowget.knowgetbackend.domain.admin.dto.AdminModifyDTO;
 import com.knowget.knowgetbackend.domain.admin.dto.AdminResponseDTO;
+import com.knowget.knowgetbackend.domain.admin.dto.AdminSignupDTO;
 import com.knowget.knowgetbackend.domain.admin.service.AdminService;
+import com.knowget.knowgetbackend.global.dto.AuthRequest;
+import com.knowget.knowgetbackend.global.dto.AuthResponse;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+import com.knowget.knowgetbackend.global.service.AuthService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -24,6 +29,7 @@ import lombok.RequiredArgsConstructor;
 public class AdminController {
 
 	private final AdminService adminService;
+	private final AuthService authService;
 
 	/**
 	 * 회원 목록 조회
@@ -53,6 +59,30 @@ public class AdminController {
 
 		return new ResponseEntity<>(new ResultMessageDTO(message), HttpStatus.OK);
 
+	}
+
+	@PostMapping("/register")
+	public ResponseEntity<ResultMessageDTO> register(@RequestBody AdminSignupDTO adminSignupDTO) {
+		try {
+			adminSignupDTO.setPrefLocation("NULL");
+			adminSignupDTO.setPrefJob("NULL");
+			String msg = adminService.register(adminSignupDTO);
+			return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
+		} catch (Exception e) {
+			String errorMsg = "[Error] 관리자 가입 도중 오류가 발생했습니다 : " + e.getMessage();
+			return new ResponseEntity<>(new ResultMessageDTO(errorMsg), HttpStatus.BAD_REQUEST);
+		}
+	}
+
+	@PostMapping("/login")
+	public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
+		try {
+			AuthResponse authResponse = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
+			return new ResponseEntity<>(authResponse, HttpStatus.OK);
+		} catch (Exception e) {
+			return new ResponseEntity<>(new ResultMessageDTO("[Error] 로그인 도중 오류가 발생했습니다 : " + e.getMessage()),
+				HttpStatus.BAD_REQUEST);
+		}
 	}
 
 }
