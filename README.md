@@ -63,7 +63,7 @@
 
   <br/>
 
-  ![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/0f4da61e-7d73-4ab0-af08-00733cbdc77c)
+  ![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/e5b476e3-791f-41a6-938d-5c4e49b42655)
   
 </details>
 
