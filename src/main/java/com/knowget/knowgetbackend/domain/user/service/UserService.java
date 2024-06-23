@@ -26,6 +26,7 @@ public class UserService {
 	 * @return 중복 여부 (True or False)
 	 * @author Jihwan
 	 */
+	@Transactional(readOnly = true)
 	public boolean checkUsername(String username) {
 		try {
 			if (username == null) {
@@ -55,7 +56,7 @@ public class UserService {
 			.password(passwordEncoder.encode(userSignUpDTO.getPassword()))
 			.prefLocation(userSignUpDTO.getPrefLocation())
 			.prefJob(userSignUpDTO.getPrefJob())
-			.role("ROLE_USER")
+			.role("USER")
 			.build();
 		userRepository.save(user);
 		return userSignUpDTO.getUsername() + "님 가입을 환영합니다.";

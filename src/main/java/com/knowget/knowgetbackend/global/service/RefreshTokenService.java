@@ -4,6 +4,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.user.service.UserService;
 import com.knowget.knowgetbackend.global.config.security.JwtUtil;
@@ -21,7 +22,12 @@ public class RefreshTokenService {
 	private final UserService userService;
 	private final JwtUtil jwtUtil;
 
+	@Transactional
 	public RefreshToken createRefreshToken(User user) {
+		// 기존의 refresh token 제거
+		refreshTokenRepository.deleteByUser(user);
+
+		// 새로운 refresh token 생성
 		RefreshToken refreshToken = new RefreshToken(
 			jwtUtil.generateRefreshToken(user.getUsername()),
 			user,
@@ -47,9 +53,9 @@ public class RefreshTokenService {
 		return refreshTokenRepository.save(refreshToken);
 	}
 
+	@Transactional
 	public void deleteByUsername(String username) {
-		User user = userService.findByUsername(username);
-		refreshTokenRepository.deleteByUser(user);
+		refreshTokenRepository.deleteByUser_Username(username);
 	}
 
 }

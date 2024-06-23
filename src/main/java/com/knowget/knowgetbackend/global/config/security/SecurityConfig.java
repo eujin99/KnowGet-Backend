@@ -34,29 +34,30 @@ public class SecurityConfig {
 
 	@Bean
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-		return http.securityContext((context) -> context.requireExplicitSave(false))
-			.sessionManagement((session) -> session.sessionCreationPolicy(SessionCreationPolicy.ALWAYS))
-			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
-				CorsConfiguration config = new CorsConfiguration();
-				config.setAllowedOrigins(Collections.singletonList("http://localhost:9000"));
-				config.setAllowedMethods(Collections.singletonList("*"));
-				config.setAllowCredentials(true);
-				config.setAllowedHeaders(Collections.singletonList("*"));
-				config.setMaxAge(3600L);
-				return config;
-			}))
-			.csrf(CsrfConfigurer<HttpSecurity>::disable)
-			.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
-			.authorizeHttpRequests(requests ->
-					// requests.requestMatchers(allowedUrls).permitAll()
-					requests.anyRequest().permitAll()
-				// .anyRequest().authenticated()
-			)
-			.sessionManagement(sessionManagement ->
-				sessionManagement.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-			)
-			.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-			.build();
+		return
+			http
+				.csrf(CsrfConfigurer<HttpSecurity>::disable)
+				.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
+					CorsConfiguration config = new CorsConfiguration();
+					config.setAllowedOrigins(Collections.singletonList("http://localhost:9000"));
+					config.setAllowedMethods(Collections.singletonList("*"));
+					config.setAllowedHeaders(Collections.singletonList("*"));
+					config.setAllowCredentials(true);
+					config.setMaxAge(3600L);
+					return config;
+				}))
+				.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+				.authorizeHttpRequests(requests ->
+						requests
+							.anyRequest().permitAll()
+					// .requestMatchers(allowedUrls).permitAll()
+					// .requestMatchers("/api/v1/admin/**").hasRole("ADMIN")
+					// .anyRequest().authenticated()
+				)
+				.securityContext((context) -> context.requireExplicitSave(false))
+				.headers(headers -> headers.frameOptions(FrameOptionsConfig::sameOrigin))
+				.addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+				.build();
 	}
 
 	@Bean

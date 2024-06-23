@@ -5,6 +5,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.user.service.UserService;
 import com.knowget.knowgetbackend.global.config.security.JwtUtil;
@@ -23,6 +24,7 @@ public class AuthService {
 	private final UserService userService;
 	private final RefreshTokenService refreshTokenService;
 
+	@Transactional
 	public AuthResponse authenticate(String username, String password) {
 		Authentication authentication = authenticationManager.authenticate(
 			new UsernamePasswordAuthenticationToken(username, password));
@@ -30,12 +32,16 @@ public class AuthService {
 
 		User user = userService.findByUsername(username);
 		String accessToken = jwtUtil.generateAccessToken(username);
+
+		// 기존 refresh token 삭제
 		refreshTokenService.deleteByUsername(user.getUsername());
+
 		RefreshToken refreshToken = refreshTokenService.createRefreshToken(user);
 
 		return new AuthResponse(username, user.getRole(), accessToken, refreshToken.getToken());
 	}
 
+	@Transactional
 	public AuthResponse refreshToken(String refreshToken) {
 		RefreshToken token = refreshTokenService.findByToken(refreshToken)
 			.orElseThrow(() -> new IllegalArgumentException("Invalid refresh token"));
