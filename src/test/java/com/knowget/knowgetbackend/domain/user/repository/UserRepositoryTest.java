@@ -1,6 +1,6 @@
 package com.knowget.knowgetbackend.domain.user.repository;
 
-import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.List;
 import java.util.Optional;
@@ -9,14 +9,16 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
 import com.knowget.knowgetbackend.global.entity.User;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class UserRepositoryTest {
+	@Autowired
+	private TestEntityManager entityManager;
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -24,50 +26,77 @@ class UserRepositoryTest {
 	private User user2;
 
 	@BeforeEach
-	public void setUp() {
+	@DisplayName("데이터 초기화")
+	void setUp() {
 		user1 = User.builder()
-			.username("user1")
+			.username("testuser1")
 			.password("password1")
 			.prefLocation("Seoul")
-			.prefJob("Engineer")
+			.prefJob("Developer")
+			.role("USER")
 			.build();
 
 		user2 = User.builder()
-			.username("user2")
+			.username("testuser2")
 			.password("password2")
 			.prefLocation("Busan")
-			.prefJob("Doctor")
+			.prefJob("Designer")
+			.role("ADMIN")
 			.build();
 
-		userRepository.save(user1);
-		userRepository.save(user2);
+		entityManager.persist(user1);
+		entityManager.persist(user2);
 	}
 
 	@Test
-	@DisplayName("사용자 이름 중복 체크 테스트 - checkUsername")
-	public void testCheckUsername() {
-		boolean isUnique1 = userRepository.checkUsername("user1");
-		boolean isUnique2 = userRepository.checkUsername("user3");
+	@DisplayName("checkUsername - 사용자 이름이 존재하지 않을 경우 true 반환")
+	void checkUsername_shouldReturnTrueWhenUsernameDoesNotExist() {
+		boolean result = userRepository.checkUsername("nonexistentuser");
 
-		assertThat(isUnique1).isFalse();
-		assertThat(isUnique2).isTrue();
+		assertTrue(result);
 	}
 
 	@Test
-	@DisplayName("사용자 이름으로 사용자 찾기 테스트 - findByUsername")
-	public void testFindByUsername() {
-		Optional<User> foundUser = userRepository.findByUsername("user1");
+	@DisplayName("checkUsername - 사용자 이름이 존재할 경우 false 반환")
+	void checkUsername_shouldReturnFalseWhenUsernameExists() {
+		boolean result = userRepository.checkUsername("testuser1");
 
-		assertThat(foundUser).isPresent();
-		assertThat(foundUser.get().getUsername()).isEqualTo("user1");
+		assertFalse(result);
 	}
 
 	@Test
-	@DisplayName("선호 위치 또는 직업으로 사용자 찾기 테스트 - findByPrefLocationOrPrefJob")
-	public void testFindByPrefLocationOrPrefJob() {
-		List<User> users = userRepository.findByPrefLocationOrPrefJob("Seoul", "Doctor");
+	@DisplayName("findByUsername - 사용자 이름으로 사용자 찾기")
+	void findByUsername_shouldReturnUserWhenUsernameExists() {
+		Optional<User> foundUser = userRepository.findByUsername("testuser1");
 
-		assertThat(users).hasSize(2);
-		assertThat(users).contains(user1, user2);
+		assertTrue(foundUser.isPresent());
+		assertEquals("testuser1", foundUser.get().getUsername());
+	}
+
+	@Test
+	@DisplayName("findByUsername - 사용자 이름이 존재하지 않을 경우 빈 Optional 반환")
+	void findByUsername_shouldReturnEmptyOptionalWhenUsernameDoesNotExist() {
+		Optional<User> foundUser = userRepository.findByUsername("nonexistentuser");
+
+		assertFalse(foundUser.isPresent());
+	}
+
+	@Test
+	@DisplayName("findByPrefLocationOrPrefJob - 선호 위치나 직업으로 사용자 찾기")
+	void findByPrefLocationOrPrefJob_shouldReturnUsersWhenPrefLocationOrPrefJobMatches() {
+		List<User> foundUsers = userRepository.findByPrefLocationOrPrefJob("Seoul", "Developer");
+
+		assertNotNull(foundUsers);
+		assertEquals(1, foundUsers.size());
+		assertEquals("testuser1", foundUsers.get(0).getUsername());
+	}
+
+	@Test
+	@DisplayName("findByPrefLocationOrPrefJob - 선호 위치나 직업이 일치하지 않을 경우 빈 리스트 반환")
+	void findByPrefLocationOrPrefJob_shouldReturnEmptyListWhenNoPrefLocationOrPrefJobMatches() {
+		List<User> foundUsers = userRepository.findByPrefLocationOrPrefJob("Daegu", "Manager");
+
+		assertNotNull(foundUsers);
+		assertTrue(foundUsers.isEmpty());
 	}
 }
