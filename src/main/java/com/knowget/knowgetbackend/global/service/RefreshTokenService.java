@@ -29,7 +29,7 @@ public class RefreshTokenService {
 		RefreshToken refreshToken = new RefreshToken(
 			jwtUtil.generateRefreshToken(user.getUsername()),
 			user,
-			LocalDateTime.now().plusSeconds(jwtUtil.getRefreshTokenExpiration())
+			LocalDateTime.now().plusSeconds(jwtUtil.getRefreshTokenExpiration() / 1000)
 		);
 		return refreshTokenRepository.save(refreshToken);
 	}
