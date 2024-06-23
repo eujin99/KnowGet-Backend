@@ -62,8 +62,8 @@
   <summary>6. ERD</summary>
 
   <br/>
-
-  ![image](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/e5b476e3-791f-41a6-938d-5c4e49b42655)
+  
+  ![ERD](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/7e86effe-688b-4a13-915b-2eca4b30f02b)
   
 </details>
 
