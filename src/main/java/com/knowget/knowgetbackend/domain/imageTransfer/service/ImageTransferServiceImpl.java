@@ -13,6 +13,7 @@ import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.entity.Image;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
+import com.knowget.knowgetbackend.global.exception.ImageNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,33 +28,33 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	private final AwsS3Util awsS3Util;
 	private static final long MAX_FILE_SIZE = 50 * 1024 * 1024; // 50MB
 
-	/**
-	 * 이미지 업로드
-	 * @param file
-	 * @param jobGuideId
-	 * @return imageUrl
-	 * @auther 근엽
-	 */
-	@Override
-	@Transactional
-	public String uploadFile(MultipartFile file, Integer jobGuideId) {
-		checkFileSize(file);
-
-		JobGuide jobGuide = jobGuideRepository.findById(jobGuideId)
-			.orElseThrow(() -> new IllegalArgumentException("해당하는 취업 가이드가 없습니다."));
-
-		Image image = Image.builder()
-			.imageUrl(awsS3Util.uploadFile(file))
-			.jobGuide(jobGuide)
-			.build();
-
-		imageRepository.save(image);
-
-		Image imageUrl = imageRepository.findByJobGuide(jobGuide)
-			.orElseThrow(() -> new IllegalArgumentException("해당하는 이미지가 없습니다."));
-
-		return imageUrl.getImageUrl();
-	}
+	// /**
+	//  * 이미지 업로드
+	//  * @param file
+	//  * @param jobGuideId
+	//  * @return imageUrl
+	//  * @auther 근엽
+	//  */
+	// @Override
+	// @Transactional
+	// public String uploadFile(MultipartFile file, Integer jobGuideId) {
+	// 	checkFileSize(file);
+	//
+	// 	JobGuide jobGuide = jobGuideRepository.findById(jobGuideId)
+	// 		.orElseThrow(() -> new IllegalArgumentException("해당하는 취업 가이드가 없습니다."));
+	//
+	// 	Image image = Image.builder()
+	// 		.imageUrl(awsS3Util.uploadFile(file))
+	// 		.jobGuide(jobGuide)
+	// 		.build();
+	//
+	// 	imageRepository.save(image);
+	//
+	// 	Image imageUrl = imageRepository.findByJobGuide(jobGuide)
+	// 		.orElseThrow(() -> new IllegalArgumentException("해당하는 이미지가 없습니다."));
+	//
+	// 	return imageUrl.getImageUrl();
+	// }
 
 	/**
 	 * 이미지 다중 업로드
@@ -83,7 +84,7 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 			imageRepository.save(image);
 		}
 
-		for (Image image : imageRepository.findAllByJobGuide(jobGuide)) {
+		for (Image image : imageRepository.findByJobGuide(jobGuide)) {
 
 			imageUrlList.add(image.getImageUrl());
 			log.info("이미지 URL : " + image.getImageUrl());
@@ -103,9 +104,9 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	public String deleteImage(Integer imageId) {
 
 		Image image = imageRepository.findById(imageId)
-			.orElseThrow(() -> new IllegalArgumentException("해당하는 이미지가 없습니다."));
+			.orElseThrow(() -> new ImageNotFoundException("해당하는 이미지가 없습니다."));
 
-		awsS3Util.deleteFile(image.getImageUrl());
+		// awsS3Util.deleteFile(image.getImageUrl());
 		imageRepository.delete(image);
 
 		return "이미지가 삭제되었습니다.";
