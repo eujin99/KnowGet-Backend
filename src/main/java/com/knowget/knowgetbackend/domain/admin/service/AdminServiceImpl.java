@@ -3,10 +3,12 @@ package com.knowget.knowgetbackend.domain.admin.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.knowget.knowgetbackend.domain.admin.dto.AdminResponseDTO;
+import com.knowget.knowgetbackend.domain.admin.dto.AdminSignupDTO;
 import com.knowget.knowgetbackend.domain.admin.repository.AdminRepository;
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.User;
@@ -20,6 +22,7 @@ public class AdminServiceImpl implements AdminService {
 
 	private final AdminRepository adminRepository;
 	private final UserRepository userRepository;
+	private final PasswordEncoder passwordEncoder;
 
 	/**
 	 * 회원 목록 조회
@@ -51,7 +54,22 @@ public class AdminServiceImpl implements AdminService {
 			return "회원이 비활성화되었습니다.";
 		}
 		return "회원이 활성화되었습니다.";
+	}
 
+	@Transactional
+	public String register(AdminSignupDTO adminSignupDTO) {
+		if (userRepository.findByUsername(adminSignupDTO.getUsername()).isPresent()) {
+			throw new IllegalArgumentException("이미 존재하는 관리자입니다");
+		}
+		User user = User.builder()
+			.username(adminSignupDTO.getUsername())
+			.password(passwordEncoder.encode(adminSignupDTO.getPassword()))
+			.prefLocation(adminSignupDTO.getPrefLocation())
+			.prefJob(adminSignupDTO.getPrefJob())
+			.role("ADMIN")
+			.build();
+		userRepository.save(user);
+		return adminSignupDTO.getUsername() + ": 가입이 완료되었습니다";
 	}
 
 }
