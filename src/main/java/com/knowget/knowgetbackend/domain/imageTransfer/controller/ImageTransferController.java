@@ -1,4 +1,4 @@
-package com.knowget.knowgetbackend.domain.fileTransfer.controller;
+package com.knowget.knowgetbackend.domain.imageTransfer.controller;
 
 import java.util.List;
 
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.knowget.knowgetbackend.domain.fileTransfer.service.FileTransferService;
+import com.knowget.knowgetbackend.domain.imageTransfer.service.ImageTransferService;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 
@@ -21,12 +21,12 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @RestController
-@RequestMapping("/api/v1/file-transfer")
+@RequestMapping("/api/v1/image-transfer")
 @RequiredArgsConstructor
-public class FileTransferController {
+public class ImageTransferController {
 	private final AwsS3Util awsS3Util;
 
-	private final FileTransferService fileTransferService;
+	private final ImageTransferService imageTransferService;
 
 	/**
 	 * 이미지 업로드
@@ -40,7 +40,7 @@ public class FileTransferController {
 		@RequestParam(name = "file") MultipartFile file
 	) {
 
-		String imageUrl = fileTransferService.uploadFile(file, jobGuidId);
+		String imageUrl = imageTransferService.uploadFile(file, jobGuidId);
 
 		return new ResponseEntity<>(new ResultMessageDTO(imageUrl), HttpStatus.OK);
 	}
@@ -57,7 +57,7 @@ public class FileTransferController {
 		@RequestParam(value = "files") List<MultipartFile> files
 	) {
 
-		List<String> imageUrls = fileTransferService.uploadFiles(files, jobGuidId);
+		List<String> imageUrls = imageTransferService.uploadFiles(files, jobGuidId);
 
 		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
 	}
@@ -87,7 +87,7 @@ public class FileTransferController {
 	@DeleteMapping("{imageId}/delete")
 	public ResponseEntity<ResultMessageDTO> deleteFile(@PathVariable Integer imageId) {
 
-		String deleteImage = fileTransferService.deleteImage(imageId);
+		String deleteImage = imageTransferService.deleteImage(imageId);
 
 		return new ResponseEntity<>(new ResultMessageDTO(deleteImage), HttpStatus.OK);
 	}
