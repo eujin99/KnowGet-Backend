@@ -1,4 +1,4 @@
-package com.knowget.knowgetbackend.domain.fileTransfer.service;
+package com.knowget.knowgetbackend.domain.imageTransfer.service;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.knowget.knowgetbackend.domain.fileTransfer.repository.FileTransferRepository;
+import com.knowget.knowgetbackend.domain.imageTransfer.repository.ImageRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.entity.Image;
@@ -19,9 +19,9 @@ import lombok.RequiredArgsConstructor;
 
 @Service
 @RequiredArgsConstructor
-public class FileTransferServiceImpl implements FileTransferService {
-	private static final Logger log = LoggerFactory.getLogger(FileTransferServiceImpl.class);
-	private final FileTransferRepository fileTransferRepository;
+public class ImageTransferServiceImpl implements ImageTransferService {
+	private static final Logger log = LoggerFactory.getLogger(ImageTransferServiceImpl.class);
+	private final ImageRepository imageRepository;
 	private final JobGuideRepository jobGuideRepository;
 
 	private final AwsS3Util awsS3Util;
@@ -45,9 +45,9 @@ public class FileTransferServiceImpl implements FileTransferService {
 			.jobGuide(jobGuide)
 			.build();
 
-		fileTransferRepository.save(image);
+		imageRepository.save(image);
 
-		Image imageUrl = fileTransferRepository.findByJobGuide(jobGuide)
+		Image imageUrl = imageRepository.findByJobGuide(jobGuide)
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 이미지가 없습니다."));
 
 		return imageUrl.getImageUrl();
@@ -75,10 +75,10 @@ public class FileTransferServiceImpl implements FileTransferService {
 				.jobGuide(jobGuide)
 				.build();
 
-			fileTransferRepository.save(image);
+			imageRepository.save(image);
 		}
 
-		for (Image image : fileTransferRepository.findAllByJobGuide(jobGuide)) {
+		for (Image image : imageRepository.findAllByJobGuide(jobGuide)) {
 
 			imageUrlList.add(image.getImageUrl());
 			log.info("이미지 URL : " + image.getImageUrl());
@@ -97,11 +97,11 @@ public class FileTransferServiceImpl implements FileTransferService {
 	@Transactional
 	public String deleteImage(Integer imageId) {
 
-		Image image = fileTransferRepository.findById(imageId)
+		Image image = imageRepository.findById(imageId)
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 이미지가 없습니다."));
 
 		awsS3Util.deleteFile(image.getImageUrl());
-		fileTransferRepository.delete(image);
+		imageRepository.delete(image);
 
 		return "이미지가 삭제되었습니다.";
 	}
