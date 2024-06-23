@@ -2,11 +2,14 @@ package com.knowget.knowgetbackend.global.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+
+import io.jsonwebtoken.ExpiredJwtException;
 
 @RestControllerAdvice
 public class GlobalExceptionHandler {
@@ -74,6 +77,16 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(MaxUploadSizeExceededException.class)
 	public ResponseEntity<ResultMessageDTO> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
 		return new ResponseEntity<>(new ResultMessageDTO("File size exceeds limit!"), HttpStatus.PAYLOAD_TOO_LARGE);
+	}
+
+	@ExceptionHandler(UsernameNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleUsernameNotFoundException(UsernameNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.BAD_REQUEST);
+	}
+
+	@ExceptionHandler(ExpiredJwtException.class)
+	public ResponseEntity<ResultMessageDTO> handleExpiredJwtException(ExpiredJwtException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 
 }

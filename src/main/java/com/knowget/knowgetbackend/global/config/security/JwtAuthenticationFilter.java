@@ -42,10 +42,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 				username = jwtUtil.getUsernameFromToken(jwt);
 			} catch (IllegalArgumentException e) {
 				log.error("Unable to get JWT Token");
-				System.out.println("Unable to get JWT Token");
+				throw new IllegalArgumentException("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
 				log.error("JWT Token has expired");
-				System.out.println("JWT Token has expired");
+				throw new ExpiredJwtException(null, null, "JWT Token has expired");
 			}
 		}
 
@@ -61,12 +61,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 					SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
 				}
 			} catch (UsernameNotFoundException e) {
-				// User not found
 				log.error("User not found: {}", e.getMessage());
+				throw new UsernameNotFoundException(e.getMessage());
 			}
 		}
 
 		chain.doFilter(request, response);
 	}
-}
 
+}
