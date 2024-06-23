@@ -11,11 +11,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.knowget.knowgetbackend.domain.user.dto.UserSignUpDTO;
 import com.knowget.knowgetbackend.domain.user.service.UserService;
+import com.knowget.knowgetbackend.global.config.security.JwtUtil;
 import com.knowget.knowgetbackend.global.dto.AuthRequest;
 import com.knowget.knowgetbackend.global.dto.AuthResponse;
 import com.knowget.knowgetbackend.global.dto.RefreshTokenRequest;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
+import com.knowget.knowgetbackend.global.entity.RefreshToken;
 import com.knowget.knowgetbackend.global.service.AuthService;
+import com.knowget.knowgetbackend.global.service.RefreshTokenService;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +29,8 @@ public class UserController {
 
 	private final UserService userService;
 	private final AuthService authService;
+	private final JwtUtil jwtUtil;
+	private final RefreshTokenService refreshTokenService;
 
 	/**
 	 * 사용자로부터 입력받은 ID의 중복여부 확인
@@ -86,13 +91,19 @@ public class UserController {
 	 */
 	@PostMapping("/refresh-token")
 	public ResponseEntity<?> refreshToken(@RequestBody RefreshTokenRequest request) {
-		try {
-			AuthResponse authResponse = authService.refreshToken(request.getRefreshToken());
-			return ResponseEntity.ok(authResponse);
-		} catch (Exception e) {
-			return ResponseEntity.badRequest()
-				.body(new ResultMessageDTO("[Error] 토큰 갱신 도중 오류가 발생했습니다 : " + e.getMessage()));
+		String refreshToken = request.getRefreshToken();
+
+		if (refreshToken == null || !jwtUtil.validateToken(refreshToken)) {
+			return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
+				.body(new ResultMessageDTO("[Error] : 유효하지 않은 refreshToken"));
 		}
+
+		String username = jwtUtil.getUsernameFromToken(request.getRefreshToken());
+		RefreshToken token = refreshTokenService.findByToken(refreshToken)
+			.orElseThrow(() -> new IllegalArgumentException("유효하지 않은 refreshToken"));
+
+		String newAccessToken = jwtUtil.generateAccessToken(username);
+		return ResponseEntity.ok(Map.of("accessToken", newAccessToken));
 	}
 
 }
