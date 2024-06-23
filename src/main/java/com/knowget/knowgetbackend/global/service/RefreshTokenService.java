@@ -6,7 +6,6 @@ import java.util.Optional;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.knowget.knowgetbackend.domain.user.service.UserService;
 import com.knowget.knowgetbackend.global.config.security.JwtUtil;
 import com.knowget.knowgetbackend.global.entity.RefreshToken;
 import com.knowget.knowgetbackend.global.entity.User;
@@ -19,7 +18,6 @@ import lombok.RequiredArgsConstructor;
 public class RefreshTokenService {
 
 	private final RefreshTokenRepository refreshTokenRepository;
-	private final UserService userService;
 	private final JwtUtil jwtUtil;
 
 	@Transactional
