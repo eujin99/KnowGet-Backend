@@ -51,7 +51,7 @@ public class CounselingServiceImpl implements CounselingService {
 	public CounselingResponseDTO getCounselingById(Integer id) {
 
 		Counseling counseling = counselingRepository.findById(id)
-			.orElseThrow(() -> new CounselingNotFoundException("[ERROR] 해당 상담을 찾을 수 없습니다."));
+			.orElseThrow(() -> new CounselingNotFoundException("[Error] 해당 상담을 찾을 수 없습니다."));
 		return new CounselingResponseDTO(counseling);
 	}
 
@@ -69,7 +69,7 @@ public class CounselingServiceImpl implements CounselingService {
 
 		Counseling counseling = Counseling.builder()
 			.user(userRepository.findByUsername(counselingRequestDTO.getUsername())
-				.orElseThrow(() -> new UserNotFoundException("[ERROR] 해당 사용자를 찾을 수 없습니다.")))
+				.orElseThrow(() -> new UserNotFoundException("[Error] 해당 사용자를 찾을 수 없습니다.")))
 			.category(counselingRequestDTO.getCategory())
 			.content(counselingRequestDTO.getContent())
 			.build();

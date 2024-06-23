@@ -42,7 +42,6 @@ public class AdminController {
 		List<AdminResponseDTO> users = adminService.getAllUsers();
 
 		return new ResponseEntity<>(users, HttpStatus.OK);
-
 	}
 
 	/**
@@ -61,6 +60,13 @@ public class AdminController {
 
 	}
 
+	/**
+	 * 관리자 회원가입
+	 *
+	 * @param adminSignupDTO 관리자 회원가입 DTO (아이디, 비밀번호)
+	 * @return ResponseEntity<ResultMessageDTO> 회원가입 결과 메시지
+	 * @author Jihwan
+	 */
 	@PostMapping("/register")
 	public ResponseEntity<ResultMessageDTO> register(@RequestBody AdminSignupDTO adminSignupDTO) {
 		try {
@@ -74,6 +80,13 @@ public class AdminController {
 		}
 	}
 
+	/**
+	 * 관리자 로그인
+	 *
+	 * @param authRequest 로그인 요청 DTO (아이디, 비밀번호)
+	 * @return ResponseEntity<?> 로그인 결과 (성공 시 토큰, 실패 시 에러 메시지)
+	 * @author Jihwan
+	 */
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@RequestBody AuthRequest authRequest) {
 		try {

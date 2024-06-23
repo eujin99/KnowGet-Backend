@@ -158,14 +158,14 @@ public class SuccessCaseServiceImpl implements SuccessCaseService {
 	// 6. SuccessCase 승인상태 업데이트
 	@Override
 	@Transactional
-	public String updateSuccessCaseApproval(Integer caseId, Short status) {
+	public String updateSuccessCaseApproval(Integer caseId, Integer status) {
+		SuccessCase successCase = successCaseRepository.findById(caseId)
+			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] : 해당 게시글이 존재하지 않습니다"));
 		String result = switch (status) {
 			case 1 -> "승인되었습니다";
 			case 2 -> "거절되었습니다";
 			default -> "승인 대기 상태로 변경되었습니다";
 		};
-		SuccessCase successCase = successCaseRepository.findById(caseId)
-			.orElseThrow(() -> new SuccessCaseNotFoundException("[Error] : 해당 게시글이 존재하지 않습니다"));
 		successCase.updateIsApproved(status);
 		successCaseRepository.save(successCase);
 		// successCaseRepository.updateApprovalStatus(caseId, status);

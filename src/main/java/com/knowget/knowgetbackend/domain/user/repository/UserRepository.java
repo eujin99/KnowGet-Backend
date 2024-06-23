@@ -20,4 +20,6 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
 	List<User> findByPrefLocationOrPrefJob(String prefLocation, String prefJob);
 
+	List<User> findByRole(String role);
+
 }
