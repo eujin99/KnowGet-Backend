@@ -30,15 +30,15 @@ public class DocumentTransferController {
 	 * @return imageUrl
 	 * @auther 근엽
 	 */
-	@PostMapping("{jobGuideId}/upload")
-	public String uploadFile(@PathVariable Integer jobGuideId,
-		@RequestParam(name = "file") MultipartFile file
-	) {
-
-		String documentUrl = documentTransferService.uploadFile(file, jobGuideId);
-
-		return documentUrl;
-	}
+	// @PostMapping("{jobGuideId}/upload")
+	// public String uploadFile(@PathVariable Integer jobGuideId,
+	// 	@RequestParam(name = "file") MultipartFile file
+	// ) {
+	//
+	// 	String documentUrl = documentTransferService.uploadFile(file, jobGuideId);
+	//
+	// 	return documentUrl;
+	// }
 
 	/**
 	 * 문서 다중 업로드

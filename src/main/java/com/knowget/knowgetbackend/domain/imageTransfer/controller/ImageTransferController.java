@@ -28,22 +28,22 @@ public class ImageTransferController {
 
 	private final ImageTransferService imageTransferService;
 
-	/**
-	 * 이미지 업로드
-	 * @param jobGuidId
-	 * @param file
-	 * @return imageUrl
-	 * @author 근엽
-	 */
-	@PostMapping("{jobGuidId}/upload")
-	public ResponseEntity<ResultMessageDTO> uploadFile(@PathVariable Integer jobGuidId,
-		@RequestParam(name = "file") MultipartFile file
-	) {
-
-		String imageUrl = imageTransferService.uploadFile(file, jobGuidId);
-
-		return new ResponseEntity<>(new ResultMessageDTO(imageUrl), HttpStatus.OK);
-	}
+	// /**
+	//  * 이미지 업로드
+	//  * @param jobGuidId
+	//  * @param file
+	//  * @return imageUrl
+	//  * @author 근엽
+	//  */
+	// @PostMapping("{jobGuidId}/upload")
+	// public ResponseEntity<ResultMessageDTO> uploadFile(@PathVariable Integer jobGuidId,
+	// 	@RequestParam(name = "file") MultipartFile file
+	// ) {
+	//
+	// 	String imageUrl = imageTransferService.uploadFile(file, jobGuidId);
+	//
+	// 	return new ResponseEntity<>(new ResultMessageDTO(imageUrl), HttpStatus.OK);
+	// }
 
 	/**
 	 * 이미지 다중 업로드

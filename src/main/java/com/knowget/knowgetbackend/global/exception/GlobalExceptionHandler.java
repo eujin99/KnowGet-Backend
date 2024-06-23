@@ -89,4 +89,14 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 
+	@ExceptionHandler(ImageNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleImageNotFoundException(ImageNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(DocumentNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleDocumentNotFoundException(DocumentNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+
 }
