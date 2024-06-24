@@ -90,7 +90,7 @@
 
 <details>
 
-  <summary>6. CICD 계획서 바로가기</summary>
+  <summary>9. CICD 계획서 바로가기</summary>
 
   <br/>
   
