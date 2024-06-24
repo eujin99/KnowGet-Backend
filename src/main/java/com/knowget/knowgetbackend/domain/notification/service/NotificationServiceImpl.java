@@ -88,7 +88,7 @@ public class NotificationServiceImpl implements NotificationService {
 		try {
 			User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
-			List<NotificationResponseDTO> notifications = notificationRepository.findByUser(user)
+			List<NotificationResponseDTO> notifications = notificationRepository.findByUserOrderBySentDateDesc(user)
 				.stream()
 				.map(NotificationResponseDTO::new)
 				.collect(Collectors.toList());
