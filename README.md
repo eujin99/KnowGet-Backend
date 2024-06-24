@@ -72,9 +72,9 @@
   <summary>7. 시스템 아키텍쳐</summary>
 
   <br/>
-
-  ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/086e16be-2d19-4244-b5f4-3b702f55a6ab)
   
+  ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/b336e8db-0403-4bff-b126-baac91ce2338)
+
 </details>
 
 ---
