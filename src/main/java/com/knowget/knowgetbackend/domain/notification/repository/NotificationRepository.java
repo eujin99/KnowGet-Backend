@@ -12,7 +12,8 @@ import com.knowget.knowgetbackend.global.entity.User;
 @Repository
 public interface NotificationRepository extends JpaRepository<Notification, Long> {
 
-	List<Notification> findByUser(User user);
+	@Query("select n from Notification n where n.user = ?1 order by n.sentDate DESC")
+	List<Notification> findByUserOrderBySentDateDesc(User user);
 
 	@Query("SELECT COUNT(n) FROM Notification n WHERE n.user.username = :username AND n.isRead = false")
 	Integer countUnreadNotificationsByUsername(String username);
