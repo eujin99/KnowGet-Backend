@@ -59,7 +59,17 @@
 
 <details>
 
-  <summary>6. ERD</summary>
+  <summary>6. 단위 테스트 명세서</summary>
+
+  <br/>
+  
+  - [단위 테스트 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2084964114#gid=2084964114)
+
+</details>
+
+<details>
+
+  <summary>7. ERD</summary>
 
   <br/>
   
@@ -69,13 +79,14 @@
 
 <details>
 
-  <summary>7. 시스템 아키텍쳐</summary>
+  <summary>8. 시스템 아키텍쳐</summary>
 
   <br/>
   
   ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/93907076/b336e8db-0403-4bff-b126-baac91ce2338)
 
 </details>
+
 
 ---
 
