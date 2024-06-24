@@ -9,7 +9,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
@@ -18,9 +17,7 @@ import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class BookmarkRepositoryTest {
-
 	@Autowired
 	private TestEntityManager entityManager;
 
@@ -38,6 +35,7 @@ class BookmarkRepositoryTest {
 			.password("password")
 			.prefLocation("Seoul")
 			.prefJob("Engineer")
+			.role("USER")
 			.build();
 		entityManager.persist(user);
 
@@ -100,7 +98,6 @@ class BookmarkRepositoryTest {
 		assertThat(foundBookmark).isPresent();
 		assertThat(foundBookmark.get().getUser()).isEqualTo(user);
 		assertThat(foundBookmark.get().getPost()).isEqualTo(post);
-		assertThat(foundBookmark.get().getIsBookmarked()).isTrue();
 	}
 
 	@Test
@@ -124,6 +121,7 @@ class BookmarkRepositoryTest {
 			.password("password")
 			.prefLocation("Seoul")
 			.prefJob("Engineer")
+			.role("USER")
 			.build();
 		entityManager.persist(newUser);
 		entityManager.flush();

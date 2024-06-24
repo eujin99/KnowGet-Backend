@@ -3,12 +3,12 @@ package com.knowget.knowgetbackend.domain.comment.repository;
 import static org.assertj.core.api.Assertions.*;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
@@ -17,7 +17,6 @@ import com.knowget.knowgetbackend.global.entity.SuccessCase;
 import com.knowget.knowgetbackend.global.entity.User;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class CommentRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
@@ -37,6 +36,7 @@ class CommentRepositoryTest {
 			.password("password")
 			.prefLocation("Seoul")
 			.prefJob("Engineer")
+			.role("USER")
 			.build();
 		entityManager.persist(user);
 
@@ -92,5 +92,31 @@ class CommentRepositoryTest {
 
 		// Then
 		assertThat(comments).isEmpty();
+	}
+
+	@Test
+	@DisplayName("댓글 저장 및 삭제 테스트 - saveAndDelete")
+	public void testSaveAndDelete() {
+		// Given
+		Comment comment = Comment.builder()
+			.successCase(successCase)
+			.user(user)
+			.content("This is a temporary comment.")
+			.build();
+		Comment savedComment = commentRepository.save(comment);
+
+		// When
+		Optional<Comment> foundComment = commentRepository.findById(savedComment.getCommentId());
+
+		// Then
+		assertThat(foundComment).isPresent();
+		assertThat(foundComment.get().getContent()).isEqualTo("This is a temporary comment.");
+
+		// When
+		commentRepository.delete(savedComment);
+		Optional<Comment> deletedComment = commentRepository.findById(savedComment.getCommentId());
+
+		// Then
+		assertThat(deletedComment).isNotPresent();
 	}
 }

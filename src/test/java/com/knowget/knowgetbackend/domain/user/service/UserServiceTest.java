@@ -21,7 +21,7 @@ import com.knowget.knowgetbackend.global.entity.User;
 import com.knowget.knowgetbackend.global.exception.UserNotFoundException;
 
 @ExtendWith(MockitoExtension.class)
-class UserServiceImplTest {
+class UserServiceTest {
 	@Mock
 	private UserRepository userRepository;
 

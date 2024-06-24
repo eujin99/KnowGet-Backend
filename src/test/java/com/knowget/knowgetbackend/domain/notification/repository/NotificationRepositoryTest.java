@@ -25,116 +25,149 @@ class NotificationRepositoryTest {
 	@Autowired
 	private NotificationRepository notificationRepository;
 
-	private User user1;
-	private User user2;
+	private User user;
 	private Post post;
 	private Notification notification1;
 	private Notification notification2;
 
 	@BeforeEach
 	public void setUp() {
-		user1 = User.builder()
-			.username("user1")
+		user = User.builder()
+			.username("testuser")
 			.password("password")
 			.prefLocation("Seoul")
 			.prefJob("Engineer")
+			.role("USER")
 			.build();
-
-		user2 = User.builder()
-			.username("user2")
-			.password("password")
-			.prefLocation("Busan")
-			.prefJob("Doctor")
-			.build();
+		entityManager.persist(user);
 
 		post = Post.builder()
-			.joReqstNo("req1")
-			.joRegistNo("reg1")
-			.cmpnyNm("Company")
+			.joReqstNo("REQ123")
+			.joRegistNo("REG123")
+			.cmpnyNm("CompanyName")
 			.bsnsSumryCn("Business Summary")
-			.rcritJssfcCmmnCodeSe("code1")
-			.jobcodeNm("Job Code")
-			.rcritNmprCo(1)
-			.acdmcrCmmnCodeSe("code2")
+			.rcritJssfcCmmnCodeSe("RCR123")
+			.jobcodeNm("JobCode")
+			.rcritNmprCo(10)
+			.acdmcrCmmnCodeSe("ACD123")
 			.acdmcrNm("Academic Name")
-			.emplymStleCmmnCodeSe("style1")
-			.emplymStleCmmnMm("style2")
+			.emplymStleCmmnCodeSe("EMP123")
+			.emplymStleCmmnMm("EMP MM")
 			.workPararBassAdresCn("Address")
-			.subwayNm("Subway")
-			.dtyCn("Duty")
-			.careerCndCmmnCodeSe("career1")
+			.subwayNm("SubwayName")
+			.dtyCn("Duty Content")
+			.careerCndCmmnCodeSe("CAR123")
 			.careerCndNm("Career Name")
-			.hopeWage("Wage")
-			.retGrantsNm("Grant")
+			.hopeWage("1000000")
+			.retGrantsNm("Retirement Grants")
 			.workTimeNm("Work Time")
 			.workTmNm("Work TM")
 			.holidayNm("Holiday")
 			.weekWorkHr("40")
 			.joFeinsrSbscrbNm("Insurance")
-			.rceptClosNm("Close")
-			.rceptMthIemNm("Method")
-			.modelMthNm("Model")
-			.rceptMthNm("Receipt")
-			.presentnPapersNm("Papers")
-			.mngrNm("Manager")
-			.mngrPhonNo("Phone")
-			.mngrInsttNm("Institution")
+			.rceptClosNm("Receipt Close")
+			.rceptMthIemNm("Receipt Method Item")
+			.modelMthNm("Model Method")
+			.rceptMthNm("Receipt Method")
+			.presentnPapersNm("Presentation Papers")
+			.mngrNm("Manager Name")
+			.mngrPhonNo("Manager Phone")
+			.mngrInsttNm("Manager Institute")
 			.bassAdresCn("Base Address")
 			.joSj("Job Subject")
 			.joRegDt("2023-01-01")
 			.guiLn("Guide Line")
-			.gu("Gu")
+			.gu("GU")
 			.jobCode("Job Code")
 			.build();
+		entityManager.persist(post);
 
 		notification1 = Notification.builder()
-			.user(user1)
+			.user(user)
 			.post(post)
-			.content("Notification Content 1")
+			.content("Test notification 1")
 			.build();
 
 		notification2 = Notification.builder()
-			.user(user1)
+			.user(user)
 			.post(post)
-			.content("Notification Content 2")
+			.content("Test notification 2")
 			.build();
 
-		entityManager.persist(user1);
-		entityManager.persist(user2);
-		entityManager.persist(post);
+		notification2.updateIsRead();
+
 		entityManager.persist(notification1);
 		entityManager.persist(notification2);
 		entityManager.flush();
 	}
 
 	@Test
-	@DisplayName("특정 사용자의 알림 조회 테스트")
+	@DisplayName("특정 사용자에 대한 알림 조회 테스트")
 	public void testFindByUser() {
 		// When
-		List<Notification> notifications = notificationRepository.findByUser(user1);
+		List<Notification> notifications = notificationRepository.findByUser(user);
 
 		// Then
 		assertThat(notifications).hasSize(2);
-		assertThat(notifications).contains(notification1, notification2);
+		assertThat(notifications).extracting(Notification::getContent)
+			.containsExactlyInAnyOrder("Test notification 1", "Test notification 2");
 	}
 
 	@Test
-	@DisplayName("특정 사용자의 읽지 않은 알림 개수 조회 테스트 - Username")
+	@DisplayName("특정 사용자에 대한 읽지 않은 알림 수 조회 테스트")
 	public void testCountUnreadNotificationsByUsername() {
 		// When
-		Integer unreadCount = notificationRepository.countUnreadNotificationsByUsername("user1");
+		Integer unreadCount = notificationRepository.countUnreadNotificationsByUsername(user.getUsername());
 
 		// Then
-		assertThat(unreadCount).isEqualTo(2);
+		assertThat(unreadCount).isEqualTo(1);
 	}
 
 	@Test
-	@DisplayName("특정 사용자의 읽지 않은 알림 개수 조회 테스트 - User Entity")
+	@DisplayName("특정 사용자에 대한 읽지 않은 알림 수 조회 테스트 - countByUserAndIsReadIsFalse")
 	public void testCountByUserAndIsReadIsFalse() {
 		// When
-		Integer unreadCount = notificationRepository.countByUserAndIsReadIsFalse(user1);
+		Integer unreadCount = notificationRepository.countByUserAndIsReadIsFalse(user);
 
 		// Then
-		assertThat(unreadCount).isEqualTo(2);
+		assertThat(unreadCount).isEqualTo(1);
+	}
+
+	@Test
+	@DisplayName("알림 저장 및 조회 테스트")
+	public void testSaveAndFindById() {
+		// Given
+		Notification notification = Notification.builder()
+			.user(user)
+			.post(post)
+			.content("New notification")
+			.build();
+		notification = notificationRepository.save(notification);
+
+		// When
+		Notification foundNotification = notificationRepository.findById(notification.getNotificationId()).orElse(null);
+
+		// Then
+		assertThat(foundNotification).isNotNull();
+		assertThat(foundNotification.getContent()).isEqualTo("New notification");
+	}
+
+	@Test
+	@DisplayName("알림 삭제 테스트")
+	public void testDeleteNotification() {
+		// Given
+		Notification notification = Notification.builder()
+			.user(user)
+			.post(post)
+			.content("Notification to delete")
+			.build();
+		notification = notificationRepository.save(notification);
+
+		// When
+		notificationRepository.delete(notification);
+		Notification foundNotification = notificationRepository.findById(notification.getNotificationId()).orElse(null);
+
+		// Then
+		assertThat(foundNotification).isNull();
 	}
 }
