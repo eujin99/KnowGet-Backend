@@ -88,6 +88,17 @@
 </details>
 
 
+<details>
+
+  <summary>6. CICD 계획서 바로가기</summary>
+
+  <br/>
+  
+  - [CICD 계획서 바로가기 >](https://docs.google.com/document/d/1tRymd_UT33XUuoLRjUh9fgxH1r0ngZE_1E47aMPpkkA/edit)
+
+</details>
+
+
 ---
 
 ### API 테스트
