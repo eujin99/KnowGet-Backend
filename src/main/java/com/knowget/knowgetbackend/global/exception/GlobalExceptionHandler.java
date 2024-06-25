@@ -101,7 +101,7 @@ public class GlobalExceptionHandler {
 
 	@ExceptionHandler(DeactivatedUserException.class)
 	public ResponseEntity<ResultMessageDTO> handleDeactivatedUserException(DeactivatedUserException e) {
-		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.FORBIDDEN);
 	}
 
 	@ExceptionHandler(JobGuideNotFoundException.class)

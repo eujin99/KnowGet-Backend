@@ -17,6 +17,7 @@ import com.knowget.knowgetbackend.global.dto.AuthResponse;
 import com.knowget.knowgetbackend.global.dto.RefreshTokenRequest;
 import com.knowget.knowgetbackend.global.dto.ResultMessageDTO;
 import com.knowget.knowgetbackend.global.entity.RefreshToken;
+import com.knowget.knowgetbackend.global.exception.DeactivatedUserException;
 import com.knowget.knowgetbackend.global.service.AuthService;
 import com.knowget.knowgetbackend.global.service.RefreshTokenService;
 
@@ -79,6 +80,9 @@ public class UserController {
 		try {
 			AuthResponse authResponse = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
 			return new ResponseEntity<>(authResponse, HttpStatus.OK);
+		} catch (DeactivatedUserException e) {
+			log.error(e.getMessage());
+			return new ResponseEntity<>(new ResultMessageDTO("[Error] 비활성화된 사용자입니다"), HttpStatus.FORBIDDEN);
 		} catch (Exception e) {
 			log.error(e.getMessage());
 			return new ResponseEntity<>(new ResultMessageDTO("[Error] 로그인 도중 오류가 발생했습니다 : " + e.getMessage()),

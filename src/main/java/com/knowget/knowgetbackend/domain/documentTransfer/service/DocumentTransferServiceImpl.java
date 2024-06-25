@@ -14,7 +14,6 @@ import com.knowget.knowgetbackend.global.config.s3.AwsS3Util2;
 import com.knowget.knowgetbackend.global.entity.Document;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
 import com.knowget.knowgetbackend.global.exception.DocumentNotFoundException;
-import com.knowget.knowgetbackend.global.exception.JobGuideNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -116,7 +115,7 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 	}
 
 	/**
-	 * 특정 가이드에 포함된 이미지 URL 반환
+	 * 특정 가이드에 포함된 문서 URL 반환
 	 *
 	 * @param guideId 가이드 ID
 	 * @return 이미지 URL 리스트
@@ -125,7 +124,7 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 	@Override
 	public List<String> getDocumentUrls(Integer guideId) {
 		JobGuide jobGuide = jobGuideRepository.findById(guideId)
-			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
+			.orElseThrow(() -> new DocumentNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
 		List<Document> documents = documentTransferRepository.findByJobGuide(jobGuide);
 
 		List<String> documentUrls = new ArrayList<>();

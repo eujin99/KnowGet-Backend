@@ -12,6 +12,7 @@ import com.knowget.knowgetbackend.global.config.security.JwtUtil;
 import com.knowget.knowgetbackend.global.dto.AuthResponse;
 import com.knowget.knowgetbackend.global.entity.RefreshToken;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.DeactivatedUserException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -31,6 +32,8 @@ public class AuthService {
 		SecurityContextHolder.getContext().setAuthentication(authentication);
 
 		User user = userService.findByUsername(username);
+		if (!user.getIsActive())
+			throw new DeactivatedUserException(username + " is deactivated");
 		String accessToken = jwtUtil.generateAccessToken(username);
 
 		// 기존 refresh token 삭제
