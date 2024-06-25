@@ -14,6 +14,7 @@ import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.entity.Image;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
 import com.knowget.knowgetbackend.global.exception.ImageNotFoundException;
+import com.knowget.knowgetbackend.global.exception.JobGuideNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,21 +59,22 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 
 	/**
 	 * 이미지 다중 업로드
+	 *
 	 * @param files
-	 * @param jobGuidId
+	 * @param guideId
 	 * @return imageUrls
 	 * @auther 근엽
 	 */
 	@Override
 	@Transactional
-	public List<String> uploadFiles(List<MultipartFile> files, Integer jobGuidId) {
+	public List<String> uploadFiles(List<MultipartFile> files, Integer guideId) {
 		for (MultipartFile file : files) {
 			checkFileSize(file);
 		}
 
 		List<String> imageUrlList = new ArrayList<>();
 
-		JobGuide jobGuide = jobGuideRepository.findById(jobGuidId)
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 취업 가이드가 없습니다."));
 
 		for (MultipartFile file : files) {
@@ -95,6 +97,7 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 
 	/**
 	 * 이미지 삭제
+	 *
 	 * @param imageId
 	 * @return
 	 * @auther 근엽
@@ -113,7 +116,30 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	}
 
 	/**
+	 * 특정 가이드에 포함된 이미지 URL 반환
+	 *
+	 * @param guideId 가이드 ID
+	 * @return 이미지 URL 리스트
+	 * @author Jihwan
+	 */
+	@Override
+	public List<String> getImageUrls(Integer guideId) {
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
+			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
+		List<Image> images = imageRepository.findByJobGuide(jobGuide);
+
+		List<String> imageUrls = new ArrayList<>();
+		if (!images.isEmpty()) {
+			for (Image image : images) {
+				imageUrls.add(image.getImageUrl());
+			}
+		}
+		return imageUrls;
+	}
+
+	/**
 	 * 파일 사이즈 체크
+	 *
 	 * @param file
 	 * @auther 근엽
 	 */

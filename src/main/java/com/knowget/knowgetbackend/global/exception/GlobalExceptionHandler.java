@@ -104,4 +104,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
 	}
 
+	@ExceptionHandler(JobGuideNotFoundException.class)
+	public ResponseEntity<ResultMessageDTO> handleJobGuideNotFoundException(JobGuideNotFoundException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
+	}
+
 }
