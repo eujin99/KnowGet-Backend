@@ -1,5 +1,8 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -28,6 +31,7 @@ public class Image {
 
 	@JoinColumn(name = "job_guide_id", nullable = false)
 	@ManyToOne(fetch = FetchType.EAGER)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private JobGuide jobGuide;
 
 	@Builder
