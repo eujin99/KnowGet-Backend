@@ -21,7 +21,9 @@ import com.knowget.knowgetbackend.global.service.AuthService;
 import com.knowget.knowgetbackend.global.service.RefreshTokenService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/user")
 @RequiredArgsConstructor
@@ -59,6 +61,7 @@ public class UserController {
 			String msg = userService.register(userSignUpDTO);
 			return new ResponseEntity<>(new ResultMessageDTO(msg), HttpStatus.OK);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			String errorMsg = "[Error] 회원가입 도중 오류가 발생했습니다 : " + e.getMessage();
 			return new ResponseEntity<>(new ResultMessageDTO(errorMsg), HttpStatus.BAD_REQUEST);
 		}
@@ -77,8 +80,9 @@ public class UserController {
 			AuthResponse authResponse = authService.authenticate(authRequest.getUsername(), authRequest.getPassword());
 			return new ResponseEntity<>(authResponse, HttpStatus.OK);
 		} catch (Exception e) {
+			log.error(e.getMessage());
 			return new ResponseEntity<>(new ResultMessageDTO("[Error] 로그인 도중 오류가 발생했습니다 : " + e.getMessage()),
-				HttpStatus.BAD_REQUEST);
+				HttpStatus.UNAUTHORIZED);
 		}
 	}
 
