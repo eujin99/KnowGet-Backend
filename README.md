@@ -59,11 +59,11 @@
 
 <details>
 
-  <summary>6. 단위 테스트 명세서</summary>
+  <summary>6. 단위 테스트 결과서</summary>
 
   <br/>
   
-  - [단위 테스트 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2084964114#gid=2084964114)
+  - [단위 테스트 결과서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2084964114#gid=2084964114)
 
 </details>
 
