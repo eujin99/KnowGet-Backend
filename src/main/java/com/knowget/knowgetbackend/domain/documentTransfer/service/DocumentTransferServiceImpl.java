@@ -14,6 +14,7 @@ import com.knowget.knowgetbackend.global.config.s3.AwsS3Util2;
 import com.knowget.knowgetbackend.global.entity.Document;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
 import com.knowget.knowgetbackend.global.exception.DocumentNotFoundException;
+import com.knowget.knowgetbackend.global.exception.JobGuideNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -58,21 +59,22 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 
 	/**
 	 * 문서 다중 업로드
+	 *
 	 * @param files
-	 * @param jobGuidId
+	 * @param guideId
 	 * @return imageUrls
 	 * @auther 근엽
 	 */
 	@Override
 	@Transactional
-	public List<String> uploadFiles(List<MultipartFile> files, Integer jobGuidId) {
+	public List<String> uploadFiles(List<MultipartFile> files, Integer guideId) {
 		for (MultipartFile file : files) {
 			checkFileSize(file);
 		}
 
 		List<String> imageUrlList = new ArrayList<>();
 
-		JobGuide jobGuide = jobGuideRepository.findById(jobGuidId)
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 취업 가이드가 없습니다."));
 
 		for (MultipartFile file : files) {
@@ -95,6 +97,7 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 
 	/**
 	 * 문서 삭제
+	 *
 	 * @param documentId
 	 * @return message
 	 * @auther 근엽
@@ -113,7 +116,30 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 	}
 
 	/**
+	 * 특정 가이드에 포함된 이미지 URL 반환
+	 *
+	 * @param guideId 가이드 ID
+	 * @return 이미지 URL 리스트
+	 * @author Jihwan
+	 */
+	@Override
+	public List<String> getDocumentUrls(Integer guideId) {
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
+			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
+		List<Document> documents = documentTransferRepository.findByJobGuide(jobGuide);
+
+		List<String> documentUrls = new ArrayList<>();
+		if (!documents.isEmpty()) {
+			for (Document document : documents) {
+				documentUrls.add(document.getDocumentUrl());
+			}
+		}
+		return documentUrls;
+	}
+
+	/**
 	 * 파일 사이즈 체크
+	 *
 	 * @param file
 	 * @auther 근엽
 	 */

@@ -7,7 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface DocumentTransferService {
 	// String uploadFile(MultipartFile file, Integer jobGuideId);
 
-	List<String> uploadFiles(List<MultipartFile> files, Integer jobGuidId);
+	List<String> uploadFiles(List<MultipartFile> files, Integer guideId);
 
 	String deleteDocument(Integer documentId);
+
+	List<String> getDocumentUrls(Integer guideId);
+
 }
