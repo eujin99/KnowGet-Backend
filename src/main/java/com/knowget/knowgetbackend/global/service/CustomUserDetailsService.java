@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.User;
+import com.knowget.knowgetbackend.global.exception.DeactivatedUserException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -23,6 +24,8 @@ public class CustomUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username)
 			.orElseThrow(() -> new UsernameNotFoundException(username + "와(과) 일치하는 사용자를 찾을 수 없습니다"));
+		if (!user.getIsActive())
+			throw new DeactivatedUserException(username + " : 비활성화된 사용자입니다");
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
 			List.of(new SimpleGrantedAuthority(user.getRole())));
 	}

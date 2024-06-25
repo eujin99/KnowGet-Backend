@@ -99,4 +99,9 @@ public class GlobalExceptionHandler {
 		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.NOT_FOUND);
 	}
 
+	@ExceptionHandler(DeactivatedUserException.class)
+	public ResponseEntity<ResultMessageDTO> handleDeactivatedUserException(DeactivatedUserException e) {
+		return new ResponseEntity<>(new ResultMessageDTO(e.getMessage()), HttpStatus.UNAUTHORIZED);
+	}
+
 }
