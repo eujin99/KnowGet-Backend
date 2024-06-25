@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,7 +22,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("/api/v1/image-transfer")
+@RequestMapping("/api/v1/image")
 @RequiredArgsConstructor
 public class ImageTransferController {
 	private final AwsS3Util awsS3Util;
@@ -47,17 +48,18 @@ public class ImageTransferController {
 
 	/**
 	 * 이미지 다중 업로드
-	 * @param jobGuidId
+	 *
+	 * @param guideId
 	 * @param files
 	 * @return imageUrls
 	 * @auther 근엽
 	 */
-	@PostMapping("{jobGuidId}/uploads")
-	public ResponseEntity<List<String>> uploadFiles(@PathVariable Integer jobGuidId,
+	@PostMapping("/{guideId}/uploads")
+	public ResponseEntity<List<String>> uploadFiles(@PathVariable Integer guideId,
 		@RequestParam(value = "files") List<MultipartFile> files
 	) {
 
-		List<String> imageUrls = imageTransferService.uploadFiles(files, jobGuidId);
+		List<String> imageUrls = imageTransferService.uploadFiles(files, guideId);
 
 		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
 	}
@@ -79,17 +81,31 @@ public class ImageTransferController {
 	// }
 
 	/**
-	 *	이미지 삭제
+	 * 이미지 삭제
+	 *
 	 * @param imageId
 	 * @return deleteImage
 	 * @auther 근엽
 	 */
-	@DeleteMapping("{imageId}/delete")
+	@DeleteMapping("/{imageId}/delete")
 	public ResponseEntity<ResultMessageDTO> deleteFile(@PathVariable Integer imageId) {
 
 		String deleteImage = imageTransferService.deleteImage(imageId);
 
 		return new ResponseEntity<>(new ResultMessageDTO(deleteImage), HttpStatus.OK);
+	}
+
+	/**
+	 * 특정 가이드에 포함된 이미지 URL 반환
+	 *
+	 * @param guideId 가이드 ID
+	 * @return imageUrls
+	 * @author Jihwan
+	 */
+	@GetMapping("/{guideId}")
+	public ResponseEntity<List<String>> getImageUrls(@PathVariable Integer guideId) {
+		List<String> imageUrls = imageTransferService.getImageUrls(guideId);
+		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
 	}
 
 }

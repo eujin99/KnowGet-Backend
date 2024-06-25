@@ -7,7 +7,10 @@ import org.springframework.web.multipart.MultipartFile;
 public interface ImageTransferService {
 	// String uploadFile(MultipartFile file, Integer jobGuideId);
 
-	List<String> uploadFiles(List<MultipartFile> files, Integer jobGuidId);
+	List<String> uploadFiles(List<MultipartFile> files, Integer jobGuideId);
 
 	String deleteImage(Integer imageId);
+
+	List<String> getImageUrls(Integer guideId);
+
 }
