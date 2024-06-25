@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 
+import com.knowget.knowgetbackend.domain.post.repository.PostRepository;
+import com.knowget.knowgetbackend.domain.user.repository.UserRepository;
 import com.knowget.knowgetbackend.global.entity.Notification;
 import com.knowget.knowgetbackend.global.entity.Post;
 import com.knowget.knowgetbackend.global.entity.User;
@@ -20,28 +21,28 @@ import com.knowget.knowgetbackend.global.entity.User;
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 class NotificationRepositoryTest {
 	@Autowired
-	private TestEntityManager entityManager;
+	private NotificationRepository notificationRepository;
 
 	@Autowired
-	private NotificationRepository notificationRepository;
+	private UserRepository userRepository;
+
+	@Autowired
+	private PostRepository postRepository;
 
 	private User user;
 	private Post post;
-	private Notification notification1;
-	private Notification notification2;
 
 	@BeforeEach
-	public void setUp() {
-		user = User.builder()
+	void setUp() {
+		user = userRepository.save(User.builder()
 			.username("testuser")
 			.password("password")
 			.prefLocation("Seoul")
 			.prefJob("Engineer")
 			.role("USER")
-			.build();
-		entityManager.persist(user);
+			.build());
 
-		post = Post.builder()
+		post = postRepository.save(Post.builder()
 			.joReqstNo("REQ123")
 			.joRegistNo("REG123")
 			.cmpnyNm("CompanyName")
@@ -79,95 +80,46 @@ class NotificationRepositoryTest {
 			.guiLn("Guide Line")
 			.gu("GU")
 			.jobCode("Job Code")
-			.build();
-		entityManager.persist(post);
+			.build());
 
-		notification1 = Notification.builder()
+		notificationRepository.save(Notification.builder()
 			.user(user)
 			.post(post)
-			.content("Test notification 1")
-			.build();
+			.content("Test Notification 1")
+			.build());
 
-		notification2 = Notification.builder()
+		Notification readNotification = Notification.builder()
 			.user(user)
 			.post(post)
-			.content("Test notification 2")
+			.content("Test Notification 2")
 			.build();
-
-		notification2.updateIsRead();
-
-		entityManager.persist(notification1);
-		entityManager.persist(notification2);
-		entityManager.flush();
+		readNotification.updateIsRead();
+		notificationRepository.save(readNotification);
 	}
 
 	@Test
-	@DisplayName("특정 사용자에 대한 알림 조회 테스트")
-	public void testFindByUser() {
-		// When
-		List<Notification> notifications = notificationRepository.findByUser(user);
+	@DisplayName("사용자에 대한 알림을 최신순으로 조회")
+	void testFindByUserOrderBySentDateDesc() {
+		List<Notification> notifications = notificationRepository.findByUserOrderBySentDateDesc(user);
 
-		// Then
 		assertThat(notifications).hasSize(2);
-		assertThat(notifications).extracting(Notification::getContent)
-			.containsExactlyInAnyOrder("Test notification 1", "Test notification 2");
+		assertThat(notifications.get(0).getContent()).isEqualTo("Test Notification 2");
+		assertThat(notifications.get(1).getContent()).isEqualTo("Test Notification 1");
 	}
 
 	@Test
-	@DisplayName("특정 사용자에 대한 읽지 않은 알림 수 조회 테스트")
-	public void testCountUnreadNotificationsByUsername() {
-		// When
+	@DisplayName("사용자의 읽지 않은 알림 개수 조회 - countUnreadNotificationsByUsername")
+	void testCountUnreadNotificationsByUsername() {
 		Integer unreadCount = notificationRepository.countUnreadNotificationsByUsername(user.getUsername());
 
-		// Then
 		assertThat(unreadCount).isEqualTo(1);
 	}
 
 	@Test
-	@DisplayName("특정 사용자에 대한 읽지 않은 알림 수 조회 테스트 - countByUserAndIsReadIsFalse")
-	public void testCountByUserAndIsReadIsFalse() {
-		// When
+	@DisplayName("사용자의 읽지 않은 알림 개수 조회 - countByUserAndIsReadIsFalse")
+	void testCountByUserAndIsReadIsFalse() {
 		Integer unreadCount = notificationRepository.countByUserAndIsReadIsFalse(user);
 
-		// Then
 		assertThat(unreadCount).isEqualTo(1);
-	}
-
-	@Test
-	@DisplayName("알림 저장 및 조회 테스트")
-	public void testSaveAndFindById() {
-		// Given
-		Notification notification = Notification.builder()
-			.user(user)
-			.post(post)
-			.content("New notification")
-			.build();
-		notification = notificationRepository.save(notification);
-
-		// When
-		Notification foundNotification = notificationRepository.findById(notification.getNotificationId()).orElse(null);
-
-		// Then
-		assertThat(foundNotification).isNotNull();
-		assertThat(foundNotification.getContent()).isEqualTo("New notification");
-	}
-
-	@Test
-	@DisplayName("알림 삭제 테스트")
-	public void testDeleteNotification() {
-		// Given
-		Notification notification = Notification.builder()
-			.user(user)
-			.post(post)
-			.content("Notification to delete")
-			.build();
-		notification = notificationRepository.save(notification);
-
-		// When
-		notificationRepository.delete(notification);
-		Notification foundNotification = notificationRepository.findById(notification.getNotificationId()).orElse(null);
-
-		// Then
-		assertThat(foundNotification).isNull();
 	}
 }

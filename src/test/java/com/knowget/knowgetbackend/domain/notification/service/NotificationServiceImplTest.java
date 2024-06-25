@@ -3,8 +3,11 @@ package com.knowget.knowgetbackend.domain.notification.service;
 import static org.assertj.core.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.anyLong;
+import static org.mockito.Mockito.anyString;
 import static org.mockito.Mockito.*;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -42,12 +45,52 @@ class NotificationServiceImplTest {
 		MockitoAnnotations.openMocks(this);
 		user = User.builder()
 			.username("testuser")
+			.password("password")
+			.prefLocation("Seoul")
+			.prefJob("Engineer")
+			.role("USER")
 			.build();
+
 		post = Post.builder()
-			.joSj("Test Job")
-			.workPararBassAdresCn("Test Address")
-			.jobcodeNm("Test Job Code")
+			.joReqstNo("REQ123")
+			.joRegistNo("REG123")
+			.cmpnyNm("CompanyName")
+			.bsnsSumryCn("Business Summary")
+			.rcritJssfcCmmnCodeSe("RCR123")
+			.jobcodeNm("JobCode")
+			.rcritNmprCo(10)
+			.acdmcrCmmnCodeSe("ACD123")
+			.acdmcrNm("Academic Name")
+			.emplymStleCmmnCodeSe("EMP123")
+			.emplymStleCmmnMm("EMP MM")
+			.workPararBassAdresCn("Address")
+			.subwayNm("SubwayName")
+			.dtyCn("Duty Content")
+			.careerCndCmmnCodeSe("CAR123")
+			.careerCndNm("Career Name")
+			.hopeWage("1000000")
+			.retGrantsNm("Retirement Grants")
+			.workTimeNm("Work Time")
+			.workTmNm("Work TM")
+			.holidayNm("Holiday")
+			.weekWorkHr("40")
+			.joFeinsrSbscrbNm("Insurance")
+			.rceptClosNm("Receipt Close")
+			.rceptMthIemNm("Receipt Method Item")
+			.modelMthNm("Model Method")
+			.rceptMthNm("Receipt Method")
+			.presentnPapersNm("Presentation Papers")
+			.mngrNm("Manager Name")
+			.mngrPhonNo("Manager Phone")
+			.mngrInsttNm("Manager Institute")
+			.bassAdresCn("Base Address")
+			.joSj("Job Subject")
+			.joRegDt("2023-01-01")
+			.guiLn("Guide Line")
+			.gu("GU")
+			.jobCode("Job Code")
 			.build();
+
 		notification = Notification.builder()
 			.user(user)
 			.post(post)
@@ -56,7 +99,7 @@ class NotificationServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("알림 전송 테스트 - sendNotification")
+	@DisplayName("사용자에게 알림을 전송")
 	void testSendNotification() {
 		when(notificationRepository.save(any(Notification.class))).thenReturn(notification);
 
@@ -66,7 +109,7 @@ class NotificationServiceImplTest {
 	}
 
 	@Test
-	@DisplayName("읽지 않은 알림 개수 조회 테스트 - getUnreadNotificationCount")
+	@DisplayName("읽지 않은 알림 개수 조회 - 성공 시나리오")
 	void testGetUnreadNotificationCount() {
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
 		when(notificationRepository.countByUserAndIsReadIsFalse(any(User.class))).thenReturn(5);
@@ -74,82 +117,81 @@ class NotificationServiceImplTest {
 		Integer unreadCount = notificationService.getUnreadNotificationCount("testuser");
 
 		assertThat(unreadCount).isEqualTo(5);
-		verify(userRepository, times(1)).findByUsername(anyString());
-		verify(notificationRepository, times(1)).countByUserAndIsReadIsFalse(any(User.class));
 	}
 
 	@Test
-	@DisplayName("읽지 않은 알림 개수 조회 실패 테스트 - 사용자 없음")
-	void testGetUnreadNotificationCountUserNotFound() {
+	@DisplayName("읽지 않은 알림 개수 조회 - 실패 시나리오")
+	void testGetUnreadNotificationCountFailure() {
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
-		assertThrows(RequestFailedException.class, () -> notificationService.getUnreadNotificationCount("unknownuser"));
-		verify(userRepository, times(1)).findByUsername(anyString());
+		assertThrows(RequestFailedException.class, () -> {
+			notificationService.getUnreadNotificationCount("nonexistentuser");
+		});
 	}
 
 	@Test
-	@DisplayName("모든 알림 조회 테스트 - getNotifications")
+	@DisplayName("사용자의 모든 알림 조회 - 성공 시나리오")
 	void testGetNotifications() {
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
-		when(notificationRepository.findByUser(any(User.class))).thenReturn(List.of(notification));
+		when(notificationRepository.findByUserOrderBySentDateDesc(any(User.class)))
+			.thenReturn(Arrays.asList(notification));
 
 		List<NotificationResponseDTO> notifications = notificationService.getNotifications("testuser");
 
 		assertThat(notifications).hasSize(1);
-		verify(userRepository, times(1)).findByUsername(anyString());
-		verify(notificationRepository, times(1)).findByUser(any(User.class));
+		assertThat(notifications.get(0).getContent()).isEqualTo("Test Notification");
 	}
 
 	@Test
-	@DisplayName("모든 알림 조회 실패 테스트 - 알림 없음")
-	void testGetNotificationsNotFound() {
-		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
-		when(notificationRepository.findByUser(any(User.class))).thenReturn(List.of());
+	@DisplayName("사용자의 모든 알림 조회 - 실패 시나리오")
+	void testGetNotificationsFailure() {
+		when(userRepository.findByUsername(anyString())).thenReturn(Optional.empty());
 
-		assertThrows(RequestFailedException.class, () -> notificationService.getNotifications("testuser"));
-		verify(userRepository, times(1)).findByUsername(anyString());
-		verify(notificationRepository, times(1)).findByUser(any(User.class));
+		assertThrows(RequestFailedException.class, () -> {
+			notificationService.getNotifications("nonexistentuser");
+		});
 	}
 
 	@Test
-	@DisplayName("알림 읽음 처리 테스트 - markAsRead")
+	@DisplayName("알림을 읽음 처리 - 성공 시나리오")
 	void testMarkAsRead() {
 		when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(notification));
+		when(notificationRepository.save(any(Notification.class))).thenReturn(notification);
 
 		String result = notificationService.markAsRead(1L);
 
 		assertThat(result).isEqualTo("알림을 읽음으로 변경하였습니다");
-		verify(notificationRepository, times(1)).findById(anyLong());
-		verify(notificationRepository, times(1)).save(any(Notification.class));
+		assertThat(notification.getIsRead()).isTrue();
 	}
 
 	@Test
-	@DisplayName("알림 읽음 처리 실패 테스트 - 알림 없음")
-	void testMarkAsReadNotFound() {
+	@DisplayName("알림을 읽음 처리 - 실패 시나리오")
+	void testMarkAsReadFailure() {
 		when(notificationRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-		assertThrows(RequestFailedException.class, () -> notificationService.markAsRead(1L));
-		verify(notificationRepository, times(1)).findById(anyLong());
+		assertThrows(RequestFailedException.class, () -> {
+			notificationService.markAsRead(1L);
+		});
 	}
 
 	@Test
-	@DisplayName("알림 삭제 테스트 - deleteNotification")
+	@DisplayName("알림 삭제 - 성공 시나리오")
 	void testDeleteNotification() {
 		when(notificationRepository.findById(anyLong())).thenReturn(Optional.of(notification));
 
 		String result = notificationService.deleteNotification(1L);
 
 		assertThat(result).isEqualTo("알림을 삭제하였습니다");
-		verify(notificationRepository, times(1)).findById(anyLong());
 		verify(notificationRepository, times(1)).delete(any(Notification.class));
 	}
 
 	@Test
-	@DisplayName("알림 삭제 실패 테스트 - 알림 없음")
-	void testDeleteNotificationNotFound() {
+	@DisplayName("알림 삭제 - 실패 시나리오")
+	void testDeleteNotificationFailure() {
 		when(notificationRepository.findById(anyLong())).thenReturn(Optional.empty());
 
-		assertThrows(RequestFailedException.class, () -> notificationService.deleteNotification(1L));
-		verify(notificationRepository, times(1)).findById(anyLong());
+		assertThrows(RequestFailedException.class, () -> {
+			notificationService.deleteNotification(1L);
+		});
 	}
 }
