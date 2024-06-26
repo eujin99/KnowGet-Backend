@@ -6,9 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -27,13 +26,13 @@ public class DocumentTransferController {
 
 	private final DocumentTransferService documentTransferService;
 
-	/**
-	 * 문서 업로드
-	 * @param jobGuideId
-	 * @param file
-	 * @return imageUrl
-	 * @auther 근엽
-	 */
+	// /**
+	//  * 문서 업로드
+	//  * @param jobGuideId
+	//  * @param file
+	//  * @return imageUrl
+	//  * @auther 근엽
+	//  */
 	// @PostMapping("{jobGuideId}/upload")
 	// public String uploadFile(@PathVariable Integer jobGuideId,
 	// 	@RequestParam(name = "file") MultipartFile file
@@ -44,23 +43,23 @@ public class DocumentTransferController {
 	// 	return documentUrl;
 	// }
 
-	/**
-	 * 문서 다중 업로드
-	 *
-	 * @param guideId
-	 * @param files
-	 * @return imageUrls
-	 * @auther 근엽
-	 */
-	@PostMapping("/{guideId}/uploads")
-	public List<String> uploadFiles(@PathVariable Integer guideId,
-		@RequestParam(value = "files") List<MultipartFile> files
-	) {
-
-		List<String> documentUrls = documentTransferService.uploadFiles(files, guideId);
-
-		return documentUrls;
-	}
+	// /**
+	//  * 문서 다중 업로드
+	//  *
+	//  * @param guideId
+	//  * @param files
+	//  * @return imageUrls
+	//  * @auther 근엽
+	//  */
+	// @PostMapping("/{guideId}/uploads")
+	// public List<String> uploadFiles(@PathVariable Integer guideId,
+	// 	@RequestParam(value = "files") List<MultipartFile> files
+	// ) {
+	//
+	// 	List<String> documentUrls = documentTransferService.uploadFiles(files, guideId);
+	//
+	// 	return documentUrls;
+	// }
 
 	/**
 	 * 문서 삭제
@@ -97,7 +96,7 @@ public class DocumentTransferController {
 	 * @return documentUrls
 	 * @auther 근엽
 	 */
-	@PatchMapping("/{guideId}/update")
+	@PutMapping("/{guideId}/update")
 	public List<String> updateDocument(@PathVariable Integer guideId,
 		@RequestParam(value = "files") List<MultipartFile> files
 	) {

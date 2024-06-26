@@ -19,7 +19,7 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.knowget.knowgetbackend.domain.imageTransfer.repository.ImageRepository;
+import com.knowget.knowgetbackend.domain.imageTransfer.repository.ImageTransferRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.entity.Image;
@@ -28,7 +28,7 @@ import com.knowget.knowgetbackend.global.exception.ImageNotFoundException;
 
 class ImageTransferServiceImplTest {
 	@Mock
-	private ImageRepository imageRepository;
+	private ImageTransferRepository imageTransferRepository;
 
 	@Mock
 	private JobGuideRepository jobGuideRepository;
@@ -67,8 +67,8 @@ class ImageTransferServiceImplTest {
 		// Given
 		when(jobGuideRepository.findById(1)).thenReturn(Optional.of(jobGuide));
 		when(awsS3Util.uploadFile(any(MultipartFile.class))).thenReturn("http://example.com/image1");
-		when(imageRepository.save(any(Image.class))).thenReturn(image);
-		when(imageRepository.findByJobGuide(jobGuide)).thenReturn(Arrays.asList(image));
+		when(imageTransferRepository.save(any(Image.class))).thenReturn(image);
+		when(imageTransferRepository.findByJobGuide(jobGuide)).thenReturn(Arrays.asList(image));
 
 		// When
 		List<String> result = imageTransferService.uploadFiles(Arrays.asList(multipartFile, multipartFile), 1);
@@ -79,15 +79,15 @@ class ImageTransferServiceImplTest {
 
 		verify(jobGuideRepository, times(1)).findById(1);
 		verify(awsS3Util, times(2)).uploadFile(any(MultipartFile.class));
-		verify(imageRepository, times(2)).save(any(Image.class));
-		verify(imageRepository, times(1)).findByJobGuide(jobGuide);
+		verify(imageTransferRepository, times(2)).save(any(Image.class));
+		verify(imageTransferRepository, times(1)).findByJobGuide(jobGuide);
 	}
 
 	@Test
 	@DisplayName("이미지 삭제 테스트 - deleteImage")
 	public void testDeleteImage() {
 		// Given
-		when(imageRepository.findById(1)).thenReturn(Optional.of(image));
+		when(imageTransferRepository.findById(1)).thenReturn(Optional.of(image));
 
 		// When
 		String result = imageTransferService.deleteImage(1);
@@ -95,23 +95,23 @@ class ImageTransferServiceImplTest {
 		// Then
 		assertThat(result).isEqualTo("이미지가 삭제되었습니다.");
 
-		verify(imageRepository, times(1)).findById(1);
-		verify(imageRepository, times(1)).delete(image);
+		verify(imageTransferRepository, times(1)).findById(1);
+		verify(imageTransferRepository, times(1)).delete(image);
 	}
 
 	@Test
 	@DisplayName("이미지를 찾을 수 없는 경우 삭제 테스트 - deleteImage")
 	public void testDeleteImageNotFound() {
 		// Given
-		when(imageRepository.findById(1)).thenReturn(Optional.empty());
+		when(imageTransferRepository.findById(1)).thenReturn(Optional.empty());
 
 		// When & Then
 		assertThrows(ImageNotFoundException.class, () -> {
 			imageTransferService.deleteImage(1);
 		});
 
-		verify(imageRepository, times(1)).findById(1);
-		verify(imageRepository, times(0)).delete(any(Image.class));
+		verify(imageTransferRepository, times(1)).findById(1);
+		verify(imageTransferRepository, times(0)).delete(any(Image.class));
 	}
 
 	@Test
@@ -127,6 +127,6 @@ class ImageTransferServiceImplTest {
 
 		verify(jobGuideRepository, times(0)).findById(anyInt());
 		verify(awsS3Util, times(0)).uploadFile(any(MultipartFile.class));
-		verify(imageRepository, times(0)).save(any(Image.class));
+		verify(imageTransferRepository, times(0)).save(any(Image.class));
 	}
 }

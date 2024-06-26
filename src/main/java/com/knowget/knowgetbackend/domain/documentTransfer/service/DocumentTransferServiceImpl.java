@@ -14,6 +14,7 @@ import com.knowget.knowgetbackend.global.config.s3.AwsS3Util2;
 import com.knowget.knowgetbackend.global.entity.Document;
 import com.knowget.knowgetbackend.global.entity.JobGuide;
 import com.knowget.knowgetbackend.global.exception.DocumentNotFoundException;
+import com.knowget.knowgetbackend.global.exception.JobGuideNotFoundException;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

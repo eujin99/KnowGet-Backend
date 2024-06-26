@@ -6,9 +6,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,23 +46,23 @@ public class ImageTransferController {
 	// 	return new ResponseEntity<>(new ResultMessageDTO(imageUrl), HttpStatus.OK);
 	// }
 
-	/**
-	 * 이미지 다중 업로드
-	 *
-	 * @param guideId
-	 * @param files
-	 * @return imageUrls
-	 * @auther 근엽
-	 */
-	@PostMapping("/{guideId}/uploads")
-	public ResponseEntity<List<String>> uploadFiles(@PathVariable Integer guideId,
-		@RequestParam(value = "files") List<MultipartFile> files
-	) {
-
-		List<String> imageUrls = imageTransferService.uploadFiles(files, guideId);
-
-		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
-	}
+	// /**
+	//  * 이미지 다중 업로드
+	//  *
+	//  * @param guideId
+	//  * @param files
+	//  * @return imageUrls
+	//  * @auther 근엽
+	//  */
+	// @PostMapping("/{guideId}/uploads")
+	// public ResponseEntity<List<String>> uploadFiles(@PathVariable Integer guideId,
+	// 	@RequestParam(value = "files") List<MultipartFile> files
+	// ) {
+	//
+	// 	List<String> imageUrls = imageTransferService.uploadFiles(files, guideId);
+	//
+	// 	return new ResponseEntity<>(imageUrls, HttpStatus.OK);
+	// }
 
 	// 다운로드
 	// @GetMapping("/download")
@@ -117,7 +116,7 @@ public class ImageTransferController {
 	 * @return message
 	 * @auther 근엽
 	 */
-	@PatchMapping("/{guideId}/update")
+	@PutMapping("/{guideId}/update")
 	public ResponseEntity<List<String>> updateImage(@PathVariable Integer guideId,
 		@RequestParam(value = "files") List<MultipartFile> files) {
 		List<String> message = imageTransferService.updateImage(guideId, files);
