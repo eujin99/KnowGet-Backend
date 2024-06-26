@@ -138,6 +138,47 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	}
 
 	/**
+	 * 이미지 업데이트
+	 *
+	 * @param guideId
+	 * @param files
+	 * @return
+	 * @auther 근엽
+	 */
+	@Override
+	public List<String> updateImage(Integer guideId, List<MultipartFile> files) {
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
+			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
+
+		for (MultipartFile file : files) {
+			checkFileSize(file);
+		}
+
+		imageRepository.findByJobGuide(jobGuide).forEach(image -> {
+			imageRepository.delete(image);
+		});
+
+		List<String> imageUrlList = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			Image image = Image.builder()
+				.imageUrl(awsS3Util.uploadFile(file))
+				.jobGuide(jobGuide)
+				.build();
+
+			imageRepository.save(image);
+		}
+
+		for (Image image : imageRepository.findByJobGuide(jobGuide)) {
+
+			imageUrlList.add(image.getImageUrl());
+			log.info("이미지 URL : " + image.getImageUrl());
+		}
+
+		return imageUrlList;
+	}
+
+	/**
 	 * 파일 사이즈 체크
 	 *
 	 * @param file

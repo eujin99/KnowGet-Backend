@@ -13,4 +13,5 @@ public interface ImageTransferService {
 
 	List<String> getImageUrls(Integer guideId);
 
+	List<String> updateImage(Integer guideId, List<MultipartFile> files);
 }
