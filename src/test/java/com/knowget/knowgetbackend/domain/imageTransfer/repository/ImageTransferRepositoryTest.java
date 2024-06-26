@@ -16,12 +16,12 @@ import com.knowget.knowgetbackend.global.entity.JobGuide;
 import com.knowget.knowgetbackend.global.entity.User;
 
 @DataJpaTest
-class ImageRepositoryTest {
+class ImageTransferRepositoryTest {
 	@Autowired
 	private TestEntityManager entityManager;
 
 	@Autowired
-	private ImageRepository imageRepository;
+	private ImageTransferRepository imageTransferRepository;
 
 	private User user;
 	private JobGuide jobGuide1;
@@ -78,8 +78,8 @@ class ImageRepositoryTest {
 	@DisplayName("특정 JobGuide에 대한 Image 조회 테스트 - findByJobGuide")
 	public void testFindByJobGuide() {
 		// When
-		List<Image> imagesForJobGuide1 = imageRepository.findByJobGuide(jobGuide1);
-		List<Image> imagesForJobGuide2 = imageRepository.findByJobGuide(jobGuide2);
+		List<Image> imagesForJobGuide1 = imageTransferRepository.findByJobGuide(jobGuide1);
+		List<Image> imagesForJobGuide2 = imageTransferRepository.findByJobGuide(jobGuide2);
 
 		// Then
 		assertThat(imagesForJobGuide1).hasSize(2);
@@ -103,7 +103,7 @@ class ImageRepositoryTest {
 		entityManager.flush();
 
 		// When
-		List<Image> imagesForJobGuide3 = imageRepository.findByJobGuide(jobGuide3);
+		List<Image> imagesForJobGuide3 = imageTransferRepository.findByJobGuide(jobGuide3);
 
 		// Then
 		assertThat(imagesForJobGuide3).isEmpty();

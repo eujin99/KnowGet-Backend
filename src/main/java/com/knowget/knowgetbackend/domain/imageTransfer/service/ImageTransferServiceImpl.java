@@ -8,7 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MaxUploadSizeExceededException;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.knowget.knowgetbackend.domain.imageTransfer.repository.ImageRepository;
+import com.knowget.knowgetbackend.domain.imageTransfer.repository.ImageTransferRepository;
 import com.knowget.knowgetbackend.domain.jobGuide.repository.JobGuideRepository;
 import com.knowget.knowgetbackend.global.config.s3.AwsS3Util;
 import com.knowget.knowgetbackend.global.entity.Image;
@@ -23,7 +23,7 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 @RequiredArgsConstructor
 public class ImageTransferServiceImpl implements ImageTransferService {
-	private final ImageRepository imageRepository;
+	private final ImageTransferRepository imageTransferRepository;
 	private final JobGuideRepository jobGuideRepository;
 
 	private final AwsS3Util awsS3Util;
@@ -83,10 +83,10 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 				.jobGuide(jobGuide)
 				.build();
 
-			imageRepository.save(image);
+			imageTransferRepository.save(image);
 		}
 
-		for (Image image : imageRepository.findByJobGuide(jobGuide)) {
+		for (Image image : imageTransferRepository.findByJobGuide(jobGuide)) {
 
 			imageUrlList.add(image.getImageUrl());
 			log.info("이미지 URL : " + image.getImageUrl());
@@ -106,11 +106,11 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	@Transactional
 	public String deleteImage(Integer imageId) {
 
-		Image image = imageRepository.findById(imageId)
+		Image image = imageTransferRepository.findById(imageId)
 			.orElseThrow(() -> new ImageNotFoundException("해당하는 이미지가 없습니다."));
 
 		// awsS3Util.deleteFile(image.getImageUrl());
-		imageRepository.delete(image);
+		imageTransferRepository.delete(image);
 
 		return "이미지가 삭제되었습니다.";
 	}
@@ -126,7 +126,7 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 	public List<String> getImageUrls(Integer guideId) {
 		JobGuide jobGuide = jobGuideRepository.findById(guideId)
 			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
-		List<Image> images = imageRepository.findByJobGuide(jobGuide);
+		List<Image> images = imageTransferRepository.findByJobGuide(jobGuide);
 
 		List<String> imageUrls = new ArrayList<>();
 		if (!images.isEmpty()) {
@@ -154,8 +154,8 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 			checkFileSize(file);
 		}
 
-		imageRepository.findByJobGuide(jobGuide).forEach(image -> {
-			imageRepository.delete(image);
+		imageTransferRepository.findByJobGuide(jobGuide).forEach(image -> {
+			imageTransferRepository.delete(image);
 		});
 
 		List<String> imageUrlList = new ArrayList<>();
@@ -166,10 +166,10 @@ public class ImageTransferServiceImpl implements ImageTransferService {
 				.jobGuide(jobGuide)
 				.build();
 
-			imageRepository.save(image);
+			imageTransferRepository.save(image);
 		}
 
-		for (Image image : imageRepository.findByJobGuide(jobGuide)) {
+		for (Image image : imageTransferRepository.findByJobGuide(jobGuide)) {
 
 			imageUrlList.add(image.getImageUrl());
 			log.info("이미지 URL : " + image.getImageUrl());
