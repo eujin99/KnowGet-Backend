@@ -13,4 +13,5 @@ public interface DocumentTransferService {
 
 	List<String> getDocumentUrls(Integer guideId);
 
+	List<String> updateDocument(Integer guideId, List<MultipartFile> files);
 }

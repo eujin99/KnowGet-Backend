@@ -71,7 +71,7 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 			checkFileSize(file);
 		}
 
-		List<String> imageUrlList = new ArrayList<>();
+		List<String> documentUrls = new ArrayList<>();
 
 		JobGuide jobGuide = jobGuideRepository.findById(guideId)
 			.orElseThrow(() -> new IllegalArgumentException("해당하는 취업 가이드가 없습니다."));
@@ -87,11 +87,11 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 
 		for (Document document : documentTransferRepository.findByJobGuide(jobGuide)) {
 
-			imageUrlList.add(document.getDocumentUrl());
+			documentUrls.add(document.getDocumentUrl());
 			log.info("문서 URL : " + document.getDocumentUrl());
 		}
 
-		return imageUrlList;
+		return documentUrls;
 	}
 
 	/**
@@ -137,6 +137,48 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 	}
 
 	/**
+	 * 문서 업데이트
+	 *
+	 * @param guideId
+	 * @param files
+	 * @return documentUrls
+	 * @auther 근엽
+	 */
+	@Override
+	public List<String> updateDocument(Integer guideId, List<MultipartFile> files) {
+		JobGuide jobGuide = jobGuideRepository.findById(guideId)
+			.orElseThrow(() -> new JobGuideNotFoundException("[Error] : 해당하는 취업 가이드가 없습니다."));
+
+		for (MultipartFile file : files) {
+			checkFileSize(file);
+		}
+
+		documentTransferRepository.findByJobGuide(jobGuide).forEach(document -> {
+			documentTransferRepository.delete(document);
+		});
+
+		List<String> documentUrls = new ArrayList<>();
+
+		for (MultipartFile file : files) {
+			Document document = Document.builder()
+				.documentUrl(awsS3Util.uploadFile(file))
+				.jobGuide(jobGuide)
+				.build();
+
+			documentTransferRepository.save(document);
+		}
+
+		for (Document document : documentTransferRepository.findByJobGuide(jobGuide)) {
+
+			documentUrls.add(document.getDocumentUrl());
+			log.info("문서 URL : " + document.getDocumentUrl());
+		}
+
+		return documentUrls;
+
+	}
+
+	/**
 	 * 파일 사이즈 체크
 	 *
 	 * @param file
@@ -147,5 +189,4 @@ public class DocumentTransferServiceImpl implements DocumentTransferService {
 			throw new MaxUploadSizeExceededException(file.getSize());
 		}
 	}
-
 }

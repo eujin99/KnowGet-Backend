@@ -6,6 +6,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,6 +107,21 @@ public class ImageTransferController {
 	public ResponseEntity<List<String>> getImageUrls(@PathVariable Integer guideId) {
 		List<String> imageUrls = imageTransferService.getImageUrls(guideId);
 		return new ResponseEntity<>(imageUrls, HttpStatus.OK);
+	}
+
+	/**
+	 * 이미지 업데이트
+	 *
+	 * @param guideId
+	 * @param files
+	 * @return message
+	 * @auther 근엽
+	 */
+	@PatchMapping("/{guideId}/update")
+	public ResponseEntity<List<String>> updateImage(@PathVariable Integer guideId,
+		@RequestParam(value = "files") List<MultipartFile> files) {
+		List<String> message = imageTransferService.updateImage(guideId, files);
+		return new ResponseEntity<>(message, HttpStatus.OK);
 	}
 
 }
