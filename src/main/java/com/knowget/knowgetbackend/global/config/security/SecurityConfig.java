@@ -50,7 +50,7 @@ public class SecurityConfig {
 		http
 			.cors(corsCustomizer -> corsCustomizer.configurationSource(request -> {
 				CorsConfiguration config = new CorsConfiguration();
-				config.setAllowedOrigins(Collections.singletonList("http://localhost:9000"));
+				config.setAllowedOrigins(Collections.singletonList("http://d26s7gklfb7nph.cloudfront.net"));
 				config.setAllowedMethods(Collections.singletonList("*"));
 				config.setAllowedHeaders(Collections.singletonList("*"));
 				config.setAllowCredentials(true);
