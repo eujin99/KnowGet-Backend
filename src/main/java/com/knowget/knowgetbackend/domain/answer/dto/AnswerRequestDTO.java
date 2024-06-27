@@ -4,4 +4,8 @@ import lombok.Data;
 
 @Data
 public class AnswerRequestDTO {
+
+	private Integer counselingId;
+	private String content;
+
 }

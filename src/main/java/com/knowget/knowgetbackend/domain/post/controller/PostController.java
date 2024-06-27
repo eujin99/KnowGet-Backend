@@ -1,97 +1,89 @@
-// package com.knowget.knowgetbackend.domain.post.controller;
-//
-// import java.util.List;
-//
-// import org.springframework.http.HttpStatus;
-// import org.springframework.http.ResponseEntity;
-// import org.springframework.security.core.context.SecurityContextHolder;
-// import org.springframework.web.bind.annotation.DeleteMapping;
-// import org.springframework.web.bind.annotation.ExceptionHandler;
-// import org.springframework.web.bind.annotation.GetMapping;
-// import org.springframework.web.bind.annotation.PatchMapping;
-// import org.springframework.web.bind.annotation.PathVariable;
-// import org.springframework.web.bind.annotation.PostMapping;
-// import org.springframework.web.bind.annotation.RequestBody;
-// import org.springframework.web.bind.annotation.RequestMapping;
-// import org.springframework.web.bind.annotation.RestController;
-//
-// import com.knowget.knowgetbackend.domain.post.dto.PostModifyRequestDTO;
-// import com.knowget.knowgetbackend.domain.post.dto.PostRequestDTO;
-// import com.knowget.knowgetbackend.domain.post.exception.InvalidLoginException;
-// import com.knowget.knowgetbackend.domain.post.exception.PostNotFoundException;
-// import com.knowget.knowgetbackend.domain.post.service.PostService;
-// import com.knowget.knowgetbackend.global.entity.Post;
-//
-// import lombok.RequiredArgsConstructor;
-//
-// @RestController
-// @RequestMapping("/qna")
-// @RequiredArgsConstructor
-// public class PostController {
-//
-// 	private final PostService postService;
-//
-// 	/**
-// 	 * 최신순으로 Q&A 리스트 조회
-// 	 */
-// 	@GetMapping("/all")
-// 	public ResponseEntity<List<Post>> findAll() {
-// 		List<Post> postList = postService.findAll();
-// 		return new ResponseEntity<>(postList, HttpStatus.OK);
-// 	}
-//
-// 	/**
-// 	 * Q&A 조회
-// 	 */
-// 	@PostMapping("/{postIdx}")
-// 	public ResponseEntity<Post> findById(@PathVariable("postIdx") Long postIdx) {
-// 		Post post = postService.findById(postIdx);
-// 		return new ResponseEntity<>(post, HttpStatus.OK);
-// 	}
-//
-// 	/**
-// 	 * Q&A 생성
-// 	 */
-// 	@PostMapping("/save")
-// 	public ResponseEntity<String> save(@RequestBody PostRequestDTO postRequestDTO) {
-// 		String id = SecurityContextHolder.getContext().getAuthentication().getName();
-// 		postRequestDTO.setId(id);
-// 		postRequestDTO.setType("qna");
-//
-// 		String msg = postService.save(postRequestDTO);
-// 		return new ResponseEntity<>(msg, HttpStatus.OK);
-// 	}
-//
-// 	/**
-// 	 * Q&A 수정
-// 	 */
-// 	@PatchMapping("/{postIdx}/update")
-// 	public ResponseEntity<String> update(@PathVariable("postIdx") Long postIdx,
-// 		@RequestBody PostModifyRequestDTO postModifyRequestDTO) {
-// 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-// 		postModifyRequestDTO.setId(userId);
-// 		String msg = postService.update(postIdx, postModifyRequestDTO);
-// 		return new ResponseEntity<>(msg, HttpStatus.OK);
-// 	}
-//
-// 	/**
-// 	 * Q&A 삭제
-// 	 */
-// 	@DeleteMapping("/{postIdx}/delete")
-// 	public ResponseEntity<String> delete(@PathVariable("postIdx") Long postIdx) {
-// 		String userId = SecurityContextHolder.getContext().getAuthentication().getName();
-// 		String msg = postService.delete(postIdx, userId);
-// 		return new ResponseEntity<>(msg, HttpStatus.OK);
-// 	}
-//
-// 	@ExceptionHandler(InvalidLoginException.class)
-// 	public ResponseEntity<String> handleInvalidLoginException(InvalidLoginException e) {
-// 		return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-// 	}
-//
-// 	@ExceptionHandler(PostNotFoundException.class)
-// 	public ResponseEntity<String> handleQnaNotFoundException(PostNotFoundException e) {
-// 		return new ResponseEntity<>(e.getMessage(), HttpStatus.UNAUTHORIZED);
-// 	}
-//
-// }
+package com.knowget.knowgetbackend.domain.post.controller;
+
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.knowget.knowgetbackend.domain.post.dto.PostResponseDTO;
+import com.knowget.knowgetbackend.domain.post.service.PostService;
+
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
+@RestController
+@RequestMapping("/api/v1/posts")
+@RequiredArgsConstructor
+public class PostController {
+
+	private final PostService postService;
+
+	/**
+	 * 모든 저장된 게시글을 조회.
+	 *
+	 * @return 저장된 모든 게시글 목록.
+	 * @author 윾진
+	 */
+	@GetMapping
+	public List<PostResponseDTO> getAllPosts() {
+		return postService.getAllPosts();
+	}
+
+	/**
+	 * 게시글 ID로 게시글을 조회
+	 *
+	 * @param postId 게시글 ID
+	 * @return 게시글 정보
+	 * @author Jihwan
+	 */
+	@GetMapping("/{postId}")
+	public PostResponseDTO getPostById(@PathVariable Integer postId) {
+		return postService.getPostById(postId);
+	}
+
+	/**
+	 * 근무지 (구)로 필터링된 게시글을 조회.
+	 *
+	 * @param gu 근무지 구 이름 (예: 용산구).
+	 * @return 근무지 (구)로 필터링된 게시글 목록.
+	 * @author 윾진
+	 */
+	@GetMapping("/search-by-location")
+	public List<PostResponseDTO> getPostsByLocation(@RequestParam String gu) {
+		return postService.getPostsByLocation(gu);
+	}
+
+	/**
+	 * 모집 직종 코드로 필터링된 게시글을 조회.
+	 *
+	 * @param code 모집 직종 코드.
+	 * @return 모집 직종 코드로 필터링된 게시글 목록.
+	 * @author 윾진
+	 */
+	@GetMapping("/search-by-job-code")
+	public List<PostResponseDTO> getPostsByJobCode(@RequestParam String code) {
+		return postService.getPostsByJobCode(code);
+	}
+
+	/**
+	 * 스케쥴러 없이 명시적으로 Open API를 통해 일자리 정보를 가져와 저장
+	 *
+	 * @return HTTP 상태 코드 200 (OK)
+	 * @author Jihwan
+	 */
+	@GetMapping("/fetch-posts")
+	public ResponseEntity<Void> fetchPosts() {
+		log.info("post fetching started at {}", LocalDateTime.now());
+		int insertCount = postService.fetchPosts(1, 100);
+		log.info("fetched {} posts at {}", insertCount, LocalDateTime.now());
+		return new ResponseEntity<>(HttpStatus.OK);
+	}
+
+}

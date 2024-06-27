@@ -1,7 +1,18 @@
 package com.knowget.knowgetbackend.domain.reply.dto;
 
+import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ReplyRequestDTO {
+
+	private Integer commentId;
+	private String username;
+	@NotNull
+	private String content;
+
 }

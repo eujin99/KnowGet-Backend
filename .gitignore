@@ -168,28 +168,6 @@ replay_pid*
 .history
 .ionide
 
-### Vue ###
-# gitignore template for Vue.js projects
-#
-# Recommended template: Node.gitignore
-
-docs/_book
-
-test/
-
-### Vuejs ###
-# Recommended template: Node.gitignore
-
-node_modules/
-dist/
-npm-debug.log
-yarn-error.log
-
-# End of https://www.toptal.com/developers/gitignore/api/intellij,visualstudiocode,java,vue,vuejs
-
-# Created by https://www.toptal.com/developers/gitignore/api/gradle
-# Edit at https://www.toptal.com/developers/gitignore?templates=gradle
-
 ### Gradle ###
 .gradle
 **/build/

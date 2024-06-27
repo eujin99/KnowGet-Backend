@@ -4,4 +4,8 @@ import lombok.Data;
 
 @Data
 public class CounselingRequestDTO {
+	private String username;
+	private String category;
+	private String content;
+
 }

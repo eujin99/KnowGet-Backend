@@ -2,6 +2,8 @@ package com.knowget.knowgetbackend.global.entity;
 
 import org.hibernate.annotations.ColumnDefault;
 
+import com.knowget.knowgetbackend.global.common.BaseTime;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -17,7 +19,7 @@ import lombok.NoArgsConstructor;
 @Table(name = "users")
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class User {
+public class User extends BaseTime {
 
 	@Id
 	@Column(name = "user_id")
@@ -33,32 +35,40 @@ public class User {
 	@Column(name = "pref_location", nullable = false)
 	private String prefLocation;
 
-	@Column(name = "pref_job", nullable = false, columnDefinition = "TINYINT(1)")
-	private Short prefJob;
+	@Column(name = "pref_job", nullable = false)
+	private String prefJob;
 
 	@Column(name = "is_active", nullable = false)
 	@ColumnDefault("true")
 	private Boolean isActive;
 
+	@Column(name = "role", nullable = false)
+	private String role;
+
 	@Builder
-	public User(String username, String password, String prefLocation, Short prefJob) {
+	public User(String username, String password, String prefLocation, String prefJob, String role) {
 		this.username = username;
 		this.password = password;
 		this.prefLocation = prefLocation;
 		this.prefJob = prefJob;
+		this.role = role;
 		this.isActive = true;
+	}
+
+	public void updatePassword(String newPassword) {
+		this.password = newPassword;
 	}
 
 	public void updatePrefLocation(String prefLocation) {
 		this.prefLocation = prefLocation;
 	}
 
-	public void updatePrefJob(Short prefJob) {
+	public void updatePrefJob(String prefJob) {
 		this.prefJob = prefJob;
 	}
 
-	public void updateIsActive() {
-		this.isActive = false;
+	public void updateIsActive(Boolean isActive) {
+		this.isActive = isActive;
 	}
 
 }

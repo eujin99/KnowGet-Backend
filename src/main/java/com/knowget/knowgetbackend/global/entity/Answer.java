@@ -1,5 +1,8 @@
 package com.knowget.knowgetbackend.global.entity;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.knowget.knowgetbackend.global.common.BaseTime;
 
 import jakarta.persistence.Column;
@@ -9,7 +12,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AccessLevel;
@@ -30,19 +32,15 @@ public class Answer extends BaseTime {
 
 	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "counseling_id", nullable = false)
+	@OnDelete(action = OnDeleteAction.CASCADE)
 	private Counseling counseling;
-
-	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "admin_id", nullable = false)
-	private Admin admin;
 
 	@Column(name = "content", nullable = false, columnDefinition = "TEXT")
 	private String content;
 
 	@Builder
-	public Answer(Counseling counseling, Admin admin, String content) {
+	public Answer(Counseling counseling, String content) {
 		this.counseling = counseling;
-		this.admin = admin;
 		this.content = content;
 	}
 

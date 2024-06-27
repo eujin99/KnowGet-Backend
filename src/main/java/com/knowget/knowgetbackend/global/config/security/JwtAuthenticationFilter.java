@@ -1,59 +1,64 @@
 package com.knowget.knowgetbackend.global.config.security;
 
 import java.io.IOException;
-import java.util.List;
-import java.util.Optional;
 
-import org.springframework.core.annotation.Order;
-import org.springframework.http.HttpHeaders;
-import org.springframework.security.authentication.AbstractAuthenticationToken;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.web.authentication.WebAuthenticationDetails;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-@Order(0)
-@RequiredArgsConstructor
 @Component
+@Slf4j
+@RequiredArgsConstructor
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	private final TokenProvider tokenProvider;
+
+	private final JwtUtil jwtUtil;
+	private final UserDetailsService userDetailsService;
 
 	@Override
-	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-		throws ServletException, IOException {
-		String token = parseBearerToken(request);
-		User user = parseUserSpecification(token);
-		AbstractAuthenticationToken authenticated = UsernamePasswordAuthenticationToken.authenticated(user, token,
-			user.getAuthorities());
-		authenticated.setDetails(new WebAuthenticationDetails(request));
-		SecurityContextHolder.getContext().setAuthentication(authenticated);
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response,
+		FilterChain chain) throws ServletException, IOException {
 
-		filterChain.doFilter(request, response);
+		final String authorizationHeader = request.getHeader("Authorization");
+		String username = null;
+		String jwt = null;
+
+		if (authorizationHeader != null && authorizationHeader.startsWith("Bearer ")) {
+			jwt = authorizationHeader.substring(7);
+			try {
+				username = jwtUtil.getUsernameFromToken(jwt);
+			} catch (ExpiredJwtException e) {
+				log.error("JWT Token has expired");
+			} catch (Exception e) {
+				log.error("Unable to get JWT Token", e);
+			}
+		}
+
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
+
+			if (jwtUtil.validateToken(jwt)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
+					new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken
+					.setDetails(
+						new WebAuthenticationDetailsSource().buildDetails(request));
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+			}
+		}
+
+		chain.doFilter(request, response);
 	}
 
-	private String parseBearerToken(HttpServletRequest request) {
-		return Optional.ofNullable(request.getHeader(HttpHeaders.AUTHORIZATION))
-			.filter(token -> token.substring(0, 7).equalsIgnoreCase("Bearer "))
-			.map(token -> token.substring(7))
-			.orElse(null);
-	}
-
-	private User parseUserSpecification(String token) {
-		String[] split = Optional.ofNullable(token)
-			.filter(subject -> subject.length() >= 10)
-			.map(tokenProvider::validateTokenAndGetSubject)
-			.orElse("anonymous:anonymous")
-			.split(":");
-
-		return new User(split[0], "", List.of(new SimpleGrantedAuthority(split[1])));
-	}
 }
