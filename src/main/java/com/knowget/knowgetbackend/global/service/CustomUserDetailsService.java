@@ -1,6 +1,6 @@
 package com.knowget.knowgetbackend.global.service;
 
-import java.util.List;
+import java.util.Collections;
 
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,7 +24,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 		User user = userRepository.findByUsername(username)
 			.orElseThrow(() -> new UsernameNotFoundException(username + "와(과) 일치하는 사용자를 찾을 수 없습니다"));
 		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
-			List.of(new SimpleGrantedAuthority(user.getRole())));
+			Collections.singletonList(new SimpleGrantedAuthority("ROLE_" + user.getRole())));
 	}
 
 }
