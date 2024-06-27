@@ -13,7 +13,7 @@
 
   <br/>
 
-  - [기획안 바로가기 >](https://docs.google.com/document/d/1Ucauy5ZMM9s71Qy_svndxV5mIco3C6t9s2AXsY0C59A/edit?usp=sharing)
+  [한화시스템 BEYOND SW캠프 5기 최종프로젝트.pdf](https://github.com/user-attachments/files/16010874/BEYOND.SW.5.pdf)
 
 </details>
 
@@ -22,8 +22,8 @@
   <summary>2. WBS</summary>
 
   <br/>
-
-  - [WBS 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=1143432732#gid=1143432732)
+  
+  [Final Project - WBS.pdf](https://github.com/user-attachments/files/16010901/Final.Project.-.WBS.pdf)
   
 </details>
 
@@ -32,8 +32,8 @@
   <summary>3. 요구사항 명세서</summary>
 
   <br/>
-
-  - [요구사항 정의서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=177440614#gid=177440614)
+  
+  [Final Project - 요구사항 명세서.pdf](https://github.com/user-attachments/files/16011006/Final.Project.-.pdf)
   
 </details>
 
@@ -52,8 +52,8 @@
   <summary>5. API 명세서</summary>
 
   <br/>
-
-  - [API 명세서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2024008045#gid=2024008045)
+  
+  [Final Project - API 명세서.pdf](https://github.com/user-attachments/files/16010957/Final.Project.-.API.pdf)
   
 </details>
 
@@ -61,9 +61,9 @@
 
   <summary>6. 단위 테스트 결과서</summary>
 
-  <br/>
+  <br/>  
   
-  - [단위 테스트 결과서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=2084964114#gid=2084964114)
+  [Final Project - 단위 테스트.pdf](https://github.com/user-attachments/files/16011049/Final.Project.-.pdf)
 
 </details>
 
@@ -83,20 +83,18 @@
 
   <br/>
   
-
   ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/45b2dc86-c209-4d04-9f34-92d82ef627e8)
-
 
 </details>
 
 
 <details>
 
-  <summary>9. CICD 계획서 바로가기</summary>
+  <summary>9. CI/CD 계획서 바로가기</summary>
 
   <br/>
   
-  - [CICD 계획서 바로가기 >](https://docs.google.com/document/d/1tRymd_UT33XUuoLRjUh9fgxH1r0ngZE_1E47aMPpkkA/edit)
+  [CI/CD 계획서.pdf](https://github.com/user-attachments/files/16011023/CI.pdf)
 
 </details>
 
@@ -105,8 +103,8 @@
   <summary>10. 통합테스트 결과서 바로가기</summary>
 
   <br/>
-  
-  - [통합 테스트 결과서 바로가기 >](https://docs.google.com/spreadsheets/d/1vZhWWp7TbRf0YiPWQCPTvmmrBy8v7JXIAb6jj8DCzP4/edit?gid=1397295268#gid=1397295268)
+
+  [Final Project - 통합 테스트.pdf](https://github.com/user-attachments/files/16011046/Final.Project.-.pdf)
 
 </details>
 
