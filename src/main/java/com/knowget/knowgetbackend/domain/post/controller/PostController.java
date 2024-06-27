@@ -81,7 +81,7 @@ public class PostController {
 	@GetMapping("/fetch-posts")
 	public ResponseEntity<Void> fetchPosts() {
 		log.info("post fetching started at {}", LocalDateTime.now());
-		int insertCount = postService.fetchPosts(1, 100);
+		int insertCount = postService.fetchPosts(1, 1000);
 		log.info("fetched {} posts at {}", insertCount, LocalDateTime.now());
 		return new ResponseEntity<>(HttpStatus.OK);
 	}
