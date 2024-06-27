@@ -2,6 +2,7 @@ package com.knowget.knowgetbackend.domain.answer.controller;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -34,6 +35,7 @@ public class AnswerController {
 	 * @return ResponseEntity<AnswerResponseDTO> 답변 내용
 	 * @author 근엽
 	 */
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@PostMapping("/{id}")
 	public ResponseEntity<AnswerResponseDTO> getAnswer(@PathVariable Integer id) {
 		AnswerResponseDTO answer = answerService.getAnswer(id);
@@ -48,6 +50,7 @@ public class AnswerController {
 	 * @return ResponseEntity<String> 작성 완료 메시지
 	 * @author 근엽
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<ResultMessageDTO> saveAnswer(@RequestBody AnswerRequestDTO answerRequestDTO) {
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
@@ -68,6 +71,7 @@ public class AnswerController {
 	 * @return ResponseEntity<String> 수정 완료 메시지
 	 * @author 근엽
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@PatchMapping("/{id}")
 	public ResponseEntity<ResultMessageDTO> updateAnswer(@PathVariable Integer id,
 		@RequestBody AnswerModfiyDTO answerModfiyDTO) {
@@ -83,6 +87,7 @@ public class AnswerController {
 	 * @return ResponseEntity<String> 삭제 완료 메시지
 	 * @author 근엽
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<ResultMessageDTO> deleteAnswer(@PathVariable Integer id) {
 		String message = answerService.deleteAnswer(id);
