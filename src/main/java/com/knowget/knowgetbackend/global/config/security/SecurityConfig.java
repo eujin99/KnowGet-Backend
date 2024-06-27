@@ -34,7 +34,8 @@ public class SecurityConfig {
 	private final String[] publicURLs = {"/api/v1/user/**", "/api/v1/posts/**", "/api/v1/education/**",
 		"/api/v1/job-guide", "/api/v1/job-guide/{id}", "/api/v1/success-case", "/api/v1/success-case/{caseId}",
 		"/api/v1/success-case/search", "/api/v1/success-case/{caseId}/comments",
-		"/api/v1/comment/{commentId}/replies", "/api/v1/admin/register", "/api/v1/admin/login"};
+		"/api/v1/comment/{commentId}/replies", "/api/v1/admin/register", "/api/v1/admin/login",
+		"/api/v1/image/{guideId}", "/api/v1/document/{guideId}"};
 	private final String[] protectedUrls = {"/api/v1/notification/**", "/api/v1/bookmark/**",
 		"/api/v1/success-case/{caseId}/comment",
 		"/api/v1/success-case/{caseId}/comment/{commentId}", "/api/v1/comment/{commentId}/reply",
@@ -86,8 +87,9 @@ public class SecurityConfig {
 				requests
 					.requestMatchers(publicURLs).permitAll()
 					.requestMatchers(protectedUrls).authenticated()
-					.requestMatchers("/api/v1/admin/users", "/api/v1/admin/user/{userId}", "/api/v1/image/**",
-						"/api/v1/document/**").hasRole("ADMIN")
+					.requestMatchers("/api/v1/admin/users", "/api/v1/admin/user/{userId}",
+						"/api/v1/image/{guideId}/update", "/api/v1/image/{imageId}/delete",
+						"/api/v1/document/{guideId}/update", "/api/v1/document/{documentId}/delete").hasRole("ADMIN")
 					.requestMatchers("/api/v1/mypage/**").hasRole("USER")
 					.anyRequest().authenticated()
 			);
