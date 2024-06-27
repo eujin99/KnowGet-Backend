@@ -75,7 +75,8 @@ public class JobGuideServiceImpl implements JobGuideService {
 		try {
 			User admin = userRepository.findByUsername(jobGuideRequestDTO.getUsername())
 				.orElseThrow(
-					() -> new UserNotFoundException("등록된" + jobGuideRequestDTO.getUsername() + "이라는 사용자가 없습니다. "));
+					() -> new UserNotFoundException(
+						"등록된 '" + jobGuideRequestDTO.getUsername() + "' 이라는 사용자가 없습니다."));
 
 			JobGuide jobGuide = JobGuide.builder()
 				.user(admin)

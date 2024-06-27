@@ -3,6 +3,7 @@ package com.knowget.knowgetbackend.domain.jobGuide.controller;
 import java.util.ArrayList;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -58,6 +59,7 @@ public class JobGuideController {
 	 * @return responseEntity에 생성된 게시글 담아서 반환.
 	 * @author 유진
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@PostMapping
 	public ResponseEntity<?> createJobGuide(@RequestBody JobGuideRequestDTO jobGuideRequestDTO) {
 		return ResponseEntity.ok(jobGuideService.createJobGuide(jobGuideRequestDTO));
@@ -71,6 +73,7 @@ public class JobGuideController {
 	 * @return responseEntity에 수정된 게시글 담아 반환
 	 * @author 유진
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateJobGuide(@PathVariable Integer id,
 		@RequestBody JobGuideRequestDTO jobGuideRequestDTO) {
@@ -84,6 +87,7 @@ public class JobGuideController {
 	 * @return entity에 삭제 완료 상태 반환함..
 	 * @author 유진
 	 */
+	@PreAuthorize("hasRole('ADMIN')")
 	@DeleteMapping("/{id}")
 	public ResponseEntity<?> deleteJobGuide(@PathVariable Integer id) {
 		jobGuideService.deleteJobGuide(id);

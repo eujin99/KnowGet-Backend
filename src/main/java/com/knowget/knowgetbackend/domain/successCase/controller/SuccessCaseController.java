@@ -3,6 +3,7 @@ package com.knowget.knowgetbackend.domain.successCase.controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
@@ -46,6 +47,7 @@ public class SuccessCaseController {
 	// 3. SuccessCase 생성
 	// postman 사용법 : username / title / content 입력 후 post로 요청 : http://localhost:8080/api/v1/success-case
 	@PostMapping
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	public ResponseEntity<ResultMessageDTO> createSuccessCase(
 		@RequestBody SuccessCaseRequestDTO successCaseRequestDTO) {
 		ResultMessageDTO successCase = successCaseService.createSuccessCase(successCaseRequestDTO);
@@ -54,6 +56,7 @@ public class SuccessCaseController {
 
 	// 4. SuccessCase 삭제
 	// postman 사용법 : delete로 요청 route : http://localhost:8080/api/v1/success-case/{caseId}
+	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
 	@DeleteMapping("/{caseId}")
 	public ResponseEntity<ResultMessageDTO> deleteSuccessCase(@PathVariable Integer caseId) {
 		ResultMessageDTO resultMessage = successCaseService.deleteSuccessCase(caseId);
@@ -70,6 +73,7 @@ public class SuccessCaseController {
 
 	// 6. SuccessCase 승인상태 업데이트
 	// postman 사용법 : Patch으로 요청 route : http://localhost:8080/api/v1/success-case/approval/{caseId}
+	@PreAuthorize("hasRole('ADMIN')")
 	@PatchMapping("/approval/{caseId}/{status}")
 	public ResponseEntity<ResultMessageDTO> updateSuccessCaseApproval(@PathVariable Integer caseId,
 		@PathVariable Integer status) {
