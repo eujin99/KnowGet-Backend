@@ -5,7 +5,7 @@ import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerResponseDTO;
 
 public interface AnswerService {
-	AnswerResponseDTO getAnswer(Integer id);
+	AnswerResponseDTO getAnswer(Integer counselingId);
 
 	String saveAnswer(AnswerRequestDTO answerRequestDTO);
 

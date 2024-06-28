@@ -5,13 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.PatchMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerModfiyDTO;
 import com.knowget.knowgetbackend.domain.answer.dto.AnswerRequestDTO;
@@ -31,14 +25,14 @@ public class AnswerController {
 	/**
 	 * 답변 상세 조회
 	 *
-	 * @param id
+	 * @param counselingId 상담아이디다 근엽아 ㅋㅋ
 	 * @return ResponseEntity<AnswerResponseDTO> 답변 내용
-	 * @author 근엽
+	 * @author 근엽 => 윾진
 	 */
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	@PostMapping("/{id}")
-	public ResponseEntity<AnswerResponseDTO> getAnswer(@PathVariable Integer id) {
-		AnswerResponseDTO answer = answerService.getAnswer(id);
+	@GetMapping("/{counselingId}")
+	public ResponseEntity<AnswerResponseDTO> getAnswer(@PathVariable Integer counselingId) {
+		AnswerResponseDTO answer = answerService.getAnswer(counselingId);
 
 		return new ResponseEntity<>(answer, HttpStatus.OK);
 	}
