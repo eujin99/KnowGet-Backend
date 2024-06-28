@@ -92,9 +92,6 @@ public class NotificationServiceImpl implements NotificationService {
 				.stream()
 				.map(NotificationResponseDTO::new)
 				.collect(Collectors.toList());
-			if (notifications.isEmpty()) {
-				throw new NotificationNotFoundException("알림이 비어있습니다");
-			}
 			return notifications;
 		} catch (Exception e) {
 			throw new RequestFailedException("[Error] 알림을 불러오는데에 실패했습니다 : " + e.getMessage());
