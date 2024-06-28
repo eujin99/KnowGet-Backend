@@ -25,15 +25,15 @@ public class AnswerServiceImpl implements AnswerService {
 	/**
 	 * 답변 상세 조회
 	 *
-	 * @param id
+	 * @param counselingId 상담 아이디라고 근엽아 ㅋㅋ
 	 * @return AnswerResponseDTO 답변 내용
 	 * @throws AnswerNotFoundException
 	 * @author 근엽
 	 */
 	@Transactional(readOnly = true)
 	@Override
-	public AnswerResponseDTO getAnswer(Integer id) {
-		Answer ans = answerRepository.findById(id)
+	public AnswerResponseDTO getAnswer(Integer counselingId) {
+		Answer ans = answerRepository.findByCounselingCounselingId(counselingId)
 			.orElseThrow(() -> new AnswerNotFoundException("[Error] 존재하지않는 답변입니다."));
 		return new AnswerResponseDTO(ans);
 	}
