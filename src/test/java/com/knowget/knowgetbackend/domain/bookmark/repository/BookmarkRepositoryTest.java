@@ -104,7 +104,7 @@ class BookmarkRepositoryTest {
 	@DisplayName("특정 사용자의 Bookmark 조회 테스트 - findByUser")
 	public void testFindByUser() {
 		// When
-		List<Bookmark> bookmarks = bookmarkRepository.findByUser(user);
+		List<Bookmark> bookmarks = bookmarkRepository.findByUserAndIsBookmarkedTrue(user);
 
 		// Then
 		assertThat(bookmarks).hasSize(1);
