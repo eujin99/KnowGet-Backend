@@ -128,7 +128,7 @@ class MypageServiceImplTest {
 			.build();
 
 		when(userRepository.findByUsername(anyString())).thenReturn(Optional.of(user));
-		when(bookmarkRepository.findByUser(any())).thenReturn(List.of(bookmark));
+		when(bookmarkRepository.findByUserAndIsBookmarkedTrue(any())).thenReturn(List.of(bookmark));
 
 		// When
 		List<PostResponseDTO> bookmarkList = mypageService.getBookmarkList();
@@ -138,7 +138,7 @@ class MypageServiceImplTest {
 		assertThat(bookmarkList).hasSize(1);
 		assertThat(bookmarkList.get(0).getJoReqstNo()).isEqualTo("REQ123");
 		verify(userRepository, times(1)).findByUsername(anyString());
-		verify(bookmarkRepository, times(1)).findByUser(any());
+		verify(bookmarkRepository, times(1)).findByUserAndIsBookmarkedTrue(any());
 	}
 
 	@Test
