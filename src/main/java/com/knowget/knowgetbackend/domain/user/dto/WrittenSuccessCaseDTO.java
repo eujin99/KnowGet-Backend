@@ -17,12 +17,16 @@ public class WrittenSuccessCaseDTO {
 	private String content;
 	private Integer isApproved;
 	private LocalDateTime createdDate;
+	private String username;
+	private Integer successCaseId;
 
 	public WrittenSuccessCaseDTO(SuccessCase successCase) {
 		this.title = successCase.getTitle();
 		this.content = successCase.getContent();
 		this.isApproved = successCase.getIsApproved();
 		this.createdDate = successCase.getCreatedDate();
+		this.username = successCase.getUser().getUsername();
+		this.successCaseId = successCase.getCaseId();
 	}
 
 }
