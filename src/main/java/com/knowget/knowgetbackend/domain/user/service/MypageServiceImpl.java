@@ -52,7 +52,7 @@ public class MypageServiceImpl implements MypageService {
 			String username = SecurityContextHolder.getContext().getAuthentication().getName();
 			User user = userRepository.findByUsername(username)
 				.orElseThrow(() -> new UserNotFoundException("존재하지 않는 사용자입니다"));
-			return bookmarkRepository.findByUser(user).stream()
+			return bookmarkRepository.findByUserAndIsBookmarkedTrue(user).stream()
 				.map(Bookmark::getPost)
 				.toList()
 				.stream()
