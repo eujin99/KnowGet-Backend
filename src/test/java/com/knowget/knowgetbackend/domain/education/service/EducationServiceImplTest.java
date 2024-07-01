@@ -18,6 +18,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.client.RestTemplate;
 
 import com.knowget.knowgetbackend.domain.education.dto.EducationResponseDTO;
+import com.knowget.knowgetbackend.domain.education.repository.EducationRepository;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
 class EducationServiceImplTest {
@@ -34,7 +35,7 @@ class EducationServiceImplTest {
 	void setUp() {
 		MockitoAnnotations.openMocks(this);
 		when(restTemplateBuilder.build()).thenReturn(restTemplate);
-		educationService = new EducationServiceImpl(restTemplateBuilder);
+		educationService = new EducationServiceImpl((EducationRepository)restTemplateBuilder);
 	}
 
 	@Test
