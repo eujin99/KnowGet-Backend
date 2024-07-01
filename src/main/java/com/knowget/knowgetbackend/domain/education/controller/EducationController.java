@@ -1,7 +1,9 @@
 package com.knowget.knowgetbackend.domain.education.controller;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,9 @@ import com.knowget.knowgetbackend.domain.education.dto.EducationResponseDTO;
 import com.knowget.knowgetbackend.domain.education.service.EducationService;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/v1/education")
 @RequiredArgsConstructor
@@ -35,6 +39,19 @@ public class EducationController {
 	@GetMapping("/recruiting")
 	public ResponseEntity<List<EducationResponseDTO>> getRecruitingEducations() {
 		return ResponseEntity.ok(educationService.getRecruitingEducations());
+	}
+
+	@GetMapping("/2")
+	public ResponseEntity<List<EducationResponseDTO>> getAllEducations2() {
+		return ResponseEntity.ok(educationService.getAllEducations2());
+	}
+
+	@GetMapping("/fetch-educations")
+	public ResponseEntity<Void> fetchEducations() {
+		log.info("education fetching started at {}", LocalDateTime.now());
+		int insertCount = educationService.fetchEducations(1, 1000);
+		log.info("fetched {} educations at {}", insertCount, LocalDateTime.now());
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 }

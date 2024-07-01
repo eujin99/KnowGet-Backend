@@ -9,24 +9,31 @@ import java.util.stream.Collectors;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
-import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
 import com.knowget.knowgetbackend.domain.education.dto.EducationResponseDTO;
+import com.knowget.knowgetbackend.domain.education.repository.EducationRepository;
+import com.knowget.knowgetbackend.global.entity.Education;
 import com.knowget.knowgetbackend.global.exception.RequestFailedException;
 
-@Service
-public class EducationServiceImpl implements EducationService {
-	private final RestTemplate restTemplate;
-	private final String apiKey = "4952704e5a737379343850566e5a51";
-	private final String baseUrl = "http://openAPI.seoul.go.kr:8088/" + apiKey + "/json/OfflineCourse";
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
-	public EducationServiceImpl(RestTemplateBuilder restTemplateBuilder) {
-		this.restTemplate = restTemplateBuilder.build();
-	}
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class EducationServiceImpl implements EducationService {
+
+	private final EducationRepository educationRepository;
+
+	@Value("${seoul.api.key}")
+	private String apiKey;
 
 	/**
 	 * 1. 모든 교육강의 가져오기
@@ -37,9 +44,36 @@ public class EducationServiceImpl implements EducationService {
 	 */
 	// 1. 모든 교육강의 가져오기
 	@Override
+	@Transactional
 	public List<EducationResponseDTO> getAllEducations() {
-		String url = baseUrl + "/1/1000"; // 1000번째까지 가져오기
-		return getEducationsFromApi(url);
+		String apiUrl = String.format("http://openapi.seoul.go.kr:8088/%s/json/OfflineCourse/1/1000", apiKey);
+		return getEducationsFromApi(apiUrl);
+	}
+
+	@Override
+	public List<EducationResponseDTO> getAllEducations2() {
+		return educationRepository.findAllByOrderByEducationIdDesc().stream()
+			.map(education -> EducationResponseDTO.builder()
+				.courseNm(education.getCourseNm())
+				.courseRequestStrDt(education.getCourseRequestStrDt())
+				.courseRequestEndDt(education.getCourseRequestEndDt())
+				.courseStrDt(education.getCourseStrDt())
+				.courseEndDt(education.getCourseEndDt())
+				.capacity(education.getCapacity())
+				.courseApplyUrl(education.getCourseApplyUrl())
+				.deptNm(education.getDeptNm())
+				.gu(education.getGu())
+				.build()
+			)
+			.collect(Collectors.toList());
+	}
+
+	@Scheduled(cron = "0 0 * * * ?")
+	@Transactional
+	public void scheduledFetch() {
+		log.info("education fetching started at {}", LocalDate.now());
+		int insertCount = fetchEducations(1, 1000);
+		log.info("fetched {} posts at {}", insertCount, LocalDate.now());
 	}
 
 	/**
@@ -53,6 +87,7 @@ public class EducationServiceImpl implements EducationService {
 
 	// 2. 교육강의 검색하기
 	@Override
+	@Transactional
 	public List<EducationResponseDTO> searchEducations(String keyword) {
 		List<EducationResponseDTO> result = getAllEducations().stream() // 모든 교육강의 stream으로
 			.filter(education -> education.getCourseNm().contains(keyword)) // education의 courseNm에 keyword가 포함되어있는지.
@@ -78,6 +113,7 @@ public class EducationServiceImpl implements EducationService {
 
 	// 3. 모집중인 교육강의 가져오기
 	@Override
+	@Transactional
 	public List<EducationResponseDTO> getRecruitingEducations() {
 		LocalDate today = LocalDate.now();
 		// openAPI - courseRequestStrDt, courseRequestEndDt가 'yyyyMMdd' or 'yyyyMMddHHmm' 형식으로 되어있음
@@ -114,7 +150,8 @@ public class EducationServiceImpl implements EducationService {
 
 	// OpenAPI로부터 교육강의 데이터를 가져오는 메소드
 	// 사용 이유: OpenAPI로부터 데이터를 가져오는 과정이 중복되기 때문에 메소드로 분리
-	private List<EducationResponseDTO> getEducationsFromApi(String url) {
+	protected List<EducationResponseDTO> getEducationsFromApi(String url) {
+		RestTemplate restTemplate = new RestTemplate();
 		ResponseEntity<String> response = restTemplate.getForEntity(url, String.class);
 
 		if (response.getStatusCode() == HttpStatus.OK) {
@@ -194,5 +231,52 @@ public class EducationServiceImpl implements EducationService {
 		}
 		// 날짜 형식에 맞지 않은 데이터는 false 처리하였으니, true만 반환!
 		return true;
+	}
+
+	@Override
+	@Transactional
+	public Integer fetchEducations(int startIndex, int endIndex) {
+		String apiUrl = String.format("http://openapi.seoul.go.kr:8088/%s/json/OfflineCourse/%d/%d", apiKey, startIndex,
+			endIndex);
+		int insertCount = 0;
+
+		RestTemplate restTemplate = new RestTemplate();
+		ResponseEntity<String> responses = restTemplate.getForEntity(apiUrl, String.class);
+
+		if (responses.getStatusCode() == HttpStatus.OK) {
+			String body = responses.getBody();
+			if (body != null) {
+				try {
+					JSONArray jsonArray = new JSONObject(body).getJSONObject("OfflineCourse").getJSONArray("row");
+					log.info("jsonArray : {}", jsonArray);
+					log.info("jsonArray.length() : {}", jsonArray.length());
+
+					for (int i = 0; i < jsonArray.length(); i++) {
+						JSONObject educationJson = jsonArray.getJSONObject(i);
+						String courseRequestStrDt = educationJson.getString("COURSE_REQUEST_STR_DT");
+						String courseRequestEndDt = educationJson.getString("COURSE_REQUEST_END_DT");
+
+						if (dateFiltering(courseRequestStrDt, courseRequestEndDt)) {
+							Education education = Education.builder()
+								.courseNm(educationJson.getString("COURSE_NM"))
+								.courseRequestStrDt(courseRequestStrDt)
+								.courseRequestEndDt(courseRequestEndDt)
+								.courseStrDt(educationJson.getString("COURSE_STR_DT"))
+								.courseEndDt(educationJson.getString("COURSE_END_DT"))
+								.capacity(educationJson.getInt("CAPACITY"))
+								.courseApplyUrl(educationJson.getString("COURSE_APPLY_URL"))
+								.deptNm(educationJson.getString("DEPT_NM"))
+								.gu(educationJson.getString("GU"))
+								.build();
+							educationRepository.save(education);
+							insertCount++;
+						}
+					}
+				} catch (Exception e) {
+					throw new RuntimeException("OpenAPI response 파싱 실패", e);
+				}
+			}
+		}
+		return insertCount;
 	}
 }
