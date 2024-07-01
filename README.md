@@ -83,7 +83,8 @@
 
   <br/>
   
-  ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/45b2dc86-c209-4d04-9f34-92d82ef627e8)
+  ![System Architecture](https://github.com/beyond-sw-camp/be05-fin-5team-KnowGet-Backend/assets/132131921/09165478-179d-460c-a179-94273db86a7b)
+
 
 </details>
 
