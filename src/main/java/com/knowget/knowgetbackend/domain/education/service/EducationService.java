@@ -9,6 +9,10 @@ public interface EducationService {
 	// 1. 모든 교육강의 가져오기
 	List<EducationResponseDTO> getAllEducations();
 
+	List<EducationResponseDTO> getAllEducations2();
+
+	Integer fetchEducations(int startIndex, int endIndex);
+
 	// 2. 교육강의 검색하기
 	List<EducationResponseDTO> searchEducations(String keyword);
 

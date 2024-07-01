@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class EducationResponseDTO {
+
 	// 강의 명
 	private String courseNm;
 	// 수강신청 시작 일자
