@@ -1,10 +1,23 @@
 FROM openjdk:17
 
-# 빌드 과정에서 생성된 JAR 파일의 경로를 명시합니다.
-ARG JAR_FILE=build/libs/app.jar
+# 빌드 도구 설치
+RUN apt-get update && apt-get install -y curl unzip
+
+# Gradle 설치
+RUN curl -s https://get.sdkman.io | bash
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && sdk install gradle 7.3"
+
+# 소스 코드를 컨테이너에 복사
+COPY . /app
+
+# 작업 디렉토리 설정
+WORKDIR /app
+
+# Gradle 빌드를 실행하여 JAR 파일 생성
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && gradle build"
 
 # JAR 파일을 컨테이너로 복사합니다.
-COPY ${JAR_FILE} app.jar
+COPY build/libs/app.jar app.jar
 
 # 애플리케이션이 사용하는 포트를 노출합니다.
 EXPOSE 8080
