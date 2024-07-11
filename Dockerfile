@@ -2,7 +2,7 @@
 FROM openjdk:17-jdk-slim
 
 # 빌드 도구 설치
-RUN apt-get update && apt-get install -y curl unzip
+RUN apt-get update && apt-get install -y curl unzip zip
 
 # SDKMAN을 이용해 Gradle 설치
 RUN curl -s https://get.sdkman.io | bash && \
