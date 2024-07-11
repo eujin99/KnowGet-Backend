@@ -15,10 +15,13 @@ COPY . /app
 WORKDIR /app
 
 # Gradle 빌드를 실행하여 JAR 파일 생성
-RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && gradle bootJar"
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && gradle clean bootJar"
+
+# JAR 파일이 생성되었는지 확인
+RUN ls -l /app/build/libs/
 
 # JAR 파일을 컨테이너로 복사합니다.
-COPY build/libs/app.jar app.jar
+COPY /app/build/libs/app.jar app.jar
 
 # 애플리케이션이 사용하는 포트를 노출합니다.
 EXPOSE 8080
