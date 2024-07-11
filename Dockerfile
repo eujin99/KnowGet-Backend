@@ -1,5 +1,5 @@
 # 기본 이미지 설정
-FROM openjdk:17
+FROM openjdk:17-jdk-slim
 
 # 빌드 도구 설치
 RUN apt-get update && apt-get install -y curl unzip
@@ -14,8 +14,11 @@ COPY . /app
 # 작업 디렉토리 설정
 WORKDIR /app
 
+# 빌드 캐시 무효화를 위해 환경 변수 설정
+ARG CACHEBUST=1
+
 # Gradle 빌드를 실행하여 JAR 파일 생성
-RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && gradle clean build bootJar"
+RUN bash -c "source $HOME/.sdkman/bin/sdkman-init.sh && gradle clean build bootJar --no-daemon"
 
 # JAR 파일이 생성되었는지 확인
 RUN ls -l /app/build/libs/
