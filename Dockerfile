@@ -19,8 +19,8 @@ RUN ./gradlew clean build bootJar --no-daemon
 # JAR 파일이 생성되었는지 확인
 RUN ls -l /app/build/libs/
 
-# JAR 파일을 컨테이너 내에서 복사합니다.
-COPY /app/build/libs/*.jar /app.jar
+# JAR 파일을 이동합니다.
+RUN mv /app/build/libs/*.jar /app.jar
 
 # 애플리케이션이 사용하는 포트를 노출합니다.
 EXPOSE 8080
