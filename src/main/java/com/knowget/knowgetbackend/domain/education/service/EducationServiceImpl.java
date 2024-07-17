@@ -34,6 +34,13 @@ public class EducationServiceImpl implements EducationService {
 	@Value("${seoul.api.key}")
 	private String apiKey;
 
+	/**
+	 * 1. 모든 교육강의 가져오기
+	 *
+	 * @param -
+	 * @return List<EducationResponseDTO> 모든 교육강의 리스트
+	 * @author MJ
+	 */
 	@Override
 	@Transactional
 	public List<EducationResponseDTO> getAllEducations() {
@@ -132,7 +139,7 @@ public class EducationServiceImpl implements EducationService {
 									courseRequestEndDt,
 									educationJson.getString("COURSE_STR_DT"),
 									educationJson.getString("COURSE_END_DT"),
-									educationJson.getInt("CAPACITY"),
+									parseCapacity(educationJson),
 									educationJson.getString("COURSE_APPLY_URL"),
 									educationJson.getString("DEPT_NM"),
 									educationJson.getString("GU")
@@ -147,6 +154,14 @@ public class EducationServiceImpl implements EducationService {
 			}
 		}
 		throw new RuntimeException("OpenAPI 데이터 가져오기 실패");
+	}
+
+	private Integer parseCapacity(JSONObject educationJson) {
+		try {
+			return educationJson.getInt("CAPACITY");
+		} catch (Exception e) {
+			return null; // CAPACITY 필드가 없거나 비어있을 경우 null 반환
+		}
 	}
 
 	protected boolean dateFiltering(String courseRequestStrDt, String courseRequestEndDt) {
@@ -180,15 +195,12 @@ public class EducationServiceImpl implements EducationService {
 			String body = responses.getBody();
 			if (body != null) {
 				try {
-					log.info("API Response: {}", body);
 					JSONArray jsonArray = new JSONObject(body).getJSONObject("OfflineCourse").getJSONArray("row");
-					log.info("Parsed JSON Array: {}", jsonArray);
+					log.info("jsonArray : {}", jsonArray);
 					log.info("jsonArray.length() : {}", jsonArray.length());
 
 					for (int i = 0; i < jsonArray.length(); i++) {
 						JSONObject educationJson = jsonArray.getJSONObject(i);
-						log.info("Parsed JSON Object: {}", educationJson);
-
 						String courseRequestStrDt = educationJson.getString("COURSE_REQUEST_STR_DT");
 						String courseRequestEndDt = educationJson.getString("COURSE_REQUEST_END_DT");
 
@@ -199,20 +211,16 @@ public class EducationServiceImpl implements EducationService {
 									.courseRequestEndDt(courseRequestEndDt)
 									.courseStrDt(educationJson.getString("COURSE_STR_DT"))
 									.courseEndDt(educationJson.getString("COURSE_END_DT"))
-									.capacity(educationJson.getInt("CAPACITY"))
+									.capacity(parseCapacity(educationJson))
 									.courseApplyUrl(educationJson.getString("COURSE_APPLY_URL"))
 									.deptNm(educationJson.getString("DEPT_NM"))
 									.gu(educationJson.getString("GU"))
 									.build();
-
-							log.info("Inserting education: {}", education);
-							Education savedEducation = educationRepository.save(education);
-							log.info("Saved education: {}", savedEducation);
+							educationRepository.save(education);
 							insertCount++;
 						}
 					}
 				} catch (Exception e) {
-					log.error("OpenAPI response parsing failed", e);
 					throw new RuntimeException("OpenAPI response 파싱 실패", e);
 				}
 			}
